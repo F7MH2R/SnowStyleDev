@@ -1,24 +1,31 @@
 import { useState } from "react";
 import "./css/Modal.css"
-//import logo from "./logo.svg";
 
- const Login = () => {
+const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleModal = () => setIsOpen(!isOpen);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
+  const handleSubmit = (event) => {
+    // Aquí puedes manejar la lógica para enviar el formulario
+    event.preventDefault();
+    // Por ahora, solo cerramos el modal al enviar el formulario
+    closeModal();
+  };
 
   return (
     <section className="page modal-1-page">
       <div
         className={`modal-1-overlay ${isOpen ? "open" : ""}`}
-        onClick={toggleModal}
+        onClick={closeModal}
       >
-        <div className="modal-1-modal">
+        <div className="modal-1-modal" onClick={(e) => e.stopPropagation()}>
           <header>
             <h2>Sign Up</h2>
             <h3>SnowStyle</h3>
           </header>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="textbox">
               <span class="material-symbols-outlined"></span>
               <input type="email" placeholder="Email" />
@@ -30,10 +37,10 @@ import "./css/Modal.css"
             <button
               className="signup-button"
               type="submit"
-              onClick={toggleModal}
             >
+              <h3>Iniciar Sesión </h3> 
               <p></p>
-              <span className="material-symbols-outlined"> Inicar Sesión </span>
+              <span className="material-symbols-outlined"> </span>
             </button>
           </form>
           <p>No necesitas tarjeta de credito</p>
@@ -46,13 +53,12 @@ import "./css/Modal.css"
             <button
               className="signup-button"
               type="button"
-              onClick={toggleModal}
+              onClick={openModal}
             >
               <p>Registrate Gratis</p>
               <span className="material-symbols-outlined"> </span>
             </button>
           </article>
-          
         </div>
       </footer>
     </section>
