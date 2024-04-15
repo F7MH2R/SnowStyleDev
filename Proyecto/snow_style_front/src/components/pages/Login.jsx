@@ -1,6 +1,12 @@
 import { useState } from "react";
 import "./css/Modal.css";
 
+import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
+
 const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -59,31 +65,15 @@ const Login = () => {
               </button>
             </div>
             <button className="signup-button" type="submit">
-              <h3>Iniciar Sesión </h3>
-              <p></p>
-              <span className="material-symbols-outlined"> </span>
+              <span className="material-symbols-outlined">
+                <KeyboardTabOutlinedIcon />
+                Iniciar Sesión{" "}
+              </span>
             </button>
-            <Link to={"/src/components/pages/LostP"} className="lost" href="#">
-              Olvidé mi contraseña
-            </Link>
-
-            <Link to="/src/components/pages/Register" className="lost">
-              No tengo cuenta || Crear cuenta
-            </Link>
           </form>
           <p>No necesitas tarjeta de credito</p>
         </div>
       </div>
-      <footer className="modal-1-footer">
-        <div className="container">
-          <article>
-            <h2>Listo Para Iniciar.</h2>
-            <button className="signup-button" type="button" onClick={openModal}>
-              <p>Registrate Gratis</p>
-            </button>
-          </article>
-        </div>
-      </footer>
     </section>
   );
 };
