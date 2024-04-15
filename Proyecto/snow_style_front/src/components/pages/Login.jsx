@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./css/Modal.css";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
@@ -27,6 +27,9 @@ const Login = () => {
     closeModal();
   };
 
+  useEffect(() => {
+    openModal(); // Abre el modal cuando se renderiza el componente
+  }, []);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -89,16 +92,6 @@ const Login = () => {
           <p>No necesitas tarjeta de credito</p>
         </div>
       </div>
-      <footer className="modal-1-footer">
-        <div className="container">
-          <article>
-            <h2>Listo Para Iniciar.</h2>
-            <button className="signup-button" type="button" onClick={openModal}>
-              <p>Registrate Gratis</p>
-            </button>
-          </article>
-        </div>
-      </footer>
     </section>
   );
 };
