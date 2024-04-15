@@ -25,7 +25,7 @@ function App() {
         <Route path="HELP" element={<Help />} />
         <Route path="LOGIN" element={<Login />} />
         <Route path="REGIST" element={<Registrarse />} />
-        <Route path="WHOARE" element={<Whoare />} />
+        <Route path="WHOARE" element={<WhoAre />} />
       </Routes>
       <Footer />
     </div>
