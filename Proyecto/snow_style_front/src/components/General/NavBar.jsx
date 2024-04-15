@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import logo from "./img/Logo SnowStyle.PNG";
 import "../pages/css/Modal.css"; // Importa el archivo de estilos CSS
+
 import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
