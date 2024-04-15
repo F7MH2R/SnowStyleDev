@@ -10,19 +10,19 @@ import Nav from "./components/General/NavBar";
 import Footer from "./components/General/Footer";
 import Help from "./components/pages/Help";
 import Carrito from "./components/Carrito/Carrito";
-import lay from "./components/Item/lays.png";
+import imagen from "./components/Item/blusa.png";
 
 function App() {
   const usuarioSesion = Number(localStorage.getItem("UserId"));
   const items = [
     {
-      imagen: lay,
+      imagen: imagen,
       descripcion: "Prenda 1",
       precio: 10.25,
       id: 1,
     },
     {
-      imagen: lay,
+      imagen: imagen,
       descripcion: "Prenda 2",
       precio: 10.25,
       id: 2,

@@ -15,7 +15,7 @@ const Item = ({ imagen, descripcion, precio, id }) => {
           <div className="row">$ {precio}</div>
           <div className="row">{descripcion}</div>
         </div>
-        <div className="col">mas y menos</div>
+        <div className="col">cantidad</div>
         <div className="col">
           <a href={`eliminar/${id}`}>Eliminar</a>
         </div>
