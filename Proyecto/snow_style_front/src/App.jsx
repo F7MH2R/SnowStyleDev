@@ -9,6 +9,7 @@ import Car from "./components/pages/Car";
 import Nav from "./components/General/NavBar";
 import Footer from "./components/General/Footer";
 import Help from "./components/pages/Help";
+import Whoare from "./components/pages/WhoAre";
 
 
 
@@ -26,7 +27,7 @@ function App() {
         <Route path="HELP" element={<Help />} />
         <Route path="LOGIN" element={<Login />} />
         <Route path="REGIST" element={<Registrarse />} />
-      
+        <Route path="WHOARE" element={<Whoare />} />
       </Routes>
       <Footer />
     </div>
