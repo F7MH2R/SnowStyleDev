@@ -1,23 +1,37 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/home/Home";
-import Login from "./components/pages/login";
-import Registrarse from "./components/pages/register";
+import Login from "./components/pages/Login";
+import Registrarse from "./components/pages/Register";
 import Explorar from "./components/pages/Explorer";
 import Contact from "./components/pages/Contact";
 import Car from "./components/pages/Car";
 import Nav from "./components/General/NavBar";
 import Footer from "./components/General/Footer";
 import Help from "./components/pages/Help";
-
-
-
+import Carrito from "./components/Carrito/Carrito";
+import lay from "./components/Item/lays.png";
 
 function App() {
   const usuarioSesion = Number(localStorage.getItem("UserId"));
+  const items = [
+    {
+      imagen: lay,
+      descripcion: "Prenda 1",
+      precio: 10.25,
+      id: 1,
+    },
+    {
+      imagen: lay,
+      descripcion: "Prenda 2",
+      precio: 10.25,
+      id: 2,
+    },
+  ];
+
   return (
     <div className="App">
-      <Nav/>      
+      <Nav />
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="EXPLOR" element={<Explorar />} />
@@ -26,7 +40,7 @@ function App() {
         <Route path="HELP" element={<Help />} />
         <Route path="LOGIN" element={<Login />} />
         <Route path="REGIST" element={<Registrarse />} />
-      
+        <Route path="cart" element={<Carrito items={items} />} />
       </Routes>
       <Footer />
     </div>
