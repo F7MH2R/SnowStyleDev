@@ -9,19 +9,17 @@ import Car from "./components/pages/Car";
 import Nav from "./components/General/NavBar";
 import Footer from "./components/General/Footer";
 import Help from "./components/pages/Help";
-import Whoare from "./components/pages/WhoAre";
-
-
-
+import WhoAre from "./components/pages/WhoAre";
 
 function App() {
   const usuarioSesion = Number(localStorage.getItem("UserId"));
   return (
     <div className="App">
-      <Nav/>      
+      <Nav />
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="EXPLOR" element={<Explorar />} />
+        <Route path="WHO" element={<WhoAre />} />
         <Route path="CAR" element={<Car />} />
         <Route path="CONTACT" element={<Contact />} />
         <Route path="HELP" element={<Help />} />
