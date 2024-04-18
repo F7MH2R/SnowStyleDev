@@ -1,7 +1,16 @@
 import React from "react";
+import VideoCarousel from "./VideoCarousel";
+import TrendingSection from "./tendencias";
+import TrendingSectionH from"./tendenciash";
+
 const Home=()=>{
     return(
-        <div><h1>SNOW Home</h1></div>
+        <div>
+            <VideoCarousel />
+            <TrendingSection />
+            <TrendingSectionH />
+        </div>
+        
     );
 };
 export default Home;

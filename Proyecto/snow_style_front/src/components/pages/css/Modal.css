@@ -298,11 +298,13 @@ body {
 .logo {
   width: 220px; /* Tamaño deseado para el logo */
   height: auto;
+  align-items: center;
 }
 
 .navbar-right {
   display: flex;
   align-items: center;
+  margin-left: 10%;
 }
 
 .buscar-icono {
@@ -377,4 +379,78 @@ body {
   font-size: 18px;
   margin-bottom: 10px;
 }
+
+/* estilos carrusel */
+
+.carousel-item img {
+  width: 100%;
+  height: 800px; /* Tamaño fijo para las imágenes, ajusta según sea necesario */
+  object-fit: cover; /* Recorta la imagen para que llene el contenedor */
+}
+
+
+/* Tendencias Mujeres*/
+
+.trending-section {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  flex-direction: column;
+  margin-top: 50px;
+  margin-left: 50px; 
+  margin-right: 50px;/* Apila los elementos verticalmente */
+}
+
+.mujeres-header {
+  align-self: flex-start; /* Posiciona "MUJERES" a la izquierda */
+  margin-left: 20px; /* Agrega margen izquierdo para separar "MUJERES" del resto */
+}
+
+.trending-header {
+  border-bottom: 1px solid black; /* Línea horizontal como separador */
+  display: inline-block; /* Hace que el borde rodee el texto */
+  padding: 0 250px; /* Espacio alrededor del texto */
+}
+
+/* CArds */
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-content: center;
+  margin-top: 70px; 
+  width: 80%;
+  height: 40%;
+  margin-bottom: 10%;
+}
+
+.trending-card {
+  width: 200px; /* Ancho deseado para las cards */
+  height: 200px; /* Altura deseada para las cards */
+  margin: 10px; /* Margen entre las cards */
+  overflow: hidden; /* Oculta cualquier contenido que desborde */
+}
+
+.card-container img {
+  width: 100%; /* Ajusta el ancho de la imagen para llenar la card */
+  height: 100%; /* Ajusta la altura de la imagen para llenar la card */
+  object-fit: fill; /* Ajusta la imagen dentro del contenedor */
+}
+/* Aplica márgenes específicos a la primera y última card */
+.card-container:first-child {
+  margin-left: 0;
+}
+
+.card-container:last-child {
+  margin-right: 0;
+}
+
+.link {
+  text-decoration: none; /* Para eliminar el subrayado del enlace */
+  color: inherit; /* Para heredar el color del texto */
+}
+
+
+/*Tendencias Hombres*/
 
