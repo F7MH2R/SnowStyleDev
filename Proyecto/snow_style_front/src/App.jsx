@@ -10,6 +10,7 @@ import Nav from "./components/General/NavBar";
 import Footer from "./components/General/Footer";
 import Help from "./components/pages/Help";
 import WhoAre from "./components/pages/WhoAre";
+import DetalleProducto from "./components/pages/DetalleProducto";
 
 function App() {
   const usuarioSesion = Number(localStorage.getItem("UserId"));
@@ -26,6 +27,7 @@ function App() {
         <Route path="LOGIN" element={<Login />} />
         <Route path="REGIST" element={<Registrarse />} />
         <Route path="WHOARE" element={<WhoAre />} />
+        <Route path="DETALLEPRODUCTO" element={<DetalleProducto />} />
       </Routes>
       <Footer />
     </div>
