@@ -55,7 +55,7 @@ const NavBar = () => {
         <a href="#niño" className="navbar-link">
           Niños
         </a>
-        <a href="/CONTACT" className="navbar-link">
+        <a href="/WHOARE" className="navbar-link">
           Conocenos
         </a>
       </div>
