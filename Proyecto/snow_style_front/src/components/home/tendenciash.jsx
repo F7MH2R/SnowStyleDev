@@ -23,6 +23,17 @@ const TrendingSectionH = () => {
           </Link>
         ))}
       </div>
+      <div className="categories-container">
+        <h4 className="sudaderas"><Link to="/sudaderas" style={{ textDecoration: 'none', color: 'black' }}>SUDADERAS</Link></h4>
+        <h4 className="camisas"><Link to="/camisas" style={{ textDecoration: 'none', color: 'black' }}>CAMISAS</Link></h4>
+        <h4 className="pantalones"><Link to="/pantalones" style={{ textDecoration: 'none', color: 'black' }}>PANTALONES</Link></h4>
+        <h4 className="abrigo"><Link to="/abrigo" style={{ textDecoration: 'none', color: 'black' }}>ABRIGO</Link></h4>
+      </div>
+      <div className="see-all-container">
+      <Link to="/todos-los-productos" className="see-all" style={{ textDecoration: 'none' }}>
+          <h3 style={{ color: 'black' }}>Todos los Productos</h3>
+        </Link>
+      </div>
     </div>
   );
 };

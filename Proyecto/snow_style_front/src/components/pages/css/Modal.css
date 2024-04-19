@@ -389,7 +389,36 @@ body {
 }
 
 
-/* Tendencias Mujeres*/
+/* Tendencias*/
+.categories-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -7%;
+  margin-left: -40%;
+}
+
+.see-all-container {
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+
+.sudaderas {
+  margin-right: 45%;
+}
+
+.camisas {
+  margin-right: 45%;
+}
+
+.pantalones {
+  margin-right: 45%;
+}
+
+.abrigo {
+  margin-right: 45%;
+}
 
 .trending-section {
   display: flex;
@@ -452,5 +481,37 @@ body {
 }
 
 
-/*Tendencias Hombres*/
+/*LIQUIDACIOOOON*/
+.liquidacion-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('https://img.freepik.com/free-photo/rows-hangers-with-clothes_23-2147669916.jpg?t=st=1713501173~exp=1713504773~hmac=f9025f47c7efa5902f5fa27cc9fc1aa25d9a1cc6b4ce4e3bb46d4edb3406861d&w=1380');
+  background-size: cover;
+}
+
+.liquidacion-content {
+  text-align: center;
+  color: white;
+}
+
+.liquidacion-content h1 {
+  font-size: 3rem;
+}
+
+.liquidacion-content p {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.liquidacion-content button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
 
