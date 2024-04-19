@@ -10,9 +10,27 @@ import Nav from "./components/General/NavBar";
 import Footer from "./components/General/Footer";
 import Help from "./components/pages/Help";
 import WhoAre from "./components/pages/WhoAre";
-
+import Carrito from "./components/Carrito/Carrito";
+import imagen from "./components/Item/blusa.png";
+import LostP from "./components/pages/LostP";
+//import Item from "./components/Item/Item";
+// <Route path="LOGIN" element={<Login />} />;
 function App() {
   const usuarioSesion = Number(localStorage.getItem("UserId"));
+  const items = [
+    {
+      imagen: imagen,
+      descripcion: "Prenda 1",
+      precio: 10.25,
+      id: 1,
+    },
+    {
+      imagen: imagen,
+      descripcion: "Prenda 2",
+      precio: 10.25,
+      id: 2,
+    },
+  ];
   return (
     <div className="App">
       <Nav />
@@ -23,8 +41,10 @@ function App() {
         <Route path="CAR" element={<Car />} />
         <Route path="CONTACT" element={<Contact />} />
         <Route path="HELP" element={<Help />} />
-        <Route path="LOGIN" element={<Login />} />
+        <Route path="Lost" element={<LostP />} />
         <Route path="REGIST" element={<Registrarse />} />
+        <Route path="WHOARE" element={<WhoAre />} />
+        <Route path="cart" element={<Carrito items={items} />} />
       </Routes>
       <Footer />
     </div>

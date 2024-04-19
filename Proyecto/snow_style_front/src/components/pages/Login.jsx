@@ -1,4 +1,6 @@
 import { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import "./css/Modal.css";
 
 import EmailIcon from "@mui/icons-material/Email";
@@ -21,6 +23,12 @@ const Login = () => {
     event.preventDefault();
     // Por ahora, solo cerramos el modal al enviar el formulario
     closeModal();
+  };
+  useEffect(() => {
+    openModal(); // Abre el modal cuando se renderiza el componente
+  }, []);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
