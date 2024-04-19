@@ -414,17 +414,46 @@ body {
   height: 100%;
 }
 
-.text-content-conocenos {
-  text-align: center;
-  color: #ffffff;
-  background-color: rgb(0,0,0,0.5);
-}
-
 .conocenos-title {
-  color: #ffffff;
+  color: #000000;
   font-size: 40px;
   text-align: center;
   margin-bottom: auto;
+}
+
+.who-are-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; 
+  overflow: hidden; 
+}
+
+.background-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .text-content {
+    font-size: 14px;
+  }
+  .text-content-conocenos {
+    font-size: 14px;
+  }
 }
 
 

@@ -15,30 +15,30 @@ const WhoAre = () => {
             <div className="text-overlay">
               <div className="text-content">
                 <header>
-                  <h2 className="textoWAU">QUIÉNES SOMOS</h2>
+                  <h2 >QUIÉNES SOMOS</h2>
                 </header>
-                <p className="textoWAU">
+                <h4 >
                   Bienvenido a SnowStyle, tu destino definitivo para la moda en
                   la nieve y el frío. Nos enorgullece presentar una selección
                   cuidadosamente curada de ropa diseñada para aquellos que aman
                   la aventura al aire libre y buscan estilo sin sacrificar
                   funcionalidad.
-                </p>
-                <p className="textoWAU">
+                </h4>
+                <h4>
                   Nuestra pasión por la moda en la nieve se refleja en cada
                   aspecto de nuestro negocio. Desde la cuidadosa selección de
                   marcas de renombre hasta nuestro compromiso con la calidad y
                   el servicio al cliente excepcional, nos esforzamos por
                   brindarte una experiencia de compra impecable en cada visita a
                   nuestro sitio.
-                </p>
+                </h4>
               </div>
             </div>
           </section>
         </div>
       </div>
 
-      <div style={{ position: "relative" }}>
+      <div className="who-are-container">
         <video
           autoPlay
           muted
@@ -46,7 +46,7 @@ const WhoAre = () => {
           className="background-video"
           style={{
             position: "absolute",
-            top: 1,
+            top: 0,
             left: 0,
             width: "100%",
             height: "100%",
@@ -56,11 +56,8 @@ const WhoAre = () => {
           <source src={videoConocenos} type="video/mp4" />
           Tu navegador no admite el elemento de video.
         </video>
-        <div
-          className="container2"
-          style={{ position: "relative", zIndex: "1" }}
-        >
-          <div className="text-content-conocenos">
+        <div className="content-container">
+          <div className="text-content">
             <header>
               <h2 className="conocenos-title">CONÓCENOS</h2>
             </header>
@@ -80,7 +77,7 @@ const WhoAre = () => {
             </address>
           </div>
         </div>
-      </div>
+        </div>
     </>
   );
 };
