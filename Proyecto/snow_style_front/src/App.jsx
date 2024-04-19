@@ -15,6 +15,9 @@ import imagen from "./components/Item/blusa.png";
 import LostP from "./components/pages/LostP";
 //import Item from "./components/Item/Item";
 // <Route path="LOGIN" element={<Login />} />;
+
+import DetalleProducto from "./components/pages/DetalleProducto";
+
 function App() {
   const usuarioSesion = Number(localStorage.getItem("UserId"));
   const items = [
@@ -44,7 +47,10 @@ function App() {
         <Route path="Lost" element={<LostP />} />
         <Route path="REGIST" element={<Registrarse />} />
         <Route path="WHOARE" element={<WhoAre />} />
+
         <Route path="cart" element={<Carrito items={items} />} />
+
+        <Route path="DETALLEPRODUCTO" element={<DetalleProducto />} />
       </Routes>
       <Footer />
     </div>
