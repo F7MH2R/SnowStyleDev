@@ -409,7 +409,7 @@ body {
 
 .carousel-item img {
   width: 100%;
-  height: 800px; /* Tamaño fijo para las imágenes, ajusta según sea necesario */
+  height: 700px; /* Tamaño fijo para las imágenes, ajusta según sea necesario */
   object-fit: cover; /* Recorta la imagen para que llene el contenedor */
 }
 
@@ -428,8 +428,8 @@ body {
 
 .see-all-container {
   text-align: center;
-  margin-top: 3%;
-  margin-bottom: 5%;
+  margin-top: 1%;
+  margin-bottom: 4%;
 }
 
 .sudaderas,
@@ -462,13 +462,15 @@ body {
   margin: 50px; /* Aplica margen uniforme en todas las direcciones */
 }
 
-.mujeres-header {
+.seccion-ropa-header {
   margin-left: 20px;
+  margin-bottom: auto;
 }
 
 .trending-header {
   border-bottom: 1px solid black;
   display: inline-block;
+  margin-top: 10px;
   padding: 0 20px; /* Reduce el espacio alrededor del texto */
 }
 
@@ -506,7 +508,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url("https://img.freepik.com/free-photo/rows-hangers-with-clothes_23-2147669916.jpg?t=st=1713501173~exp=1713504773~hmac=f9025f47c7efa5902f5fa27cc9fc1aa25d9a1cc6b4ce4e3bb46d4edb3406861d&w=1380");
+  background-image: url("https://i.ibb.co/Hzgsvpd/liquidacion-imagenes.jpg");
   background-size: cover;
 }
 
