@@ -13,13 +13,10 @@ import WhoAre from "./components/pages/WhoAre";
 import DetalleProducto from "./components/pages/DetalleProducto";
 import Carrito from "./components/Carrito/Carrito";
 import imagen from "./components/Item/blusa.png";
-import Carrito from "./components/Carrito/Carrito";
-import imagen from "./components/Item/blusa.png";
 import LostP from "./components/pages/LostP";
 //import Item from "./components/Item/Item";
 // <Route path="LOGIN" element={<Login />} />;
 
-import DetalleProducto from "./components/pages/DetalleProducto";
 
 function App() {
   const usuarioSesion = Number(localStorage.getItem("UserId"));
