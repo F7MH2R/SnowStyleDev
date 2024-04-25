@@ -6,6 +6,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
 import { Link, useNavigate } from "react-router-dom";
+import googleFontsURL from "../Fuentes/FuenteLetras";
+
 const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -35,7 +37,8 @@ const Login = () => {
   };
 
   return (
-    <section className="page modal-1-page">
+    <section className="page modal-1-page" style={{ fontFamily: 'Prompt, sans-serif' }}>
+      <link rel="stylesheet" href={googleFontsURL} />
       <div
         className={`modal-1-overlay ${isOpen ? "open" : ""}`}
         onClick={closeModal}

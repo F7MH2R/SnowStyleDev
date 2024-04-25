@@ -1,8 +1,11 @@
 {
   
   "dependencies": {
-  
     
+  
+  "@babel/plugin-proposal-private-property-in-object": "^7.16.5",
+    
+  
   "@fortawesome/free-brands-svg-icons": "^6.5.2",
   
     

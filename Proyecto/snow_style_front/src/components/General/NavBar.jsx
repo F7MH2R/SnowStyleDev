@@ -9,6 +9,8 @@ import LockIcon from "@mui/icons-material/Lock";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
+import googleFontsURL from "../Fuentes/FuenteLetras"
+
 const NavBar = () => {
   const [mostrarBusqueda, setMostrarBusqueda] = useState(false); // Estado para controlar la visibilidad del área de búsqueda
 
@@ -44,19 +46,20 @@ const NavBar = () => {
   };
 
   return (
-    <div className="navbar">
-      <div className="navbar-left">
-        <a href="#hombre" className="navbar-link">
+    <div className="navbar" style={{ fontFamily: 'Prompt, sans-serif' }}>
+      <link rel="stylesheet" href={googleFontsURL} />
+      <div className="navbar-secciones">
+        <a href="#hombre" className="navbar-secciones">
           Hombre
         </a>
-        <a href="#mujer" className="navbar-link">
+        <a href="#mujer" className="navbar-secciones">
           Mujeres
         </a>
-        <a href="#niño" className="navbar-link">
+        <a href="#niño" className="navbar-secciones">
           Niños
         </a>
-        <a href="/WHOARE" className="navbar-link">
-          Conocenos
+        <a href="/WHOARE" className="navbar-secciones">
+          Conócenos
         </a>
       </div>
       <div className="navbar-brand " href="/">

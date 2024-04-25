@@ -1,8 +1,11 @@
 import react from "react";
 import "./Item.css";
+import googleFontsURL from "../Fuentes/FuenteLetras"
+
 const Item = ({ imagen, descripcion, precio, id }) => {
   return (
-    <div className="container">
+    <div className="container" style={{ fontFamily: 'Prompt, sans-serif' }}>
+      <link rel="stylesheet" href={googleFontsURL} />
       <div className="row">
         <div className="col imagen-small">
           {imagen ? (

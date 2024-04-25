@@ -1,5 +1,7 @@
 import react from "react";
 import Item from "../Item/Item";
+import googleFontsURL from "../Fuentes/FuenteLetras"
+
 
 const Carrito = ({ items }) => {
   let total = 0.0;
@@ -10,7 +12,8 @@ const Carrito = ({ items }) => {
       id="offcanvasNavbar"
     >
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+        <link rel="stylesheet" href={googleFontsURL} />
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style={{ fontFamily: 'Prompt, sans-serif' }}>
           Canasta de compra
         </h5>
         <button
@@ -21,6 +24,7 @@ const Carrito = ({ items }) => {
         ></button>
       </div>
       <div className="offcanvas-body">
+        <link rel="stylesheet" href={googleFontsURL} />
         {items ? (
           items.map((item) => {
             total += item.precio;
@@ -34,13 +38,13 @@ const Carrito = ({ items }) => {
             );
           })
         ) : (
-          <p>No tienes productos en tu carrito</p>
+          <p style={{ fontFamily: 'Prompt, sans-serif' }}>No tienes productos en tu carrito</p>
         )}
         <div className="row">
-          <dir className="col">Total: $ {total}</dir>
+          <dir className="col" style={{ fontFamily: 'Prompt, sans-serif' }}>Total: $ {total}</dir>
         </div>
         <div className="row">
-          <button href="#" className="btn btn-primary">
+          <button href="#" className="btn btn-primary" style={{ fontFamily: 'Prompt, sans-serif' }}>
             Pagar
           </button>
         </div>

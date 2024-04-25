@@ -316,6 +316,14 @@ body {
   transition: color 0.3s ease;
 }
 
+.navbar-secciones{
+  text-decoration: none;
+  color: #333333;
+  font-size: 20px;
+  margin-right: 20px;
+  transition: color 0.3s ease;
+}
+
 .navbar-link:hover {
   color: #555555;
 }
@@ -536,6 +544,39 @@ body {
   border-radius: 20px; /* Establece el radio de los bordes */
 }
 
+.h4-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Primera seccion de quiénes somos-conócenos */
+.h4-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.h4-item {
+  margin-bottom: 20px; 
+}
+
+@media screen and (min-width: 768px) {
+  .h4-container {
+    flex-direction: row;
+  }
+
+  .h4-item {
+    margin-bottom: 0;
+    margin-right: 20px; 
+    flex: 1;
+  }
+
+  .h4-item:last-child {
+    margin-right: 0; /* Eliminar el margen derecho del último elemento en la fila */
+  }
+}
+
+
+
 /* Segunda seccion de quiénes somos-conócenos */
 .background-video-wrapper-conocenos {
   position: center;
@@ -574,7 +615,6 @@ body {
 }
 
 .text-content {
-  max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
