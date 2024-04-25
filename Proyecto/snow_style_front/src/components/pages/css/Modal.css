@@ -303,71 +303,13 @@ body {
   position: relative; /* Agregar posición relativa */
 }
 
-.navbar-left {
-  display: flex;
-  align-items: center;
+
+.nav-link {
+  color: black !important; /* Cambiar el color del texto a negro */
 }
 
-.navbar-link {
-  text-decoration: none;
-  color: #333333;
-  font-size: 30px;
-  margin-right: 20px;
-  transition: color 0.3s ease;
-}
 
-.navbar-link:hover {
-  color: #555555;
-}
 
-.logo {
-  width: 220px; /* Tamaño deseado para el logo */
-  height: auto;
-  align-items: center;
-}
-
-.navbar-right {
-  display: flex;
-  align-items: center;
-  margin-left: 10%;
-}
-
-.buscar-icono {
-  cursor: pointer;
-  font-size: 30px; /* Tamaño del icono de búsqueda */
-  margin-right: 10px; /* Espaciado entre el icono de búsqueda y el primer enlace */
-}
-
-.area-busqueda-container {
-  position: absolute; /* Agregar posición absoluta */
-  top: calc(100% + 10px); /* Colocar el input debajo de la navbar */
-  left: 50%; /* Centrar horizontalmente */
-  transform: translateX(-50%); /* Alinear al centro */
-}
-
-.area-busqueda {
-  display: flex;
-  align-items: center;
-}
-
-.area-busqueda input {
-  font-size: 16px; /* Tamaño del texto en el área de búsqueda */
-  padding: 5px;
-  width: 200px; /* Ancho del input */
-  margin-right: 5px;
-}
-
-.area-busqueda button {
-  background-color: #555555;
-  color: #ffffff;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.area-busqueda button:hover {
-  background-color: #333333;
-}
 /* Footer.css */
 
 .footer {

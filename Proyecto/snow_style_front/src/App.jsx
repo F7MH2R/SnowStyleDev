@@ -6,7 +6,7 @@ import Registrarse from "./components/pages/Register";
 import Explorar from "./components/pages/Explorer";
 import Contact from "./components/pages/Contact";
 import Car from "./components/pages/Car";
-import Nav from "./components/General/NavBar";
+import NavBar from "./components/General/NavBar";  
 import Footer from "./components/General/Footer";
 import Help from "./components/pages/Help";
 import WhoAre from "./components/pages/WhoAre";
@@ -36,7 +36,7 @@ function App() {
   ];
   return (
     <div className="App">
-      <Nav />
+      <NavBar data={true}  />
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="EXPLOR" element={<Explorar />} />

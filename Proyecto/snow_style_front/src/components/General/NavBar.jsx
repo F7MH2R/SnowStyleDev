@@ -1,155 +1,124 @@
-import React, { useState, useEffect } from "react";
-import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
+import React, { useState } from "react";
 import logo from "./img/Logo SnowStyle.PNG";
-import "../pages/css/Modal.css"; // Importa el archivo de estilos CSS
 import { Link, useNavigate } from "react-router-dom";
-//Login
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
-const NavBar = () => {
-  const [mostrarBusqueda, setMostrarBusqueda] = useState(false); // Estado para controlar la visibilidad del área de búsqueda
+import { Navbar, Nav, Col, Form, FormControl, Button, Modal } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faMagnifyingGlass, faCartPlus, faBars } from "@fortawesome/free-solid-svg-icons";
+import usplaceholder from "../Multimedia/estaticos/userplaceholder.png";
+import "../pages/css/Modal.css";
 
-  // Función para manejar el clic en el icono de búsqueda
-  const handleToggleBusqueda = () => {
-    setMostrarBusqueda(!mostrarBusqueda); // Cambia el estado para mostrar u ocultar el área de búsqueda
-  };
-  // Función para abrir el modal
-  const openModal = () => {
-    setIsOpen(true);
-  };
-  const [isOpen, setIsOpen] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Aquí puedes manejar la lógica para enviar el formulario
+function NavBar(props) {
+  const [showSearch, setShowSearch] = useState(false); // Estado para controlar si se muestra el campo de búsqueda
+  const islogged = props.data.toString(); 
+  const navigate = useNavigate();
+  const idUsu = localStorage.getItem("UserId") ? JSON.parse(localStorage.getItem("UserId")) : 0;
+  const UsuarioEnSesionImg = `http://localhost:3001/imagenUsuario_${idUsu}.jpg`;
 
-    // Limpia los campos de entrada después del envío del formulario
-    setEmail("");
-    setPassword("");
+  const handleLogout = () => {
+    localStorage.removeItem(idUsu);
+    navigate("/login");
+  };
 
-    // Cierra el modal
-    closeModal();
-  };
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-  // Función para cerrar el modal
-  const closeModal = () => {
-    setIsOpen(false);
+  const handleSearchClick = () => {
+    setShowSearch(!showSearch); // Alternar la visibilidad del campo de búsqueda
   };
 
   return (
-    <div className="navbar">
-      <div className="navbar-left">
-        <a href="#hombre" className="navbar-link">
-          Hombre
-        </a>
-        <a href="#mujer" className="navbar-link">
-          Mujeres
-        </a>
-        <a href="#niño" className="navbar-link">
-          Niños
-        </a>
-        <a href="/WHOARE" className="navbar-link">
-          Conocenos
-        </a>
-      </div>
-      <div className="navbar-brand " href="/">
-        <a href="/">
-          {" "}
-          <img src={logo} alt="Logo de SnowStyle" href="/" className="logo" />
-        </a>
-      </div>
-      <div
-        className={`navbar-right ${mostrarBusqueda ? "mostrar-busqueda" : ""}`}
-      >
-        <div className="buscar-icono" onClick={handleToggleBusqueda}>
-          <FaSearch />
-        </div>
-        {mostrarBusqueda && (
-          <div className="area-busqueda-container">
-            <div className="area-busqueda">
-              <input type="text" placeholder="Escribe aquí para buscar..." />
-              <button>Buscar</button>
-            </div>
-          </div>
-        )}
-        <a href="/cart" className="navbar-link">
-          <FaShoppingCart />
-        </a>
-        <a href="#Login" className="navbar-link" onClick={openModal}>
-          <FaUser />
-        </a>
+    <>
+      <Navbar expand="lg" className="nava fixed-top bggreen mx-0 py-1" data-bs-theme="dark" data={islogged}>
+        <Navbar.Toggle aria-controls="basic-navbar-nav">
+          <span className="navbar-toggler-icon" style={{color: "black", fontSize: "2.4rem"}}> 
+            <FontAwesomeIcon icon={faBars} />
+          </span>
+        </Navbar.Toggle>
 
-        {/* Modal Component */}
-        <section className="page modal-1-page">
-          <div
-            className={`modal-1-overlay ${isOpen ? "open" : ""}`}
-            onClick={closeModal}
-          >
-            <div className="modal-1-modal" onClick={(e) => e.stopPropagation()}>
-              <header>
-                <h2>Sign Up</h2>
-                <h3>SnowStyle</h3>
-              </header>
-              <form onSubmit={handleSubmit}>
-                <div className="textbox">
-                  <span className="material-symbols-outlined">
-                    <EmailIcon />
-                  </span>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Col xs={12} lg={4} className="d-flex justify-content-center align-items-center">
+            <Nav className="w-100 whitetxt justify-content-center">
+              <Nav.Link as={Link} to="mujeres" className="text-center">
+                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                  Mujeres
+                </h2>
+              </Nav.Link>
+              <Nav.Link as={Link} to="hombres" className="text-center">
+                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                  Hombres
+                </h2>
+              </Nav.Link>
+              <Nav.Link as={Link} to="niños" className="text-center">
+                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                  Niños
+                </h2>
+              </Nav.Link>
+              <Nav.Link as={Link} to="WhoAre" className="text-center">
+                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                  Conócenos
+                </h2>
+              </Nav.Link>
+            </Nav>
+          </Col>
+
+          <Col xs={12} lg={4} className="d-flex justify-content-center align-items-center">
+            <Navbar.Brand as={Link} to={"/"}>
+              <img alt="" src={logo} className="d-inline-block align-top logo" />
+            </Navbar.Brand>
+          </Col>
+
+          <Col xs={12} lg={4} className="d-flex justify-content-center align-items-center">
+            <Nav className="w-100 justify-content-center align-items-center">
+              {islogged === "true" ? (
+                <>
+                  <Nav.Link as={Link} className="d-inline">
+                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt" onClick={handleSearchClick}>
+                      <FontAwesomeIcon icon={faMagnifyingGlass} />{" "}
+                      <b className="d-none d-xl-inline-block">Buscar</b>
+                    </h2>
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="Carrito" className="d-inline">
+                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                      <FontAwesomeIcon icon={faCartPlus} />
+                      <b className="d-none d-xl-inline-block"> </b>
+                    </h2>
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="properties" className="d-inline">
+                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                      <img src={UsuarioEnSesionImg ?? usplaceholder} alt="" height="50px" style={{ borderRadius: "50%" }} />
+                    </h2>
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="login" className="" onClick={handleLogout}>
+                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                      <FontAwesomeIcon icon={faUser} /> Cerrar Sesión
+                    </h2>
+                  </Nav.Link>
+                </>
+              ) : (
+                <div>
+                  <Nav.Link as={Link} to="login" className="">
+                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                      <FontAwesomeIcon icon={faUser} /> Iniciar Sesion
+                    </h2>
+                  </Nav.Link>
                 </div>
-                <div className="textbox">
-                  <span className="material-symbols-outlined">
-                    <LockIcon />
-                  </span>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <button
-                    className="password-toggle"
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                  >
-                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                  </button>
-                </div>
-                <button className="signup-button" type="submit">
-                  <span className="material-symbols-outlined">
-                    <KeyboardTabOutlinedIcon />
-                    Iniciar Sesión{" "}
-                  </span>
-                </button>
+              )}
+            </Nav>
+          </Col>
+        </Navbar.Collapse>
+      </Navbar>
 
-                <Link to={"/Lost"} className="lost" href="#">
-                  Olvidé mi contraseña
-                </Link>
-
-                <Link to="REGIST" className="lost">
-                  No tengo cuenta || Crear cuenta
-                </Link>
-              </form>
-              <p>No necesitas tarjeta de credito</p>
-            </div>
-          </div>
-        </section>
-        {/* End of Modal Component */}
-      </div>
-    </div>
+      {/* Modal para el campo de búsqueda */}
+      <Modal show={showSearch} onHide={handleSearchClick} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Buscar</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form className="mx-auto">
+            <FormControl type="text" placeholder="Buscar" className="mr-sm-2" />
+            <Button variant="success" onClick={handleSearchClick}>Buscar</Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </>
   );
-};
+}
 
 export default NavBar;
