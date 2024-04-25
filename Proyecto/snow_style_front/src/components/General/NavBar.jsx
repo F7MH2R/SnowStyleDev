@@ -46,10 +46,10 @@ const NavBar = () => {
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <a href="#hombre" className="navbar-link">
+        <a href="#Hombre" className="navbar-link">
           Hombre
         </a>
-        <a href="#mujer" className="navbar-link">
+        <a href="/MUJERDEPARTAMENTO" className="navbar-link">
           Mujeres
         </a>
         <a href="#niño" className="navbar-link">

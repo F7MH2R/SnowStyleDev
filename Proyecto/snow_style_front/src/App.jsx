@@ -14,6 +14,7 @@ import DetalleProducto from "./components/pages/DetalleProducto";
 import Carrito from "./components/Carrito/Carrito";
 import imagen from "./components/Item/blusa.png";
 import LostP from "./components/pages/LostP";
+import MujerDepartamento from "./components/pages/MujerDepartamento";
 //import Item from "./components/Item/Item";
 // <Route path="LOGIN" element={<Login />} />;
 
@@ -50,8 +51,8 @@ function App() {
         <Route path="DETALLEPRODUCTO" element={<DetalleProducto />} />
         <Route path="cart" element={<Carrito items={items} />} />
         <Route path="cart" element={<Carrito items={items} />} />
+        <Route path="MUJERDEPARTAMENTO" element={<MujerDepartamento items={items} />} />
 
-        <Route path="DETALLEPRODUCTO" element={<DetalleProducto />} />
       </Routes>
       <Footer />
     </div>
