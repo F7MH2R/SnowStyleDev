@@ -133,11 +133,11 @@ const NavBar = () => {
                     Iniciar Sesión{" "}
                   </span>
                 </button>
-                //llamar la ruta lost
+
                 <Link to={"/Lost"} className="lost" href="#">
                   Olvidé mi contraseña
                 </Link>
-                //llamar la ruta registrarse
+
                 <Link to="REGIST" className="lost">
                   No tengo cuenta || Crear cuenta
                 </Link>
