@@ -9,6 +9,8 @@ import LockIcon from "@mui/icons-material/Lock";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
+import Carrito from "../Carrito/Carrito";
+import Filtro from "../Filtro/Filtro";
 const NavBar = () => {
   const [mostrarBusqueda, setMostrarBusqueda] = useState(false); // Estado para controlar la visibilidad del área de búsqueda
 
@@ -79,9 +81,8 @@ const NavBar = () => {
             </div>
           </div>
         )}
-        <a href="/cart" className="navbar-link">
-          <FaShoppingCart />
-        </a>
+        <Carrito />
+        <Filtro />
         <a href="#Login" className="navbar-link" onClick={openModal}>
           <FaUser />
         </a>
