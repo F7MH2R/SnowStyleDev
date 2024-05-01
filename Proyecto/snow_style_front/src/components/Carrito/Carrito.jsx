@@ -1,6 +1,6 @@
 import react from "react";
 import Item from "../Item/Item";
-
+import { Link, useNavigate } from "react-router-dom";
 const Carrito = ({ items }) => {
   let total = 0.0;
   return (
@@ -13,6 +13,7 @@ const Carrito = ({ items }) => {
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
           Canasta de compra
         </h5>
+
         <button
           type="button"
           class="btn-close"
@@ -40,7 +41,7 @@ const Carrito = ({ items }) => {
           <dir className="col">Total: $ {total}</dir>
         </div>
         <div className="row">
-          <button href="#" className="btn btn-primary">
+          <button href="#" className="btn btn-outline-success">
             Pagar
           </button>
         </div>
