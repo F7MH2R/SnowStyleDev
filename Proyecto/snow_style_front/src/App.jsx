@@ -36,7 +36,7 @@ function App() {
   ];
   return (
     <div className="App">
-      <NavBar data={true}  />
+      <NavBar data={false}  />
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="EXPLOR" element={<Explorar />} />

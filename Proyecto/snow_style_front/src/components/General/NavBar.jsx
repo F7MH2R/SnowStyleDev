@@ -6,13 +6,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faMagnifyingGlass, faCartPlus, faBars } from "@fortawesome/free-solid-svg-icons";
 import usplaceholder from "../Multimedia/estaticos/userplaceholder.png";
 import "../pages/css/Modal.css";
+import Login from "../pages/Login";
+
 
 function NavBar(props) {
   const [showSearch, setShowSearch] = useState(false); // Estado para controlar si se muestra el campo de búsqueda
-  const islogged = props.data.toString(); 
+  const [showLoginModal, setShowLoginModal] = useState(false); // Estado para controlar si se muestra el modal de inicio de sesión
+  const islogged = props.data.toString();
   const navigate = useNavigate();
   const idUsu = localStorage.getItem("UserId") ? JSON.parse(localStorage.getItem("UserId")) : 0;
   const UsuarioEnSesionImg = `http://localhost:3001/imagenUsuario_${idUsu}.jpg`;
+
+  // Función para abrir el modal de inicio de sesión
+  const openLoginModal = () => {
+    setShowLoginModal(true);
+  };
+
+  // Función para cerrar el modal de inicio de sesión
+  const closeLoginModal = () => {
+    setShowLoginModal(false);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem(idUsu);
@@ -27,7 +40,7 @@ function NavBar(props) {
     <>
       <Navbar expand="lg" className="nava fixed-top bggreen mx-0 py-1" data-bs-theme="dark" data={islogged}>
         <Navbar.Toggle aria-controls="basic-navbar-nav">
-          <span className="navbar-toggler-icon" style={{color: "black", fontSize: "2.4rem"}}> 
+          <span className="navbar-toggler-icon" style={{ color: "black", fontSize: "2.4rem" }}>
             <FontAwesomeIcon icon={faBars} />
           </span>
         </Navbar.Toggle>
@@ -93,11 +106,13 @@ function NavBar(props) {
                 </>
               ) : (
                 <div>
-                  <Nav.Link as={Link} to="login" className="">
+                  <Nav.Link as={Link} to="#" className="" onClick={openLoginModal}>
                     <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
-                      <FontAwesomeIcon icon={faUser} /> Iniciar Sesion
+                      <FontAwesomeIcon icon={faUser} /> Iniciar Sesión
                     </h2>
                   </Nav.Link>
+                  {/* Renderiza el modal de inicio de sesión solo si showLoginModal es true */}
+                  {showLoginModal && <Login handleClose={closeLoginModal} />}
                 </div>
               )}
             </Nav>
