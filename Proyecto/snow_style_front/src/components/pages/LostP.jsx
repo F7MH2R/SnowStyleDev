@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
 import ResetPasswordModal from "./ResetPasswordModal";
 import axios from "axios";
-function LostP() {
+function LostP(show, onClose) {
   const [email, setEmail] = useState("");
   const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,7 +25,8 @@ function LostP() {
       const data = response.data; // Con `axios`, usa `data` para obtener la respuesta JSON
 
       if (data.exists) {
-        setUserId(data.userId); // Asigna el ID del usuario
+        setUserId(data.userId);
+        console.log(data.userId); // Asigna el ID del usuario
         setModalVisible(true); // Muestra el modal para restablecer la contraseña
       } else {
         setAlertType("danger");

@@ -69,10 +69,12 @@ app.post("/api/check-email", async (req, res) => {
     );
 
     if (result.rows.length > 0) {
-      res.status(200).json({ exists: true });
+      const userId = result.rows[0].id_usuario;
+      console.log("Usuario encontrado, ID:", userId); // Mostrar ID en consola
+      res.status(200).json({ exists: true, userId });
     } else {
       res.status(404).json({ exists: false });
-      console.error("No encontrado");
+      console.error("Usuario no encontrado");
     }
   } catch (error) {
     console.error("Error al verificar correo:", error);
@@ -82,12 +84,12 @@ app.post("/api/check-email", async (req, res) => {
 
 app.post("/api/reset-password", async (req, res) => {
   const { userId, newPassword } = req.body; // Usa userId en lugar de email
-
+  console.log("Id es " + userId);
   try {
     const hashedPassword = await bcrypt.hash(newPassword, 10); // Hashear la nueva contraseña
 
     const result = await pool.query(
-      "UPDATE usuario SET contraseña = $1 WHERE id_usuario = $2", // Cambia a ID
+      "UPDATE usuario SET password = $1 WHERE id_usuario = $2", // Cambia a ID
       [hashedPassword, userId]
     );
 
@@ -100,4 +102,29 @@ app.post("/api/reset-password", async (req, res) => {
     console.error("Error al restablecer la contraseña:", error);
     res.status(500).json({ error: "Error al restablecer la contraseña" });
   }
+});
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = users.find((u) => u.email === email);
+  if (!user) {
+    return res
+      .status(400)
+      .json({ message: "Usuario o contraseña incorrectos." });
+  }
+
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) {
+    return res
+      .status(400)
+      .json({ message: "Usuario o contraseña incorrectos." });
+  }
+
+  // Generar JWT
+  const accessToken = jwt.sign({ email: user.email }, "your_secret_key", {
+    expiresIn: "1h",
+  });
+
+  res.json({ accessToken });
 });

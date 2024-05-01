@@ -1,25 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Para redirigir al login
+
 function ResetPasswordModal({ show, onClose, userId }) {
-  // Añade userId como prop
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertType, setAlertType] = useState("success");
   const [alertMessage, setAlertMessage] = useState("");
+  const navigate = useNavigate(); // Navegador para redirigir
 
   const handleResetPassword = async (userId, newPassword) => {
     try {
       const response = await axios.post(
         "/api/reset-password",
         {
-          userId, // Usa el ID del usuario
-          newPassword, // Nueva contraseña
+          userId,
+          newPassword,
         },
         {
           headers: {
-            "Content-Type": "application/json", // Establecer tipo de contenido
+            "Content-Type": "application/json",
           },
         }
       );
@@ -27,7 +29,7 @@ function ResetPasswordModal({ show, onClose, userId }) {
       if (response.data.success) {
         setAlertType("success");
         setAlertMessage("Contraseña restablecida con éxito");
-        setAlertVisible(true); // Muestra mensaje de éxito
+        setAlertVisible(true); // Mostrar alerta
       } else {
         setAlertType("danger");
         setAlertMessage("Error al restablecer la contraseña");
@@ -40,6 +42,18 @@ function ResetPasswordModal({ show, onClose, userId }) {
       setAlertVisible(true);
     }
   };
+
+  useEffect(() => {
+    if (alertVisible && alertType === "success") {
+      const timeout = setTimeout(() => {
+        onClose(); // Cierra el modal
+        navigate("/login"); // Redirigir al login
+      }, 7000); // 15 segundos
+
+      return () => clearTimeout(timeout); // Limpieza para evitar fugas de memoria
+    }
+  }, [alertVisible, alertType, onClose, navigate]); // Efecto que redirige y cierra el modal
+
   return (
     <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
@@ -76,7 +90,7 @@ function ResetPasswordModal({ show, onClose, userId }) {
         </Button>
         <Button
           variant="primary"
-          onClick={() => handleResetPassword(newPassword)}
+          onClick={() => handleResetPassword(userId, newPassword)}
         >
           Restablecer
         </Button>
