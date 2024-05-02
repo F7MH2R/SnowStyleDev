@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Alert, Modal } from "react-bootstrap";
+import { Button, Form, Alert, Modal, Table } from "react-bootstrap";
 
 const Pago = ({ total, items, nombre, correo }) => {
   const [loading, setLoading] = useState(false);
@@ -51,33 +51,33 @@ const Pago = ({ total, items, nombre, correo }) => {
 
   return (
     <div className="container">
-      <h1>Pago en línea</h1>
+      <h1 className="text-center mb-4">Pago en línea</h1>
       {pagoExitoso && (
-        <>
+        <div className="text-center">
           <Alert variant="success">
             ¡Pago exitoso! Se ha procesado el pago correctamente.
           </Alert>
           <Button variant="outline-primary" onClick={handleVerFactura}>
             Ver factura
           </Button>
-        </>
+        </div>
       )}
 
       {!pagoExitoso && (
-        <Form onSubmit={handleSubmit} className="form-container">
-          <Form.Group className="mb-3" controlId="formNombreTarjeta">
+        <Form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: "400px" }}>
+          <Form.Group controlId="formNombreTarjeta">
             <Form.Label>Nombre en la tarjeta</Form.Label>
             <Form.Control type="text" name="nombreTarjeta" defaultValue={nombre} placeholder="Ingrese su nombre" required />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formCorreoElectronico">
+          <Form.Group controlId="formCorreoElectronico">
             <Form.Label>Correo electrónico</Form.Label>
             <Form.Control type="email" name="correoElectronico" defaultValue={correo} placeholder="Ingrese su correo electrónico" required />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formCodigoPostal">
+          <Form.Group controlId="formCodigoPostal">
             <Form.Label>Código postal</Form.Label>
             <Form.Control type="text" name="postalCode" placeholder="Ingrese su código postal" required />
           </Form.Group>
-          <Button variant="primary" type="submit" disabled={loading}>
+          <Button variant="primary" type="submit" disabled={loading} className="w-100 mt-3">
             {loading ? "Procesando..." : "Pagar ahora"}
           </Button>
         </Form>
@@ -85,20 +85,30 @@ const Pago = ({ total, items, nombre, correo }) => {
 
       <Modal show={mostrarFactura} onHide={handleCloseFactura}>
         <Modal.Header closeButton>
-          <Modal.Title>Factura</Modal.Title>
+          <Modal.Title className="text-center">Factura</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Cliente: {nombreTarjeta}</p>
-          <p>Correo: {correoElectronico}</p>
-          <p>Productos:</p>
-          <ul>
-            {items.map((item) => (
-              <li key={item.id}>
-                {item.nombre} - Cantidad: {item.cantidad} - Precio unitario: {item.precio}
-              </li>
-            ))}
-          </ul>
-          <p>Total: ${total}</p>
+          <p className="fw-bold">Cliente: {nombreTarjeta}</p>
+          <p className="fw-bold">Correo: {correoElectronico}</p>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.nombre}</td>
+                  <td>{item.cantidad}</td>
+                  <td>${item.precio}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <p className="fw-bold">Total: ${total}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseFactura}>Cerrar</Button>
