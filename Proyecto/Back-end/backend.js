@@ -3,6 +3,7 @@ const { Pool } = require("pg");
 const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const jwt = require("jsonwebtoken"); // Añade la importación de JWT
 const app = express();
 const port = process.env.PORT || 3077;
 
@@ -70,30 +71,43 @@ app.post("/api/reset-password", async (req, res) => {
   }
 });
 
+
+//Login---------------------------------------------------------
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
+  try {
+    const result = await pool.query(
+      "SELECT * FROM usuario WHERE correo_electronico = $1",
+      [email]
+    );
 
-  const user = users.find((u) => u.email === email);
-  if (!user) {
-    return res
-      .status(400)
-      .json({ message: "Usuario o contraseña incorrectos." });
+    if (result.rows.length === 1) {
+      const user = result.rows[0];
+      if (password === user.password) {
+        // Credenciales válidas, generar token JWT y responder
+        const IDUsuario = user.id_usuario;
+
+        // Generar el token JWT con la información del usuario
+        const token = jwt.sign({ userId: IDUsuario }, "secret_key", { expiresIn: "1h" });
+
+        // Enviar el token como parte de la respuesta
+        res.status(200).json({ token });
+      } else {
+        // Contraseña incorrecta
+        res.status(401).json({ message: "Credenciales incorrectas" });
+      }
+    } else {
+      // Usuario no encontrado
+      res.status(401).json({ message: "Credenciales incorrectas" });
+    }
+  } catch (err) {
+    // Manejar errores de la base de datos
+    console.error("Error en la consulta:", err);
+    res.status(500).json({ message: "Error en la autenticación" });
   }
-
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) {
-    return res
-      .status(400)
-      .json({ message: "Usuario o contraseña incorrectos." });
-  }
-
-  // Generar JWT
-  const accessToken = jwt.sign({ email: user.email }, "your_secret_key", {
-    expiresIn: "1h",
-  });
-
-  res.json({ accessToken });
 });
+
+
 
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en el puerto ${port}`);

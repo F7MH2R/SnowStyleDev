@@ -247,7 +247,7 @@ body {
   left: 0;
   right: 0;
   border: 0;
-  background: #ececec;
+  background: #c0c0c0;
   height: 56px;
   border-radius: 6px;
   font-family: inherit;
@@ -256,7 +256,7 @@ body {
 }
 
 .modal-1-modal input::placeholder {
-  color: #96939c;
+  color: #9a989c;
 }
 
 .modal-1-modal > p {

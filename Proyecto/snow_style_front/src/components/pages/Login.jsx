@@ -1,48 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./css/Modal.css";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"; // Removemos useHistory
+import axios from "axios";
+
 const Login = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Aquí puedes manejar la lógica para enviar el formulario
 
-    // Limpia los campos de entrada después del envío del formulario
-    setEmail("");
-    setPassword("");
+    try {
+      const response = await axios.post("http://localhost:3077/login", { email, password });
 
-    // Cierra el modal
-    closeModal();
+      const { token } = response.data;
+
+      if (token) {
+        // Si se recibe un token de acceso
+        // Guardar el token en el almacenamiento local
+        localStorage.setItem("token", token);
+        // Redireccionar a la página de inicio
+        window.location.href = "/"; // Redirige a la página principal
+      } else {
+        setError("Credenciales incorrectas");
+      }
+    } catch (error) {
+      setError("Error de inicio de sesión");
+      console.error("Error de inicio de sesión:", error);
+    }
   };
 
-  useEffect(() => {
-    openModal(); // Abre el modal cuando se renderiza el componente
-  }, []);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   return (
     <section className="page modal-1-page">
-      <div
-        className={`modal-1-overlay ${isOpen ? "open" : ""}`}
-        onClick={closeModal}
-      >
+      <div className="modal-1-overlay open">
         <div className="modal-1-modal" onClick={(e) => e.stopPropagation()}>
           <header>
-            <h2>Sign Up</h2>
+            <h2>Iniciar Sesión</h2>
             <h3>SnowStyle</h3>
           </header>
           <form onSubmit={handleSubmit}>
@@ -81,15 +85,11 @@ const Login = () => {
                 Iniciar Sesión{" "}
               </span>
             </button>
-            <Link to={"/src/components/pages/LostP"} className="lost" href="#">
-              Olvidé mi contraseña
-            </Link>
-
-            <Link to="/src/components/pages/Register" className="lost">
-              No tengo cuenta || Crear cuenta
-            </Link>
+            <Link to={"/lost-password"} className="lost">Olvidé mi contraseña</Link>
+            <Link to="/register" className="lost">No tengo cuenta || Crear cuenta</Link>
           </form>
-          <p>No necesitas tarjeta de credito</p>
+          <p>No necesitas tarjeta de crédito</p>
+          {error && <p>{error}</p>}
         </div>
       </div>
     </section>

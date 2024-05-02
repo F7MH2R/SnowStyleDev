@@ -1,7 +1,5 @@
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/home/Home";
-import Login from "./components/pages/Login";
 import Registrarse from "./components/pages/Register";
 import Explorar from "./components/pages/Explorer";
 import Contact from "./components/pages/Contact";
@@ -13,13 +11,9 @@ import WhoAre from "./components/pages/WhoAre";
 import Carrito from "./components/Carrito/Carrito";
 import imagen from "./components/Item/blusa.png";
 import LostP from "./components/pages/LostP";
-//import Item from "./components/Item/Item";
-// <Route path="LOGIN" element={<Login />} />;
-
 import DetalleProducto from "./components/pages/DetalleProducto";
 
 function App() {
-  const usuarioSesion = Number(localStorage.getItem("UserId"));
   const items = [
     {
       imagen: imagen,
@@ -34,6 +28,7 @@ function App() {
       id: 2,
     },
   ];
+
   return (
     <div className="App">
       <NavBar data={false}  />
@@ -47,9 +42,7 @@ function App() {
         <Route path="Lost" element={<LostP />} />
         <Route path="REGIST" element={<Registrarse />} />
         <Route path="WHOARE" element={<WhoAre />} />
-
         <Route path="cart" element={<Carrito items={items} />} />
-
         <Route path="DETALLEPRODUCTO" element={<DetalleProducto />} />
       </Routes>
       <Footer />
