@@ -74,7 +74,7 @@ const NavBar = () => {
         <a href="/MUJERDEPARTAMENTO" className="navbar-link">
           Mujeres
         </a>
-        <a href="#niño" className="navbar-link">
+        <a href="/CARRITODETALLE" className="navbar-link">
           Niños
         </a>
         <a href="/WHOARE" className="navbar-link">
