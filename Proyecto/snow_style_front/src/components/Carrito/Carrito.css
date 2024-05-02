@@ -1,3 +1,87 @@
-.btn {
-  --bs-btn-font-size: 2rem;
+.carrito-offcanvas-body {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.carrito-offcanvas-header {
+  background-color: #D8CCC0;
+  border-bottom: 1px solid #333;
+}
+
+.carrito-offcanvas-title {
+  color: #333;
+  font-weight: bold;
+  
+}
+
+.mr-2{
+  width: 21px;
+  height: auto;
+  margin-right: 15px;
+}
+
+/* Estilos para la lista de items */
+.carrito-item-container {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding: 10px;
+  background-color: #f5f5f5; /* Gris claro */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.carrito-item-container:hover {
+  margin-top: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.carrito-pay-button {
+  margin-top: 20px;
+  padding: 10px 150px;
+  font-size: 16px;
+  border: 2px solid #000; /* Amarillo */
+  border-radius: 30px; /* Calculado como la mitad de la altura del botón */
+  color: #fff;
+  background-color: #000;
+  transition: all 0.3s ease;
+}
+
+
+.carrito-pay-button:hover {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+/* Estilos para el total */
+.carrito-total {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .carrito-offcanvas-body {
+    padding: 10px;
+  }
+
+  .carrito-item-img {
+    max-width: 80px;
+  }
+
+  .carrito-item-description {
+    font-size: 14px;
+  }
+
+  .carrito-item-price {
+    font-size: 14px;
+  }
+
+  .carrito-pay-button {
+    font-size: 24px;
+  }
+
+  .carrito-total {
+    font-size: 16px;
+  }
 }

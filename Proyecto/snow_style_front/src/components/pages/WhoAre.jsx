@@ -3,6 +3,7 @@ import videoBackground from "../Multimedia/videoWhoAreUs.mp4";
 import videoConocenos from "../Multimedia/videoWhoAreUs2.mp4";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 
+
 const WhoAre = () => {
   return (
     <>

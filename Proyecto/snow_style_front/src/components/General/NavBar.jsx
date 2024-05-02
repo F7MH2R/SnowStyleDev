@@ -9,6 +9,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
+import googleFontsURL from "../Fuentes/FuenteLetras";
 import Carrito from "../Carrito/Carrito";
 import Filtro from "../Filtro/Filtro";
 const NavBar = () => {
@@ -21,7 +22,7 @@ const NavBar = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    <link rel="stylesheet" href={googleFontsURL} />
     try {
       const response = await fetch("/api/login", {
         method: "POST",
@@ -69,15 +70,18 @@ const NavBar = () => {
 
   return (
     <div className="navbar">
-      <div className="navbar-left">
-        <a href="#hombre" className="navbar-link">
-          Hombre
-        </a>
+      <div className="navbar-left" style={{ fontFamily: "Prompt, sans-serif" }} >
         <a href="#mujer" className="navbar-link">
-          Mujeres
+          Damas
+        </a>
+        <a href="#hombre" className="navbar-link">
+          Caballeros
         </a>
         <a href="#niño" className="navbar-link">
           Niños
+        </a>
+        <a href="/WHOARE" className="navbar-link">
+          Conócenos
         </a>
       </div>
       <div className="navbar-brand " href="/">
@@ -90,7 +94,7 @@ const NavBar = () => {
         className={`navbar-right ${mostrarBusqueda ? "mostrar-busqueda" : ""}`}
       >
         <div className="buscar-icono">
-          <FaSearch />
+          <FaSearch className="navbar-link-iconos"/>
         </div>
         {mostrarBusqueda && (
           <div className="area-busqueda-container">
@@ -102,7 +106,7 @@ const NavBar = () => {
         )}
         <Carrito />
         <Filtro />
-        <a href="#Login" className="navbar-link" onClick={openModal}>
+        <a href="#Login" className="navbar-link-iconos" onClick={openModal}>
           <FaUser />
         </a>
 

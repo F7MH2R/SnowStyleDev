@@ -311,8 +311,16 @@ body {
 .navbar-link {
   text-decoration: none;
   color: #333333;
-  font-size: 20px;
+  font-size: 18px;
   margin-right: 20px;
+  transition: color 0.3s ease;
+}
+
+.navbar-link-iconos {
+  text-decoration: none;
+  color: #333333;
+  font-size: 22px;
+  margin-right: 1px;
   transition: color 0.3s ease;
 }
 
