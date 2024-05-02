@@ -5,42 +5,44 @@ import LockIcon from "@mui/icons-material/Lock";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
-import { Link } from "react-router-dom"; // Removemos useHistory
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Login = () => {
+const Login = ({ handleClose, onLoginSuccess }) => { // Agrega la prop onLoginSuccess
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const user = {
+      email,
+      password,
+    };
 
     try {
-      const response = await axios.post("http://localhost:3077/login", { email, password });
+      const response = await axios.post("http://localhost:3077/login", user);
+      console.log("Respuesta del servidor:", response.data); // Agregado para depuración
 
-      const { token } = response.data;
-
-      if (token) {
-        // Si se recibe un token de acceso
-        // Guardar el token en el almacenamiento local
-        localStorage.setItem("token", token);
-        // Redireccionar a la página de inicio
-        window.location.href = "/"; // Redirige a la página principal
+      if (response.data.IDUsuario) {
+        // Redirige al usuario a la página
+        navigate("/");
+        handleClose(); // Cierra el modal
+        onLoginSuccess(); // Llama a la función de devolución de llamada para el inicio de sesión exitoso
       } else {
         setError("Credenciales incorrectas");
       }
     } catch (error) {
-      setError("Error de inicio de sesión");
-      console.error("Error de inicio de sesión:", error);
+      console.error("Error de inicio de sesión:", error.response.data.message);
+      setError("Error de inicio de sesión: " + error.response.data.message);
     }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   return (
     <section className="page modal-1-page">
       <div className="modal-1-overlay open">

@@ -75,23 +75,23 @@ app.post("/api/reset-password", async (req, res) => {
 //Login---------------------------------------------------------
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
+
+  console.log("Datos recibidos del frontend:", email, password);
+  
   try {
     const result = await pool.query(
       "SELECT * FROM usuario WHERE correo_electronico = $1",
       [email]
     );
 
+    console.log("Resultado de la consulta:", result.rows);
+    
     if (result.rows.length === 1) {
       const user = result.rows[0];
       if (password === user.password) {
-        // Credenciales válidas, generar token JWT y responder
-        const IDUsuario = user.id_usuario;
-
-        // Generar el token JWT con la información del usuario
-        const token = jwt.sign({ userId: IDUsuario }, "secret_key", { expiresIn: "1h" });
-
-        // Enviar el token como parte de la respuesta
-        res.status(200).json({ token });
+        const IDUsuario = user.id_usuario; // Corregir el acceso al ID de usuario
+        console.log("ID del usuario después de la verificación:", IDUsuario);
+        res.status(200).json({ IDUsuario });
       } else {
         // Contraseña incorrecta
         res.status(401).json({ message: "Credenciales incorrectas" });
@@ -106,6 +106,10 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Error en la autenticación" });
   }
 });
+
+
+
+
 
 
 
