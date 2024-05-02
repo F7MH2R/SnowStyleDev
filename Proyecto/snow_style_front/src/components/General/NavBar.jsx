@@ -77,7 +77,7 @@ const NavBar = () => {
         <a href="#hombre" className="navbar-link">
           Caballeros
         </a>
-        <a href="#niño" className="navbar-link">
+        <a href="/CARRITODETALLE" className="navbar-link">
           Niños
         </a>
         <a href="/WHOARE" className="navbar-link">

@@ -10,26 +10,44 @@ import imagen from "../Multimedia/blusaCarrito.jpg";
 
 
 const Carrito = ({ items }) => {
-  items = [
-    {
-      imagen: imagen,
-      descripcion: "Jersey cropped",
-      precio: 10.25,
-      id: 1,
-    },
-    {
-      imagen: imagen,
-      descripcion: "Jersey cropped",
-      precio: 10.25,
-      id: 2,
-    },
-  ];
-  const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
-  let total = 0.0;
+  const generarFactura = () => {
+    const factura = items.map((item) => ({
+      nombre: item.descripcion,
+      cantidad: 1,
+      subtotal: item.precio,
+      imagen: item.imagen // Añade la imagen al objeto de la factura
+    }));
+
+    return factura;
+  };
+
+  const descargarFactura = () => {
+    const factura = generarFactura();
+    const facturaTexto = factura.map((item, index) => (
+      `Producto ${index + 1} - ${item.nombre} - Cantidad: ${item.cantidad} - Subtotal: ${item.subtotal}\n`
+    ));
+    facturaTexto.push(`Total: ${items.reduce((total, item) => total + item.precio, 0)}`);
+
+    const facturaBlob = new Blob([facturaTexto.join("\n")], { type: "text/plain" });
+    const url = window.URL.createObjectURL(facturaBlob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "factura.txt");
+    document.body.appendChild(link);
+    link.click();
+
+    link.parentNode.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
+  let total = items.reduce((total, item) => total + item.precio, 0);
+
   return (
     <>
      <div>
