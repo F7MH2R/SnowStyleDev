@@ -10,7 +10,7 @@ const Filtro = ({ tallas }) => {
   const handleShow = () => setShow(true);
   return (
     <>
-      <Button variant="black" onClick={handleShow}>
+      <Button className="navbar-link-iconos" variant="black" onClick={handleShow}>
         <FaFilter />
       </Button>
       <Offcanvas show={show} onHide={handleClose} placement="end">

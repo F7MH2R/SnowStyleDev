@@ -31,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <section className="page modal-1-page">
+    <section className="page modal-1-page" style={{ fontFamily: 'Prompt, sans-serif' }}>
       <div
         className={`modal-1-overlay ${isOpen ? "open" : ""}`}
         onClick={closeModal}
