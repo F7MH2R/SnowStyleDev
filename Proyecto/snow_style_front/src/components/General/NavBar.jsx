@@ -72,12 +72,12 @@ const NavBar = () => {
     <div className="navbar">
       <div className="navbar-left" style={{ fontFamily: "Prompt, sans-serif" }} >
         <a href="#mujer" className="navbar-link">
-          Damas
+          Dama
         </a>
         <a href="#hombre" className="navbar-link">
-          Caballeros
+          Caballero
         </a>
-        <a href="/CARRITODETALLE" className="navbar-link">
+        <a href="#niño" className="navbar-link">
           Niños
         </a>
         <a href="/WHOARE" className="navbar-link">

@@ -43,7 +43,6 @@
   border-radius: 30px; /* Calculado como la mitad de la altura del botón */
   color: #fff;
   background-color: #000;
-  transition: all 0.3s ease;
 }
 
 

@@ -635,3 +635,95 @@ body {
     font-size: 14px;
   }
 }
+
+/*DISEÑO PARA PAGO*/
+/* Pago.css */
+
+/* Estilos para el contenedor principal */
+.container-primero{
+  background-color:#C2CBC9;
+  margin-bottom: 5vh;
+  margin-top: 5vh;
+}
+
+.payment-container {
+  background-color:#C2CBC9; /* Color de fondo */
+  padding: 20px;
+  border-radius: 10px;
+  height: 76vh;
+}
+
+.custom-alert {
+  background-color: #a3fba6; /* Color de fondo del Alert */
+  border-color: #75716E; /* Color del borde del Alert */
+}
+
+/* Estilos para el formulario de pago */
+.payment-form {
+  max-width: 400px;
+  margin: auto;
+  background-color:#C2CBC9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.payment-form label {
+  font-weight: bold;
+}
+
+.payment-form input[type="text"],
+.payment-form input[type="email"] {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.payment-form button {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* Estilos para la tabla de la factura */
+.payment-modal-body table {
+  width: 100%;
+}
+
+.payment-modal-body th,
+.payment-modal-body td {
+  text-align: center;
+}
+
+.payment-modal-body th:first-child,
+.payment-modal-body td:first-child {
+  text-align: left;
+}
+
+ /* pagoexitoso*/
+.custom-payment-form {
+  max-width: 400px; /* Tamaño máximo del formulario */
+  margin-top: 5vh;
+}
+
+.custom-form-group {
+  margin-bottom: 30px; /* Espacio entre grupos de campos */
+}
+
+.label {
+  margin-bottom: 10px; /* Espacio entre la etiqueta y el campo */
+}
+
+.custom-payment-form .custom-button {
+  margin-top: 20px;
+  color: #fff;
+  background-color: #75716E; 
+  border-color: #BFCBD4;
+  border-radius: 20px;
+}
+
+.custom-payment-form .custom-button:hover {
+  background-color: #26533b; 
+}
+
+
+
+
