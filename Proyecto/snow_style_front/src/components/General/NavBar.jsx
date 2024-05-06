@@ -9,54 +9,79 @@ import LockIcon from "@mui/icons-material/Lock";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
+import googleFontsURL from "../Fuentes/FuenteLetras";
+import Carrito from "../Carrito/Carrito";
+import Filtro from "../Filtro/Filtro";
 const NavBar = () => {
   const [mostrarBusqueda, setMostrarBusqueda] = useState(false); // Estado para controlar la visibilidad del área de búsqueda
-
-  // Función para manejar el clic en el icono de búsqueda
-  const handleToggleBusqueda = () => {
-    setMostrarBusqueda(!mostrarBusqueda); // Cambia el estado para mostrar u ocultar el área de búsqueda
-  };
-  // Función para abrir el modal
-  const openModal = () => {
-    setIsOpen(true);
-  };
   const [isOpen, setIsOpen] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (event) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); // Para redirigir después del inicio de sesión
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Aquí puedes manejar la lógica para enviar el formulario
+    <link rel="stylesheet" href={googleFontsURL} />
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-    // Limpia los campos de entrada después del envío del formulario
-    setEmail("");
-    setPassword("");
+      if (response.ok) {
+        const data = await response.json();
+        // Haz algo con la respuesta, por ejemplo, almacenar el token en el almacenamiento local
+        localStorage.setItem("token", data.token);
 
-    // Cierra el modal
-    closeModal();
+        // Redirigir al usuario a otra página después de iniciar sesión
+        navigate("/dashboard");
+      } else {
+        const errorData = await response.json();
+        console.error("Error al iniciar sesión:", errorData.message);
+        // Puedes mostrar un mensaje de error al usuario aquí
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+      // Manejar errores de red
+    }
+
+    // Cerrar el modal
+    setIsOpen(false);
   };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  // Función para cerrar el modal
+
   const closeModal = () => {
     setIsOpen(false);
   };
 
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
   return (
     <div className="navbar">
-      <div className="navbar-left">
-        <a href="#hombre" className="navbar-link">
-          Hombre
-        </a>
+      <div className="navbar-left" style={{ fontFamily: "Prompt, sans-serif" }} >
         <a href="#mujer" className="navbar-link">
-          Mujeres
+          Dama
+        </a>
+        <a href="#hombre" className="navbar-link">
+          Caballero
         </a>
         <a href="#niño" className="navbar-link">
           Niños
         </a>
         <a href="/WHOARE" className="navbar-link">
-          Conocenos
+          Conócenos
         </a>
       </div>
       <div className="navbar-brand " href="/">
@@ -68,8 +93,8 @@ const NavBar = () => {
       <div
         className={`navbar-right ${mostrarBusqueda ? "mostrar-busqueda" : ""}`}
       >
-        <div className="buscar-icono" onClick={handleToggleBusqueda}>
-          <FaSearch />
+        <div className="buscar-icono">
+          <FaSearch className="navbar-link-iconos"/>
         </div>
         {mostrarBusqueda && (
           <div className="area-busqueda-container">
@@ -79,14 +104,14 @@ const NavBar = () => {
             </div>
           </div>
         )}
-        <a href="/cart" className="navbar-link">
-          <FaShoppingCart />
-        </a>
-        <a href="#Login" className="navbar-link" onClick={openModal}>
+        <Carrito />
+        <Filtro />
+        <a href="#Login" className="navbar-link-iconos" onClick={openModal}>
           <FaUser />
         </a>
 
         {/* Modal Component */}
+        {/* Modal de inicio de sesión */}
         <section className="page modal-1-page">
           <div
             className={`modal-1-overlay ${isOpen ? "open" : ""}`}
@@ -94,55 +119,34 @@ const NavBar = () => {
           >
             <div className="modal-1-modal" onClick={(e) => e.stopPropagation()}>
               <header>
-                <h2>Sign Up</h2>
-                <h3>SnowStyle</h3>
+                <h2>Iniciar Sesión</h2>
               </header>
+
               <form onSubmit={handleSubmit}>
                 <div className="textbox">
-                  <span className="material-symbols-outlined">
-                    <EmailIcon />
-                  </span>
+                  <EmailIcon />
                   <input
                     type="email"
-                    placeholder="Email"
+                    placeholder="Correo electrónico"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="textbox">
-                  <span className="material-symbols-outlined">
-                    <LockIcon />
-                  </span>
+                  <LockIcon />
                   <input
                     type={showPassword ? "text" : "password"}
-                    placeholder="Password"
+                    placeholder="Contraseña"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <button
-                    className="password-toggle"
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                  >
+                  <button type="button" onClick={togglePasswordVisibility}>
                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                   </button>
                 </div>
-                <button className="signup-button" type="submit">
-                  <span className="material-symbols-outlined">
-                    <KeyboardTabOutlinedIcon />
-                    Iniciar Sesión{" "}
-                  </span>
-                </button>
 
-                <Link to={"/Lost"} className="lost" href="#">
-                  Olvidé mi contraseña
-                </Link>
-
-                <Link to="REGIST" className="lost">
-                  No tengo cuenta || Crear cuenta
-                </Link>
+                <button type="submit">Iniciar Sesión</button>
               </form>
-              <p>No necesitas tarjeta de credito</p>
             </div>
           </div>
         </section>

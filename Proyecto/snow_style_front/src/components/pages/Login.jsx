@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+
 import "./css/Modal.css";
+
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
-import { Link, useNavigate } from "react-router-dom";
+
 const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -16,17 +18,11 @@ const Login = () => {
   const closeModal = () => setIsOpen(false);
 
   const handleSubmit = (event) => {
-    event.preventDefault();
     // Aquí puedes manejar la lógica para enviar el formulario
-
-    // Limpia los campos de entrada después del envío del formulario
-    setEmail("");
-    setPassword("");
-
-    // Cierra el modal
+    event.preventDefault();
+    // Por ahora, solo cerramos el modal al enviar el formulario
     closeModal();
   };
-
   useEffect(() => {
     openModal(); // Abre el modal cuando se renderiza el componente
   }, []);
@@ -35,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <section className="page modal-1-page">
+    <section className="page modal-1-page" style={{ fontFamily: 'Prompt, sans-serif' }}>
       <div
         className={`modal-1-overlay ${isOpen ? "open" : ""}`}
         onClick={closeModal}
@@ -81,13 +77,6 @@ const Login = () => {
                 Iniciar Sesión{" "}
               </span>
             </button>
-            <Link to={"/src/components/pages/LostP"} className="lost" href="#">
-              Olvidé mi contraseña
-            </Link>
-
-            <Link to="/src/components/pages/Register" className="lost">
-              No tengo cuenta || Crear cuenta
-            </Link>
           </form>
           <p>No necesitas tarjeta de credito</p>
         </div>
@@ -95,5 +84,4 @@ const Login = () => {
     </section>
   );
 };
-
 export default Login;

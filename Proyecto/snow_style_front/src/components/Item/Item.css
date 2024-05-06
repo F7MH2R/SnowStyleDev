@@ -1,3 +1,46 @@
-.imagen-small {
-  height: 80px;
+/* Estilos para el componente Item */
+.item-container {
+  font-family: "Prompt", sans-serif;
+}
+
+.imagen-small img {
+  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+}
+
+.modal-imagen {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilos para los botones */
+.btn-ver-detalles {
+  margin-top: 20px;
+  color: #fff;
+  background-color: #75716E; 
+  border-color: #BFCBD4;
+}
+
+.btn-ver-detalles:hover {
+  color: #000;
+  background-color: #fff; /* más claro al pasar el ratón */
+  border-color: #BFCBD4; /* más claro al pasar el ratón */
+}
+
+.btn-reducir,
+.btn-aumentar {
+  color: #000;
+  background-color: #C5BEB8;
+  border-color: #C5BEB8; 
+}
+
+.btn-reducir:hover,
+.btn-aumentar:hover {
+  background-color: #75716E; /*  más oscuro al pasar el ratón */
+  border-color: #75716E; /*  más oscuro al pasar el ratón */
+}
+
+.precio-descripcion{
+  margin-top: 20px;
 }
