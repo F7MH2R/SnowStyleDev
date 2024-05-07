@@ -53,7 +53,7 @@ app.post("/api/reset-password", async (req, res) => {
   const { userId, newPassword } = req.body; // Usa userId en lugar de email
   console.log("Id es " + userId);
   try {
-    const hashedPassword = await bcrypt.hash(newPassword, 10); // Hashear la nueva contraseña
+    const hashedPassword = newPassword; // Hashear la nueva contraseña
 
     const result = await pool.query(
       "UPDATE usuario SET password = $1 WHERE id_usuario = $2", // Cambia a ID
