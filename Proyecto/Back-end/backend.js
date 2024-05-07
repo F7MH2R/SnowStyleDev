@@ -13,10 +13,10 @@ app.use(bodyParser.json()); // Middleware para analizar cuerpos JSON
 
 // Configuración de la base de datos PostgreSQL
 const pool = new Pool({
-  user: "SNOWSTYLE", // Cambia por tu usuario
+  user: "slayer", // Cambia por tu usuario
   host: "localhost",
-  database: "SNOWSTYLE", // Nombre de tu base de datos
-  password: "1704", // Cambia por tu contraseña
+  database: "snowstyle", // Nombre de tu base de datos
+  password: "deku", // Cambia por tu contraseña
   port: 5432, // Puerto estándar para PostgreSQL
 });
 
@@ -71,13 +71,12 @@ app.post("/api/reset-password", async (req, res) => {
   }
 });
 
-
 //Login---------------------------------------------------------
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   console.log("Datos recibidos del frontend:", email, password);
-  
+
   try {
     const result = await pool.query(
       "SELECT * FROM usuario WHERE correo_electronico = $1",
@@ -85,7 +84,7 @@ app.post("/login", async (req, res) => {
     );
 
     console.log("Resultado de la consulta:", result.rows);
-    
+
     if (result.rows.length === 1) {
       const user = result.rows[0];
       if (password === user.password) {
@@ -106,12 +105,6 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Error en la autenticación" });
   }
 });
-
-
-
-
-
-
 
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en el puerto ${port}`);
