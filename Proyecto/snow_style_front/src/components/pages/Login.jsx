@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./css/Modal.css";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
@@ -14,6 +14,20 @@ const Login = ({ handleClose, onLoginSuccess }) => { // Agrega la prop onLoginSu
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const modalRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        handleClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClose]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,7 +60,7 @@ const Login = ({ handleClose, onLoginSuccess }) => { // Agrega la prop onLoginSu
   return (
     <section className="page modal-1-page">
       <div className="modal-1-overlay open">
-        <div className="modal-1-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-1-modal" ref={modalRef}>
           <header>
             <h2>Iniciar Sesión</h2>
             <h3>SnowStyle</h3>

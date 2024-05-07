@@ -53,7 +53,6 @@ function NavBar(props) {
       <Navbar expand="lg" className="nava fixed-top bggreen mx-0 py-1">
         <Navbar.Toggle aria-controls="basic-navbar-nav">
           <span className="navbar-toggler-icon" style={{ color: "black", fontSize: "2.4rem" }}>
-            <FontAwesomeIcon icon={faBars} />
           </span>
         </Navbar.Toggle>
 
