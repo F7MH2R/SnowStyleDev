@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./components/home/Home";
 import Registrarse from "./components/pages/Register";
 import Explorar from "./components/pages/Explorer";
+import Contact from "./components/pages/Contact";
 import Car from "./components/pages/Car";
 import NavBar from "./components/General/NavBar";  
 import Footer from "./components/General/Footer";
@@ -36,7 +37,7 @@ function App() {
         <Route path="EXPLOR" element={<Explorar />} />
         <Route path="WHO" element={<WhoAre />} />
         <Route path="CAR" element={<Car />} />
-
+        <Route path="CONTACT" element={<Contact />} />
         <Route path="HELP" element={<Help />} />
         <Route path="Lost" element={<LostP />} />
         <Route path="REGIST" element={<Registrarse />} />
