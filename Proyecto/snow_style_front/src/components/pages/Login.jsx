@@ -8,7 +8,8 @@ import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Login = ({ handleClose, onLoginSuccess }) => { // Agrega la prop onLoginSuccess
+const Login = ({ handleClose, onLoginSuccess }) => {
+  // Agrega la prop onLoginSuccess
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -87,8 +88,13 @@ const Login = ({ handleClose, onLoginSuccess }) => { // Agrega la prop onLoginSu
                 Iniciar Sesión{" "}
               </span>
             </button>
-            <Link to={"/lost-password"} className="lost">Olvidé mi contraseña</Link>
-            <Link to="/register" className="lost">No tengo cuenta || Crear cuenta</Link>
+            <Link to={"/Lost"} className="lost" href="#">
+              Olvidé mi contraseña
+            </Link>
+
+            <Link to="/register" className="lost">
+              No tengo cuenta || Crear cuenta
+            </Link>
           </form>
           <p>No necesitas tarjeta de crédito</p>
           {error && <p>{error}</p>}
