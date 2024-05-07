@@ -3,6 +3,7 @@ const { Pool } = require("pg");
 const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+
 const jwt = require("jsonwebtoken"); // Añade la importación de JWT
 const app = express();
 const port = process.env.PORT || 3077;
@@ -13,11 +14,52 @@ app.use(bodyParser.json()); // Middleware para analizar cuerpos JSON
 
 // Configuración de la base de datos PostgreSQL
 const pool = new Pool({
-  user: "SNOWSTYLE", // Cambia por tu usuario
+  user: "slayer", // Cambia por tu usuario
   host: "localhost",
   database: "SNOWSTYLE", // Nombre de tu base de datos
-  password: "1704", // Cambia por tu contraseña
+  password: "deku", // Cambia por tu contraseña
   port: 5432, // Puerto estándar para PostgreSQL
+});
+
+
+// Configuración de CORS
+const corsConfig = {
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+
+app.use(cors(corsConfig));
+app.use(bodyParser.json()); // Middleware para analizar cuerpos JSON
+
+//Escriban sus usuarios
+//deku = slayerdek
+//
+//
+//
+//
+
+
+/*
+pool
+  .connect()
+  .then(async (client) => {
+    console.log("Conexión exitosa a PostgreSQL");
+
+    // Consulta para obtener todos los usuarios
+    const result = await client.query("SELECT * FROM usuario");
+
+    console.log("Usuarios en la base de datos:");
+    console.log(result.rows);
+
+    client.release(); // Libera el cliente
+  })
+  .catch((err) => {
+    console.error("Error de conexión:", err);
+  });
+*/
+app.listen(port, () => {
+  console.log(`Servidor ejecutándose en el puerto ${port}`);
 });
 
 // Conexión a la base de datos
@@ -53,7 +95,7 @@ app.post("/api/reset-password", async (req, res) => {
   const { userId, newPassword } = req.body; // Usa userId en lugar de email
   console.log("Id es " + userId);
   try {
-    const hashedPassword = await bcrypt.hash(newPassword, 10); // Hashear la nueva contraseña
+    const hashedPassword = newPassword ; // Hashear la nueva contraseña
 
     const result = await pool.query(
       "UPDATE usuario SET password = $1 WHERE id_usuario = $2", // Cambia a ID
@@ -115,4 +157,5 @@ app.post("/login", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en el puerto ${port}`);
+
 });

@@ -1,0 +1,105 @@
+--Inserts
+-- Inserciones para la tabla proveedor
+INSERT INTO proveedor (id_proveedor, name_proveedor) VALUES
+    (1, 'Textiles Montecarlo'),
+    (2, 'Ropa Buena S.A.'),
+    (3, 'Fashion Trends Co.'),
+    (4, 'Textilera Global'),
+    (5, 'Moda Moderna S.L.'),
+    (6, 'Industrias del Vestido'),
+    (7, 'Estilo & Co.'),
+    (8, 'Prendas de Calidad Inc.'),
+    (9, 'Fabricantes del Vestido'),
+    (10, 'Producciones Textiles');
+
+-- Inserciones para la tabla departamento
+INSERT INTO departamento (id_departamento, nombre) VALUES
+    (1, 'Hombre'),
+    (2, 'Mujer'),
+    (3, 'Niño')
+
+
+
+-- Inserciones para la tabla talla
+INSERT INTO talla (id_talla, nom_talla, codigo) VALUES
+    (1, 'XS', 'X'),
+    (2, 'S', 'S'),
+    (3, 'M', 'M'),
+    (4, 'L', 'L'),
+    (5, 'XL', 'XL')
+
+
+-- Inserciones para la tabla marca con nombres de marcas realistas
+INSERT INTO marca (id_marca, nom_marca, codigo) VALUES
+    (1, 'Moda Internacional', 'MI001'),
+    (2, 'Estilo Urbano', 'EU002'),
+    (3, 'Corte Fino', 'CF003'),
+    (4, 'Fashionista Co.', 'FC004'),
+    (5, 'Trendy Chic', 'TC005'),
+    (6, 'Ropa Elegante', 'RE006'),
+    (7, 'Casual Wear', 'CW007'),
+    (8, 'Atuendo Moderno', 'AM008'),
+    (9, 'Prendas Premium', 'PP009'),
+    (10, 'Vintage Vibe', 'VV010');
+
+
+-- Inserciones para la tabla Usuario
+INSERT INTO Usuario (id_usuario, nombre, correo_electronico, password, direccion, telefono, dui) VALUES
+    (1, 'Juan Pérez', 'juan@example.com', 'password1', 'Calle A, Ciudad X', 12345678, '12345678-9'),
+    (2, 'María García', 'maria@example.com', 'password2', 'Avenida B, Ciudad Y', 98765432, '98765432-1'),
+    (3, 'Pedro López', 'pedro@example.com', 'password3', 'Calle C, Ciudad Z', 56473829, '56473829-2'),
+    (4, 'Laura Martínez', 'laura@example.com', 'password4', 'Calle D, Ciudad W', 38492018, '38492018-3'),
+    (5, 'Ana Rodríguez', 'ana@example.com', 'password5', 'Avenida E, Ciudad V', 29384756, '29384756-4'),
+    (6, 'Carlos Sánchez', 'carlos@example.com', 'password6', 'Calle F, Ciudad U', 85739204, '85739204-5'),
+    (7, 'Sofía Pérez', 'sofia@example.com', 'password7', 'Avenida G, Ciudad T', 20394857, '20394857-6'),
+    (8, 'David García', 'david@example.com', 'password8', 'Calle H, Ciudad S', 48756392, '48756392-7'),
+    (9, 'Elena Martínez', 'elena@example.com', 'password9', 'Avenida I, Ciudad R', 75930284, '75930284-8'),
+    (10, 'Luis Rodríguez', 'luis@example.com', 'password10', 'Calle J, Ciudad Q', 23904857, '23904857-9');
+
+
+-- Inserciones para la tabla factura
+INSERT INTO factura (id_factura, codigo, fecha, id_cliente) VALUES
+    (1, 'FAC001', '2024-04-01', 1),
+    (2, 'FAC002', '2024-04-02', 2),
+    (3, 'FAC003', '2024-04-03', 3),
+    (4, 'FAC004', '2024-04-04', 4),
+    (5, 'FAC005', '2024-04-05', 5),
+    (6, 'FAC006', '2024-04-06', 6),
+    (7, 'FAC007', '2024-04-07', 7),
+    (8, 'FAC008', '2024-04-08', 8),
+    (9, 'FAC009', '2024-04-09', 9),
+    (10, 'FAC010', '2024-04-10', 10);
+
+-- Inserción de cuatro abrigos de invierno en la tabla prenda
+INSERT INTO public.prenda (id_marca, id_departamento, id_talla, disponibilidad, cantidad, id_proveedor, precio_unitario, imagen1, imagen2, imagen3, imagen4, nombre_prenda)
+VALUES 
+    (1, 2, 3, 10, 50, 1, 59.99, 'https://i.ibb.co/LnZjHbT/a1.jpg', 'https://i.ibb.co/LnZjHbT/a1.jpg', 'https://i.ibb.co/LnZjHbT/a1.jpg', 'https://i.ibb.co/LnZjHbT/a1.jpg', 'Abrigo de Invierno Azul'),
+    (2, 2, 3, 15, 30, 2, 69.99, 'https://i.ibb.co/XXz5K3K/a4.jpg', 'https://i.ibb.co/XXz5K3K/a4.jpg', 'https://i.ibb.co/XXz5K3K/a4.jpg', 'https://i.ibb.co/XXz5K3K/a4.jpg', 'Abrigo de Invierno Negro'),
+    (3, 2, 4, 5, 20, 3, 79.99, 'https://i.ibb.co/sqspMTf/a3.jpg', 'https://i.ibb.co/sqspMTf/a3.jpg', 'https://i.ibb.co/sqspMTf/a3.jpg', 'https://i.ibb.co/sqspMTf/a3.jpg', 'Abrigo de Invierno Gris'),
+    (4, 2, 5, 8, 10, 4, 89.99, 'https://i.ibb.co/q0StDWz/a2.jpg', 'https://i.ibb.co/q0StDWz/a2.jpg', 'https://i.ibb.co/q0StDWz/a2.jpg', 'https://i.ibb.co/q0StDWz/a2.jpg', 'Abrigo de Invierno Marrón');
+
+
+
+-- Inserciones para la tabla Carrito
+INSERT INTO Carrito (id_carrito, id_usuario, id_prenda, estado_carrito) VALUES
+    (1, 1, 1, 'En espera'),
+    (2, 2, 2, 'En espera'),
+    (3, 3, 3, 'En espera'),
+    (4, 4, 4, 'En espera')
+
+
+-- Inserciones para la tabla detalle_factura
+INSERT INTO detalle_factura (id_detalle_factura, id_factura, id_prenda) VALUES
+    (1, 1, 1),
+    (2, 2, 2),
+    (3, 3, 3),
+    (4, 4, 4)
+
+
+-- Inserciones para la tabla items_Carrito
+INSERT INTO items_Carrito (id_itemCarrito, id_carrito, id_prenda, cantidad) VALUES
+    (1, 1, 1, 1),
+    (2, 2, 2, 1),
+    (3, 3, 3, 1),
+    (4, 4, 4, 1)
+ 
