@@ -14,7 +14,7 @@ function ResetPasswordModal({ show, onClose, userId }) {
   const handleResetPassword = async (userId, newPassword) => {
     try {
       const response = await axios.post(
-        "http://localhost:3077/api/reset-password",
+        "/api/reset-password",
         {
           userId,
           newPassword,
@@ -47,7 +47,7 @@ function ResetPasswordModal({ show, onClose, userId }) {
     if (alertVisible && alertType === "success") {
       const timeout = setTimeout(() => {
         onClose(); // Cierra el modal
-        navigate("/"); // Redirigir al login
+        navigate("/login"); // Redirigir al login
       }, 7000); // 15 segundos
 
       return () => clearTimeout(timeout); // Limpieza para evitar fugas de memoria

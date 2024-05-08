@@ -13,7 +13,7 @@ function LostP(show, onClose) {
   const handleCheckEmail = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3077/api/check-email",
+        "/api/check-email",
         { email }, // Pasa el objeto directamente
         {
           headers: {

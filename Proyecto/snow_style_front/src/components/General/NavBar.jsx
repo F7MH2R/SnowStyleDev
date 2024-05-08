@@ -1,207 +1,159 @@
 import React, { useState, useEffect } from "react";
+import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import logo from "./img/Logo SnowStyle.PNG";
+import "../pages/css/Modal.css"; // Importa el archivo de estilos CSS
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Navbar,
-  Nav,
-  Col,
-  Form,
-  FormControl,
-  Button,
-  Modal,
-} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faMagnifyingGlass,
-  faBars,
-} from "@fortawesome/free-solid-svg-icons";
-import usplaceholder from "../Multimedia/estaticos/userplaceholder.png";
-import "../pages/css/Modal.css";
-import Login from "../pages/Login";
+//Login
+import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
+import googleFontsURL from "../Fuentes/FuenteLetras";
 import Carrito from "../Carrito/Carrito";
 import Filtro from "../Filtro/Filtro";
+const NavBar = () => {
+  const [mostrarBusqueda, setMostrarBusqueda] = useState(false); // Estado para controlar la visibilidad del área de búsqueda
+  const [isOpen, setIsOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); // Para redirigir después del inicio de sesión
 
-function NavBar(props) {
-  const [showSearch, setShowSearch] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
-  const navigate = useNavigate();
-  const idUsu = localStorage.getItem("UserId")
-    ? JSON.parse(localStorage.getItem("UserId"))
-    : 0;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    <link rel="stylesheet" href={googleFontsURL} />
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-  const UsuarioEnSesionImg = `http://localhost:3001/imagenUsuario_${idUsu}.jpg`;
+      if (response.ok) {
+        const data = await response.json();
+        // Haz algo con la respuesta, por ejemplo, almacenar el token en el almacenamiento local
+        localStorage.setItem("token", data.token);
 
-  useEffect(() => {
-    setIsLogged(props.data);
-  }, [props.data]);
+        // Redirigir al usuario a otra página después de iniciar sesión
+        navigate("/dashboard");
+      } else {
+        const errorData = await response.json();
+        console.error("Error al iniciar sesión:", errorData.message);
+        // Puedes mostrar un mensaje de error al usuario aquí
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+      // Manejar errores de red
+    }
 
-  useEffect(() => {
-    console.log("Estado de autenticación actualizado:", isLogged);
-  }, [isLogged]);
-
-  console.log("Renderizando NavBar. Estado de autenticación:", isLogged);
-
-  const openLoginModal = () => {
-    setShowLoginModal(true);
+    // Cerrar el modal
+    setIsOpen(false);
   };
 
-  const closeLoginModal = () => {
-    setShowLoginModal(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem(idUsu);
-    setIsLogged(false);
-    navigate("/");
+  const closeModal = () => {
+    setIsOpen(false);
   };
 
-  const handleSearchClick = () => {
-    setShowSearch(!showSearch);
-  };
-
-  const handleLoginSuccess = () => {
-    setIsLogged(true);
+  const openModal = () => {
+    setIsOpen(true);
   };
 
   return (
-    <>
-      <Navbar expand="lg" className="nava fixed-top bggreen mx-0 py-1">
-        <Navbar.Toggle aria-controls="basic-navbar-nav">
-          <span
-            className="navbar-toggler-icon"
-            style={{ color: "black", fontSize: "2.4rem" }}
-          >
-            <FontAwesomeIcon icon={faBars} />
-          </span>
-        </Navbar.Toggle>
+    <div className="navbar">
+      <div className="navbar-left" style={{ fontFamily: "Prompt, sans-serif" }} >
+        <a href="#mujer" className="navbar-link">
+          Dama
+        </a>
+        <a href="#hombre" className="navbar-link">
+          Caballero
+        </a>
+        <a href="#niño" className="navbar-link">
+          Niños
+        </a>
+        <a href="/WHOARE" className="navbar-link">
+          Conócenos
+        </a>
+      </div>
+      <div className="navbar-brand " href="/">
+        <a href="/">
+          {" "}
+          <img src={logo} alt="Logo de SnowStyle" href="/" className="logo" />
+        </a>
+      </div>
+      <div
+        className={`navbar-right ${mostrarBusqueda ? "mostrar-busqueda" : ""}`}
+      >
+        <div className="buscar-icono">
+          <FaSearch className="navbar-link-iconos"/>
+        </div>
+        {mostrarBusqueda && (
+          <div className="area-busqueda-container">
+            <div className="area-busqueda">
+              <input type="text" placeholder="Escribe aquí para buscar..." />
+              <button>Buscar</button>
+            </div>
+          </div>
+        )}
+        <Carrito />
+        <Filtro />
+        <a href="#Login" className="navbar-link-iconos" onClick={openModal}>
+          <FaUser />
+        </a>
 
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Col
-            xs={12}
-            lg={4}
-            className="d-flex justify-content-center align-items-center"
+        {/* Modal Component */}
+        {/* Modal de inicio de sesión */}
+        <section className="page modal-1-page">
+          <div
+            className={`modal-1-overlay ${isOpen ? "open" : ""}`}
+            onClick={closeModal}
           >
-            <Nav className="w-100 whitetxt justify-content-center">
-              <Nav.Link as={Link} to="mujeres" className="text-center">
-                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
-                  Dama
-                </h2>
-              </Nav.Link>
-              <Nav.Link as={Link} to="hombres" className="text-center">
-                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
-                  Caballero
-                </h2>
-              </Nav.Link>
-              <Nav.Link as={Link} to="niños" className="text-center">
-                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
-                  Niños
-                </h2>
-              </Nav.Link>
-              <Nav.Link as={Link} to="WhoAre" className="text-center">
-                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
-                  Conócenos
-                </h2>
-              </Nav.Link>
-            </Nav>
-          </Col>
+            <div className="modal-1-modal" onClick={(e) => e.stopPropagation()}>
+              <header>
+                <h2>Iniciar Sesión</h2>
+              </header>
 
-          <Col
-            xs={12}
-            lg={4}
-            className="d-flex justify-content-center align-items-center"
-          >
-            <Navbar.Brand as={Link} to={"/"}>
-              <img
-                alt=""
-                src={logo}
-                className="d-inline-block align-top logo"
-              />
-            </Navbar.Brand>
-          </Col>
-
-          <Col
-            xs={12}
-            lg={4}
-            className="d-flex justify-content-center align-items-center"
-          >
-            <Nav className="w-100 justify-content-center align-items-center">
-              {isLogged ? (
-                <>
-                  <Nav.Link as={Link} className="d-inline">
-                    <h2
-                      className="d-inline mx-2 mt-auto normaltxt whitetxt"
-                      onClick={handleSearchClick}
-                    >
-                      <FontAwesomeIcon icon={faMagnifyingGlass} />{" "}
-                      <b className="d-none d-xl-inline-block">Buscar</b>
-                    </h2>
-                  </Nav.Link>
-                  <Filtro />
-                  <Carrito />
-                  <Nav.Link as={Link} to="properties" className="d-inline">
-                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
-                      <img
-                        src={UsuarioEnSesionImg ?? usplaceholder}
-                        alt=""
-                        height="50px"
-                        style={{ borderRadius: "50%" }}
-                      />
-                    </h2>
-                  </Nav.Link>
-                  <Nav.Link
-                    as={Link}
-                    to="/"
-                    className=""
-                    onClick={handleLogout}
-                  >
-                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
-                      <FontAwesomeIcon icon={faUser} /> Cerrar Sesión
-                    </h2>
-                  </Nav.Link>
-                </>
-              ) : (
-                <div>
-                  <Nav.Link
-                    as={Link}
-                    to="#"
-                    className=""
-                    onClick={openLoginModal}
-                  >
-                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
-                      <FontAwesomeIcon icon={faUser} /> Iniciar Sesión
-                    </h2>
-                  </Nav.Link>
-                  {/* Renderiza el modal de inicio de sesión solo si showLoginModal es true */}
-                  {showLoginModal && (
-                    <Login
-                      onLoginSuccess={handleLoginSuccess}
-                      handleClose={closeLoginModal}
-                    />
-                  )}
+              <form onSubmit={handleSubmit}>
+                <div className="textbox">
+                  <EmailIcon />
+                  <input
+                    type="email"
+                    placeholder="Correo electrónico"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </div>
-              )}
-            </Nav>
-          </Col>
-        </Navbar.Collapse>
-      </Navbar>
+                <div className="textbox">
+                  <LockIcon />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Contraseña"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button type="button" onClick={togglePasswordVisibility}>
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </button>
+                </div>
 
-      <Modal show={showSearch} onHide={handleSearchClick} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Buscar</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form className="mx-auto">
-            <FormControl type="text" placeholder="Buscar" className="mr-sm-2" />
-            <Button variant="success" onClick={handleSearchClick}>
-              Buscar
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </>
+                <button type="submit">Iniciar Sesión</button>
+              </form>
+            </div>
+          </div>
+        </section>
+        {/* End of Modal Component */}
+      </div>
+    </div>
   );
-}
+};
 
 export default NavBar;

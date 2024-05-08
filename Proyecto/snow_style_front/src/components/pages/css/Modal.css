@@ -247,7 +247,7 @@ body {
   left: 0;
   right: 0;
   border: 0;
-  background: #c0c0c0;
+  background: #ececec;
   height: 56px;
   border-radius: 6px;
   font-family: inherit;
@@ -256,7 +256,7 @@ body {
 }
 
 .modal-1-modal input::placeholder {
-  color: #9a989c;
+  color: #96939c;
 }
 
 .modal-1-modal > p {
@@ -384,13 +384,6 @@ body {
 .area-busqueda button:hover {
   background-color: #333333;
 }
-
-.nav-link {
-  color: black !important; /* Cambiar el color del texto a negro */
-}
-
-
-
 /* Footer.css */
 
 .footer {
