@@ -303,6 +303,87 @@ body {
   position: relative; /* Agregar posición relativa */
 }
 
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #333333;
+  font-size: 18px;
+  margin-right: 20px;
+  transition: color 0.3s ease;
+}
+
+.navbar-link-iconos {
+  text-decoration: none;
+  color: #333333;
+  font-size: 22px;
+  margin-right: 1px;
+  transition: color 0.3s ease;
+}
+
+.navbar-secciones{
+  text-decoration: none;
+  color: #333333;
+  font-size: 20px;
+  margin-right: 20px;
+  transition: color 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: #555555;
+}
+
+.logo {
+  width: 220px; /* Tamaño deseado para el logo */
+  height: auto;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  margin-left: 10%;
+}
+
+.buscar-icono {
+  cursor: pointer;
+  font-size: 30px; /* Tamaño del icono de búsqueda */
+  margin-right: 10px; /* Espaciado entre el icono de búsqueda y el primer enlace */
+}
+
+.area-busqueda-container {
+  position: absolute; /* Agregar posición absoluta */
+  top: calc(100% + 10px); /* Colocar el input debajo de la navbar */
+  left: 50%; /* Centrar horizontalmente */
+  transform: translateX(-50%); /* Alinear al centro */
+}
+
+.area-busqueda {
+  display: flex;
+  align-items: center;
+}
+
+.area-busqueda input {
+  font-size: 16px; /* Tamaño del texto en el área de búsqueda */
+  padding: 5px;
+  width: 200px; /* Ancho del input */
+  margin-right: 5px;
+}
+
+.area-busqueda button {
+  background-color: #555555;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.area-busqueda button:hover {
+  background-color: #333333;
+}
 
 .nav-link {
   color: black !important; /* Cambiar el color del texto a negro */
@@ -351,7 +432,7 @@ body {
 
 .carousel-item img {
   width: 100%;
-  height: 800px; /* Tamaño fijo para las imágenes, ajusta según sea necesario */
+  height: 700px; /* Tamaño fijo para las imágenes, ajusta según sea necesario */
   object-fit: cover; /* Recorta la imagen para que llene el contenedor */
 }
 
@@ -370,8 +451,8 @@ body {
 
 .see-all-container {
   text-align: center;
-  margin-top: 3%;
-  margin-bottom: 5%;
+  margin-top: 1%;
+  margin-bottom: 4%;
 }
 
 .sudaderas,
@@ -404,13 +485,15 @@ body {
   margin: 50px; /* Aplica margen uniforme en todas las direcciones */
 }
 
-.mujeres-header {
+.seccion-ropa-header {
   margin-left: 20px;
+  margin-bottom: auto;
 }
 
 .trending-header {
   border-bottom: 1px solid black;
   display: inline-block;
+  margin-top: 10px;
   padding: 0 20px; /* Reduce el espacio alrededor del texto */
 }
 
@@ -448,7 +531,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url("https://img.freepik.com/free-photo/rows-hangers-with-clothes_23-2147669916.jpg?t=st=1713501173~exp=1713504773~hmac=f9025f47c7efa5902f5fa27cc9fc1aa25d9a1cc6b4ce4e3bb46d4edb3406861d&w=1380");
+  background-image: url("https://i.ibb.co/Hzgsvpd/liquidacion-imagenes.jpg");
   background-size: cover;
 }
 
@@ -475,6 +558,39 @@ body {
   cursor: pointer;
   border-radius: 20px; /* Establece el radio de los bordes */
 }
+
+.h4-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Primera seccion de quiénes somos-conócenos */
+.h4-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.h4-item {
+  margin-bottom: 20px; 
+}
+
+@media screen and (min-width: 768px) {
+  .h4-container {
+    flex-direction: row;
+  }
+
+  .h4-item {
+    margin-bottom: 0;
+    margin-right: 20px; 
+    flex: 1;
+  }
+
+  .h4-item:last-child {
+    margin-right: 0; /* Eliminar el margen derecho del último elemento en la fila */
+  }
+}
+
+
 
 /* Segunda seccion de quiénes somos-conócenos */
 .background-video-wrapper-conocenos {
@@ -514,7 +630,6 @@ body {
 }
 
 .text-content {
-  max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
@@ -527,3 +642,95 @@ body {
     font-size: 14px;
   }
 }
+
+/*DISEÑO PARA PAGO*/
+/* Pago.css */
+
+/* Estilos para el contenedor principal */
+.container-primero{
+  background-color:#C2CBC9;
+  margin-bottom: 5vh;
+  margin-top: 5vh;
+}
+
+.payment-container {
+  background-color:#C2CBC9; /* Color de fondo */
+  padding: 20px;
+  border-radius: 10px;
+  height: 76vh;
+}
+
+.custom-alert {
+  background-color: #a3fba6; /* Color de fondo del Alert */
+  border-color: #75716E; /* Color del borde del Alert */
+}
+
+/* Estilos para el formulario de pago */
+.payment-form {
+  max-width: 400px;
+  margin: auto;
+  background-color:#C2CBC9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.payment-form label {
+  font-weight: bold;
+}
+
+.payment-form input[type="text"],
+.payment-form input[type="email"] {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.payment-form button {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* Estilos para la tabla de la factura */
+.payment-modal-body table {
+  width: 100%;
+}
+
+.payment-modal-body th,
+.payment-modal-body td {
+  text-align: center;
+}
+
+.payment-modal-body th:first-child,
+.payment-modal-body td:first-child {
+  text-align: left;
+}
+
+ /* pagoexitoso*/
+.custom-payment-form {
+  max-width: 400px; /* Tamaño máximo del formulario */
+  margin-top: 5vh;
+}
+
+.custom-form-group {
+  margin-bottom: 30px; /* Espacio entre grupos de campos */
+}
+
+.label {
+  margin-bottom: 10px; /* Espacio entre la etiqueta y el campo */
+}
+
+.custom-payment-form .custom-button {
+  margin-top: 20px;
+  color: #fff;
+  background-color: #75716E; 
+  border-color: #BFCBD4;
+  border-radius: 20px;
+}
+
+.custom-payment-form .custom-button:hover {
+  background-color: #26533b; 
+}
+
+
+
+
