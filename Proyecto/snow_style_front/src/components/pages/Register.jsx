@@ -106,7 +106,7 @@ const Register = () => {
           { label: "Correo Electrónico", name: "email", type: "email" },
           { label: "Contraseña", name: "password", type: "password" },
           { label: "Dirección", name: "address", type: "text" },
-          { label: "Teléfono", name: "phone", type: "tel" },
+          { label: "Teléfono", name: "phone", type: "number" },
           { label: "DUI", name: "dui", type: "number" },
           {
             label: "Link de Imagen de Perfil",
