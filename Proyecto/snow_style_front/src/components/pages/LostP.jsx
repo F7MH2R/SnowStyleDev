@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
 import ResetPasswordModal from "./ResetPasswordModal";
+import googleFontsURL from "../Fuentes/FuenteLetras";
 import axios from "axios";
-function LostP(show, onClose) {
+import "./css/Modal.css";
+
+function LostP({ show, onClose }) { // Corregido el destructuring de props
   const [email, setEmail] = useState("");
-  const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario
+  const [userId, setUserId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertType, setAlertType] = useState("success");
@@ -14,24 +17,24 @@ function LostP(show, onClose) {
     try {
       const response = await axios.post(
         "http://localhost:3077/api/check-email",
-        { email }, // Pasa el objeto directamente
+        { email },
         {
           headers: {
-            "Content-Type": "application/json", // Encabezado para JSON
+            "Content-Type": "application/json",
           },
         }
       );
 
-      const data = response.data; // Con `axios`, usa `data` para obtener la respuesta JSON
+      const data = response.data;
 
       if (data.exists) {
         setUserId(data.userId);
-        console.log(data.userId); // Asigna el ID del usuario
-        setModalVisible(true); // Muestra el modal para restablecer la contraseña
+        console.log(data.userId);
+        setModalVisible(true);
       } else {
         setAlertType("danger");
         setAlertMessage("Correo electrónico no encontrado");
-        setAlertVisible(true); // Muestra el mensaje de error
+        setAlertVisible(true);
       }
     } catch (error) {
       console.error("Error al verificar el correo:", error);
@@ -42,35 +45,40 @@ function LostP(show, onClose) {
   };
 
   return (
-    <div>
-      <h2>Verificar Correo Electrónico</h2>
-      {alertVisible && (
-        <Alert
-          variant={alertType}
-          onClose={() => setAlertVisible(false)}
-          dismissible
-        >
-          {alertMessage}
-        </Alert>
-      )}
-      <Form>
-        <Form.Group>
-          <Form.Label>Correo Electrónico</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-        <Button variant="primary" onClick={handleCheckEmail}>
-          Verificar
-        </Button>
-      </Form>
-      <ResetPasswordModal
-        show={modalVisible}
-        userId={userId} // Pasar el ID del usuario al modal
-        onClose={() => setModalVisible(false)} // Asegúrate de cerrar el modal cuando se cierre
-      />
+    <div className="container-form">
+      <div style={{ fontFamily: "Prompt, sans-serif" }} className="lost-password-form"> 
+        <link rel="stylesheet" href={googleFontsURL} />
+        <h3 className="lost-password-form-title">Verificación Correo Electrónico</h3> 
+        {alertVisible && (
+          <Alert
+            variant={alertType}
+            onClose={() => setAlertVisible(false)}
+            dismissible
+            className="lost-password-form-alert"
+          >
+            {alertMessage}
+          </Alert>
+        )}
+        <Form>
+          <Form.Group className="lost-password-form-group"> 
+            <Form.Label className="lost-password-form-label">Digite su correo:</Form.Label> 
+            <Form.Control
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="lost-password-form-control" 
+            />
+          </Form.Group>
+          <Button variant="primary" onClick={handleCheckEmail} className="lost-password-form-btn"> 
+            Verificar
+          </Button>
+        </Form>
+        <ResetPasswordModal
+          show={modalVisible}
+          userId={userId}
+          onClose={() => setModalVisible(false)}
+        />
+      </div>
     </div>
   );
 }

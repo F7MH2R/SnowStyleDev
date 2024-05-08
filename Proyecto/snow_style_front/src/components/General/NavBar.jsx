@@ -85,24 +85,24 @@ function NavBar(props) {
           >
             <Nav className="w-100 whitetxt justify-content-center">
               <Nav.Link as={Link} to="mujeres" className="text-center">
-                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Dama
-                </h2>
+                </h3>
               </Nav.Link>
               <Nav.Link as={Link} to="hombres" className="text-center">
-                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Caballero
-                </h2>
+                </h3>
               </Nav.Link>
               <Nav.Link as={Link} to="niños" className="text-center">
-                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Niños
-                </h2>
+                </h3>
               </Nav.Link>
               <Nav.Link as={Link} to="WhoAre" className="text-center">
-                <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Conócenos
-                </h2>
+                </h3>
               </Nav.Link>
             </Nav>
           </Col>
@@ -156,9 +156,9 @@ function NavBar(props) {
                     className=""
                     onClick={handleLogout}
                   >
-                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                    <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                       <FontAwesomeIcon icon={faUser} /> Cerrar Sesión
-                    </h2>
+                    </h3>
                   </Nav.Link>
                 </>
               ) : (
@@ -169,9 +169,9 @@ function NavBar(props) {
                     className=""
                     onClick={openLoginModal}
                   >
-                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                    <h4 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                       <FontAwesomeIcon icon={faUser} /> Iniciar Sesión
-                    </h2>
+                    </h4>
                   </Nav.Link>
                   {/* Renderiza el modal de inicio de sesión solo si showLoginModal es true */}
                   {showLoginModal && (
