@@ -105,7 +105,7 @@ const Login = ({ handleClose, onLoginSuccess }) => {
             <Link to={"/lost"} className="lost">
               Olvidé mi contraseña
             </Link>
-            <Link to="/register" className="lost">
+            <Link to="/REGIST" className="lost">
               No tengo cuenta || Crear cuenta
             </Link>
           </form>
