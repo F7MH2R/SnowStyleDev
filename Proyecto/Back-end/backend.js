@@ -106,6 +106,36 @@ app.post("/login", async (req, res) => {
   }
 });
 
+// Endpoint para registrar usuarios
+app.post("/register", async (req, res) => {
+  try {
+    const { fullName, email, password, address, phone, dui, profileImage } =
+      req.body;
+
+    // Encriptar la contraseña
+    const hashedPassword = password;
+
+    // Insertar el nuevo usuario en la base de datos
+    const result = await pool.query(
+      "INSERT INTO usuario (nombre, correo_electronico, password, direccion, telefono, dui, img_perfil) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id_usuario",
+      [fullName, email, hashedPassword, address, phone, dui, profileImage]
+    );
+
+    res.status(201).json({
+      message: "Usuario registrado con éxito",
+      userId: result.rows[0].id,
+    });
+  } catch (error) {
+    if (error.code === "23505") {
+      // Error de restricción UNIQUE (correo electrónico duplicado)
+      res.status(409).json({ message: "Correo electrónico ya registrado" });
+    } else {
+      console.error(error);
+      res.status(500).json({ message: "Error interno del servidor" });
+    }
+  }
+});
+
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en el puerto ${port}`);
 });
