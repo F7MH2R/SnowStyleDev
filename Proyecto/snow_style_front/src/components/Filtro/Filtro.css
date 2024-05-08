@@ -1,0 +1,26 @@
+.btn-primary {
+  --bs-btn-bg: white;
+  --bs-btn-border-color: black;
+  --bs-btn-color: black;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: black;
+  --bs-btn-hover-border-color: black;
+}
+
+.btn-filtro {
+  --bs-btn-font-size: 0.5rem;
+}
+
+.check-filtro {
+  border-color: black;
+}
+
+.form-check-input:focus {
+  border-color: black;
+  box-shadow: 0 0 0 0.25rem rgba(1, 6, 15, 0.945);
+}
+
+.form-check-input:checked {
+  background-color: black;
+  border-color: black;
+}
