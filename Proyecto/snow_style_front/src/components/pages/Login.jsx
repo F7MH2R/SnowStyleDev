@@ -43,6 +43,7 @@ const Login = ({ handleClose, onLoginSuccess }) => {
 
       if (response.data.IDUsuario) {
         // Redirige al usuario a la página
+        localStorage.setItem("UserId", response.data.IDUsuario);
         navigate("/");
         handleClose(); // Cierra el modal
         onLoginSuccess(); // Llama a la función de devolución de llamada para el inicio de sesión exitoso
