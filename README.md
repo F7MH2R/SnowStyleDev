@@ -1,7 +1,7 @@
 NPM STAR 
 
---Si deseas iniciar el front-end
+--Para iniciar todo 
 
-NODE "nombre del archivo que deseas iniciar".js
+npm run install:all
 
---Iniciar el Backend
+--Para instalar todas las dependencias
