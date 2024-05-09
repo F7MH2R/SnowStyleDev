@@ -324,7 +324,7 @@ body {
   transition: color 0.3s ease;
 }
 
-.navbar-secciones{
+.navbar-secciones {
   text-decoration: none;
   color: #333333;
   font-size: 20px;
@@ -388,8 +388,6 @@ body {
 .nav-link {
   color: black !important; /* Cambiar el color del texto a negro */
 }
-
-
 
 /* Footer.css */
 
@@ -571,7 +569,7 @@ body {
 }
 
 .h4-item {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 @media screen and (min-width: 768px) {
@@ -581,7 +579,7 @@ body {
 
   .h4-item {
     margin-bottom: 0;
-    margin-right: 20px; 
+    margin-right: 20px;
     flex: 1;
   }
 
@@ -589,8 +587,6 @@ body {
     margin-right: 0; /* Eliminar el margen derecho del último elemento en la fila */
   }
 }
-
-
 
 /* Segunda seccion de quiénes somos-conócenos */
 .background-video-wrapper-conocenos {
@@ -647,29 +643,29 @@ body {
 /* Pago.css */
 
 /* Estilos para el contenedor principal */
-.container-primero{
-  background-color:#C2CBC9;
+.container-primero {
+  background-color: #c2cbc9;
   margin-bottom: 5vh;
   margin-top: 5vh;
 }
 
 .payment-container {
-  background-color:#C2CBC9; 
+  background-color: #c2cbc9;
   padding: 20px;
   border-radius: 10px;
   height: 76vh;
 }
 
 .custom-alert {
-  background-color: #a3fba6; 
-  border-color: #75716E; 
+  background-color: #a3fba6;
+  border-color: #75716e;
 }
 
 /* Estilos para el formulario de pago */
 .payment-form {
   max-width: 400px;
   margin: auto;
-  background-color:#C2CBC9;
+  background-color: #c2cbc9;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -712,23 +708,23 @@ body {
 }
 
 .custom-form-group {
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
 }
 
 .label {
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .custom-payment-form .custom-button {
   margin-top: 20px;
   color: #fff;
-  background-color: #75716E; 
-  border-color: #BFCBD4;
+  background-color: #75716e;
+  border-color: #bfcbd4;
   border-radius: 20px;
 }
 
 .custom-payment-form .custom-button:hover {
-  background-color: #26533b; 
+  background-color: #26533b;
 }
 
 /* LOST PASSWORD */
@@ -738,7 +734,7 @@ body {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #E1D7CE;
+  background-color: #e1d7ce;
   margin-top: 20vh;
   margin-bottom: 35vh;
 }
@@ -763,8 +759,8 @@ body {
 .lost-password-form-btn {
   margin-top: 20px;
   color: #fff;
-  background-color: #6c5747; 
-  border-color: #BFCBD4;
+  background-color: #6c5747;
+  border-color: #bfcbd4;
   border-radius: 20px;
 }
 
@@ -778,7 +774,3 @@ body {
     display: flex;
   }
 }
-
-
-
-

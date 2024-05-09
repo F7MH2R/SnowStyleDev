@@ -5,7 +5,8 @@ import googleFontsURL from "../Fuentes/FuenteLetras";
 import axios from "axios";
 import "./css/Modal.css";
 
-function LostP({ show, onClose }) { // Corregido el destructuring de props
+function LostP({ show, onClose }) {
+  // Corregido el destructuring de props
   const [email, setEmail] = useState("");
   const [userId, setUserId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -46,9 +47,14 @@ function LostP({ show, onClose }) { // Corregido el destructuring de props
 
   return (
     <div className="container-form">
-      <div style={{ fontFamily: "Prompt, sans-serif" }} className="lost-password-form"> 
+      <div
+        style={{ fontFamily: "Prompt, sans-serif" }}
+        className="lost-password-form"
+      >
         <link rel="stylesheet" href={googleFontsURL} />
-        <h3 className="lost-password-form-title">Verificación Correo Electrónico</h3> 
+        <h3 className="lost-password-form-title">
+          Verificación Correo Electrónico
+        </h3>
         {alertVisible && (
           <Alert
             variant={alertType}
@@ -60,16 +66,22 @@ function LostP({ show, onClose }) { // Corregido el destructuring de props
           </Alert>
         )}
         <Form>
-          <Form.Group className="lost-password-form-group"> 
-            <Form.Label className="lost-password-form-label">Digite su correo:</Form.Label> 
+          <Form.Group className="lost-password-form-group">
+            <Form.Label className="lost-password-form-label">
+              Digite su correo:
+            </Form.Label>
             <Form.Control
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="lost-password-form-control" 
+              className="lost-password-form-control"
             />
           </Form.Group>
-          <Button variant="primary" onClick={handleCheckEmail} className="lost-password-form-btn"> 
+          <Button
+            variant="primary"
+            onClick={handleCheckEmail}
+            className="lost-password-form-btn"
+          >
             Verificar
           </Button>
         </Form>

@@ -142,7 +142,11 @@ const Register = () => {
           </Form.Group>
         )}
 
-        <Button type="submit" variant="dark">
+        <Button
+          type="submit"
+          variant="dark"
+          style={{ marginBottom: "15%", marginTop: "5%" }}
+        >
           Registrar
         </Button>
       </Form>
