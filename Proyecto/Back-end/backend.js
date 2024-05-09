@@ -3,25 +3,13 @@ const { Pool } = require("pg");
 const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const jwt = require("jsonwebtoken"); // Añade la importación de JWT
 const app = express();
 const port = process.env.PORT || 3077;
 
-// Configuración de CORS
-const corsConfig = {
-  origin: "http://localhost:3000",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-};
-
-app.use(cors(corsConfig));
+// Configuración de CORS para permitir solicitudes desde cualquier origen
+app.use(cors());
 app.use(bodyParser.json()); // Middleware para analizar cuerpos JSON
-
-//Escriban sus usuarios
-//deku = slayerdek
-//
-//
-//
-//
 
 // Configuración de la base de datos PostgreSQL
 const pool = new Pool({
@@ -30,27 +18,6 @@ const pool = new Pool({
   database: "snowstyle", // Nombre de tu base de datos
   password: "deku", // Cambia por tu contraseña
   port: 5432, // Puerto estándar para PostgreSQL
-});
-/*
-pool
-  .connect()
-  .then(async (client) => {
-    console.log("Conexión exitosa a PostgreSQL");
-
-    // Consulta para obtener todos los usuarios
-    const result = await client.query("SELECT * FROM usuario");
-
-    console.log("Usuarios en la base de datos:");
-    console.log(result.rows);
-
-    client.release(); // Libera el cliente
-  })
-  .catch((err) => {
-    console.error("Error de conexión:", err);
-  });
-*/
-app.listen(port, () => {
-  console.log(`Servidor ejecutándose en el puerto ${port}`);
 });
 
 // Conexión a la base de datos
@@ -86,7 +53,7 @@ app.post("/api/reset-password", async (req, res) => {
   const { userId, newPassword } = req.body; // Usa userId en lugar de email
   console.log("Id es " + userId);
   try {
-    const hashedPassword = await bcrypt.hash(newPassword, 10); // Hashear la nueva contraseña
+    const hashedPassword = newPassword; // Hashear la nueva contraseña
 
     const result = await pool.query(
       "UPDATE usuario SET password = $1 WHERE id_usuario = $2", // Cambia a ID
@@ -102,4 +69,73 @@ app.post("/api/reset-password", async (req, res) => {
     console.error("Error al restablecer la contraseña:", error);
     res.status(500).json({ error: "Error al restablecer la contraseña" });
   }
+});
+
+//Login---------------------------------------------------------
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  console.log("Datos recibidos del frontend:", email, password);
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM usuario WHERE correo_electronico = $1",
+      [email]
+    );
+
+    console.log("Resultado de la consulta:", result.rows);
+
+    if (result.rows.length === 1) {
+      const user = result.rows[0];
+      if (password === user.password) {
+        const IDUsuario = user.id_usuario; // Corregir el acceso al ID de usuario
+        console.log("ID del usuario después de la verificación:", IDUsuario);
+        res.status(200).json({ IDUsuario });
+      } else {
+        // Contraseña incorrecta
+        res.status(401).json({ message: "Credenciales incorrectas" });
+      }
+    } else {
+      // Usuario no encontrado
+      res.status(401).json({ message: "Credenciales incorrectas" });
+    }
+  } catch (err) {
+    // Manejar errores de la base de datos
+    console.error("Error en la consulta:", err);
+    res.status(500).json({ message: "Error en la autenticación" });
+  }
+});
+
+// Endpoint para registrar usuarios
+app.post("/register", async (req, res) => {
+  try {
+    const { fullName, email, password, address, phone, dui, profileImage } =
+      req.body;
+
+    // Encriptar la contraseña
+    const hashedPassword = password;
+
+    // Insertar el nuevo usuario en la base de datos
+    const result = await pool.query(
+      "INSERT INTO usuario (nombre, correo_electronico, password, direccion, telefono, dui, img_perfil) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id_usuario",
+      [fullName, email, hashedPassword, address, phone, dui, profileImage]
+    );
+
+    res.status(201).json({
+      message: "Usuario registrado con éxito",
+      userId: result.rows[0].id,
+    });
+  } catch (error) {
+    if (error.code === "23505") {
+      // Error de restricción UNIQUE (correo electrónico duplicado)
+      res.status(409).json({ message: "Correo electrónico ya registrado" });
+    } else {
+      console.error(error);
+      res.status(500).json({ message: "Error interno del servidor" });
+    }
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Servidor ejecutándose en el puerto ${port}`);
 });

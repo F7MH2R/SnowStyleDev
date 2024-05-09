@@ -1,98 +1,88 @@
-import React, { useState } from "react";
+import React from "react";
 import img1 from "../Multimedia/a1.png";
 import img2 from "../Multimedia/a2.png";
 import img3 from "../Multimedia/a3.png";
 import img4 from "../Multimedia/Sueter 3.png";
 import s1 from "../Multimedia/s1.png";
 import s2 from "../Multimedia/s2.png";
+import googleFontsURL from "../Fuentes/FuenteLetras";
 
 const DetalleProducto = () => {
-
   return (
-    <div style={styles.detalleProductoContainer}>
-      <div style={styles.detalleProductoImage}>
-        <img
-          src={img4}
-          alt="Logo de SnowStyle"
-          className="logo"
-          style={{ ...styles.imagen,}}
-          
-        />
-      </div>
-      <div style={styles.detalleProductoContent}>
-        <h1 style={styles.titulo}>Jersey cropped punto rib hombro caído</h1>
-        <div style={styles.caracteristicasContainer}>
-          <p style={styles.caracteristicas}>Ref 2174/376/700</p>
-          <div style={styles.imagenesContainer1}>
-            <img
-              src={s1}
-              alt="Imagen 1"
-              style={{ ...styles.imagenMiniatura, }}
-            />
-            <img
-              src={s2}
-              alt="Imagen 2"
-              style={{ ...styles.imagenMiniatura, }}
-            />
+    <div style={{ fontFamily: "Prompt, sans-serif" }}>
+      <div style={styles.detalleProductoContainer}>
+        <link rel="stylesheet" href={googleFontsURL} />
+        <div style={styles.detalleProductoImage}>
+          <img
+            src={img4}
+            alt="Logo de SnowStyle"
+            className="logo"
+            style={{ ...styles.imagen }}
+          />
+        </div>
+        <div style={styles.detalleProductoContent}>
+          <h1 style={styles.titulo}>Jersey cropped punto rib hombro caído</h1>
+          <div style={styles.caracteristicasContainer}>
+            <p style={styles.caracteristicas}>Ref 2174/376/700</p>
+            <div style={styles.imagenesContainer1}>
+              <img
+                src={s1}
+                alt="Imagen 1"
+                style={{ ...styles.imagenMiniatura }}
+              />
+              <img
+                src={s2}
+                alt="Imagen 2"
+                style={{ ...styles.imagenMiniatura }}
+              />
+            </div>
+            <p style={styles.caracteristicas}>Precio: $39.95</p>
           </div>
-          <p style={styles.caracteristicas}>Precio: $39.95</p>
-        </div>
-        <h1 style={styles.titulo}>Tallas Disponibles</h1>
-        <div style={styles.botonesContainer}>
-          <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-            S
-          </button>
-          <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-            M
-          </button>
-          <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-            L
-          </button>
-          <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-            XL
-          </button>
-          <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-            XXL
-          </button>
-        </div>
-        <div style={styles.descripcionContainer}>
-          <h1 style={styles.titulo}>Descripcion</h1>
-          <p style={styles.descripcion}>
-            Blusa diseño estampado con detalle fruncido y revuelo en bordes,
-            estilo casual. Prenda versátil que puedes combinar con pantalones,
-            jeans o short, su estilo romántico denota feminidad y calidez,
-            además aporta un look juvenil a tu atuendo. Cuello cuadrado y
-            tirantes gruesos.
-          </p>
+          <h1 style={styles.titulo}>Tallas Disponibles</h1>
+          <div style={styles.botonesContainer}>
+            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
+              S
+            </button>
+            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
+              M
+            </button>
+            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
+              L
+            </button>
+            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
+              XL
+            </button>
+            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
+              XXL
+            </button>
+          </div>
+          <div style={styles.descripcionContainer}>
+            <h1 style={styles.titulo}>Descripcion</h1>
+            <p style={styles.descripcion}>
+              Blusa diseño estampado con detalle fruncido y revuelo en bordes,
+              estilo casual. Prenda versátil que puedes combinar con pantalones,
+              jeans o short, su estilo romántico denota feminidad y calidez,
+              además aporta un look juvenil a tu atuendo. Cuello cuadrado y
+              tirantes gruesos.
+            </p>
 
-          <p style={styles.descripcion}>
-            Medidas de la modelo: Busto: 87cm, cintura: 65cm, cadera: 99cm,
-            estatura: 1.68cm. *Utiliza talla S
-          </p>
-          <p style={styles.descripcion}>
-            Cuidados de la prenda: lavar con prendas de colores similares, no
-            use blanqueador, cuelgue la prenda para secar.
-          </p>
-        </div>
-        <button className="btn btn-dark" style={styles.btnAgregarCarrito}>
-          Agregar al carrito
-        </button>
-        <div style={styles.imagenesContainer}>
-          <img
-            src={img2}
-            alt="Imagen 1"
-            style={{ ...styles.imagenadd, }}
-          />
-          <img
-            src={img3}
-            alt="Imagen 2"
-            style={{ ...styles.imagenadd,}}
-          />
-          <img
-            src={img1}
-            alt="Imagen 3"
-            style={{ ...styles.imagenadd,}}
-          />
+            <p style={styles.descripcion}>
+              Medidas de la modelo: Busto: 87cm, cintura: 65cm, cadera: 99cm,
+              estatura: 1.68cm. *Utiliza talla S
+            </p>
+            <p style={styles.descripcion}>
+              Cuidados de la prenda: lavar con prendas de colores similares, no
+              use blanqueador, cuelgue la prenda para secar.
+            </p>
+          </div>
+          <button className="btn btn-dark" style={styles.btnAgregarCarrito}>
+            Agregar al carrito
+          </button>
+          <div style={styles.imagenesContainer}>
+            <img src={img2} alt="Imagen 1" style={{ ...styles.imagenadd }} />
+            <img src={img3} alt="Imagen 2" style={{ ...styles.imagenadd }} />
+            <img src={img1} alt="Imagen 3" style={{ ...styles.imagenadd }} />
+          </div>
         </div>
       </div>
     </div>
