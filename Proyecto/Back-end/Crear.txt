@@ -1,0 +1,108 @@
+CREATE DATABASE SNOWSTYLE
+
+-- Creación de la tabla proveedor
+CREATE TABLE IF NOT EXISTS proveedor (
+    id_proveedor SERIAL PRIMARY KEY,
+    name_proveedor VARCHAR(500)
+);
+
+-- Creación de la tabla departamento
+CREATE TABLE IF NOT EXISTS departamento (
+    id_departamento SERIAL PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+
+-- Creación de la tabla talla
+CREATE TABLE IF NOT EXISTS talla (
+    id_talla SERIAL PRIMARY KEY,
+    nom_talla VARCHAR(5),
+    codigo VARCHAR(7)
+);
+
+-- Creación de la tabla marca
+CREATE TABLE IF NOT EXISTS marca (
+    id_marca SERIAL PRIMARY KEY,
+    nom_marca VARCHAR(255),
+    codigo VARCHAR(7)
+);
+
+-- Creación de la tabla Usuario
+CREATE TABLE IF NOT EXISTS Usuario (
+    id_usuario SERIAL PRIMARY KEY,
+    nombre VARCHAR(255),
+	apellidos VARCHAR(255),
+    correo_electronico VARCHAR(255),
+    password VARCHAR(255),
+    direccion VARCHAR(255),
+    telefono INT,
+    dui VARCHAR(10)
+);
+
+-- Creación de la tabla prenda
+CREATE TABLE IF NOT EXISTS prenda (
+    id_prenda SERIAL PRIMARY KEY,
+    id_marca INT,
+    id_departamento INT,
+    id_talla INT,
+    disponibilidad INT,
+    cantidad INT,
+    id_proveedor INT,
+    precio_unitario DECIMAL(10, 2),
+    FOREIGN KEY (id_marca) REFERENCES marca(id_marca),
+    FOREIGN KEY (id_departamento) REFERENCES departamento(id_departamento),
+    FOREIGN KEY (id_talla) REFERENCES talla(id_talla),
+    FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor)
+);
+ALTER TABLE prenda
+ADD COLUMN imagen1 VARCHAR(255),
+ADD COLUMN imagen2 VARCHAR(255),
+ADD COLUMN imagen3 VARCHAR(255),
+ADD COLUMN imagen4 VARCHAR(255);
+ALTER TABLE public.prenda
+ADD COLUMN nombre_prenda VARCHAR(255) COLLATE pg_catalog."default";
+
+-- Creación de la tabla Carrito
+CREATE TABLE IF NOT EXISTS Carrito (
+    id_carrito SERIAL PRIMARY KEY,
+    id_usuario INT,
+    id_prenda INT,
+    estado_carrito VARCHAR(255),
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
+    FOREIGN KEY (id_prenda) REFERENCES prenda(id_prenda)
+);
+
+-- Creación de la tabla items_Carrito
+CREATE TABLE IF NOT EXISTS items_Carrito (
+    id_itemCarrito SERIAL PRIMARY KEY,
+    id_carrito INT,
+    id_prenda INT,
+    cantidad INT,
+    FOREIGN KEY (id_carrito) REFERENCES Carrito(id_carrito),
+    FOREIGN KEY (id_prenda) REFERENCES prenda(id_prenda)
+);
+-- Creación de la tabla factura
+
+CREATE TABLE IF NOT EXISTS factura (
+    id_factura SERIAL PRIMARY KEY,
+    codigo VARCHAR(255),
+    fecha DATE,
+    id_cliente INT
+);
+
+-- Creación de la tabla detalle_factura
+CREATE TABLE IF NOT EXISTS detalle_factura (
+    id_detalle_factura SERIAL PRIMARY KEY,
+    id_factura INT,
+    id_prenda INT,
+    FOREIGN KEY (id_factura) REFERENCES factura(id_factura),
+    FOREIGN KEY (id_prenda) REFERENCES prenda(id_prenda)
+);
+
+
+--Comando Para crear su usuario
+--CREATE ROLE slayer WITH LOGIN PASSWORD 'deku';
+--ALTER ROLE slayer WITH SUPERUSER;
+
+
+ALTER TABLE Usuario
+ADD COLUMN img_perfil VARCHAR(255);
