@@ -1,21 +1,23 @@
 import React from "react";
 import "../pages/css/Modal.css"
 import { Link } from "react-router-dom";
+import googleFontsURL from "../Fuentes/FuenteLetras"
 
 
 const TrendingSectionN = () => {
   // Datos de ejemplo para las cards de imágenes
   const trendingItems = [
-    { id: 1, imageUrl: "https://img.freepik.com/foto-gratis/mujer-adolescente-camisa-cuadros-gorro-gesticulando-aislado_176474-97232.jpg?t=st=1713496228~exp=1713499828~hmac=1ebac0229eaf65ca3390aaa5a8445406f79345d1be48db459230df921a785a92&w=1380", title: "Sudaderas" },
-    { id: 2, imageUrl: "https://img.freepik.com/foto-gratis/chica-manos-cruzadas-pecho-mirando-izquierda_23-2148333190.jpg?t=st=1713496368~exp=1713499968~hmac=cc9026b3d774516c28fdcf7f3678b6faae62483f32650f0e241c4f1bfdbffa6a&w=1380", title: "Camisas" },
-    { id: 3, imageUrl: "https://img.freepik.com/foto-gratis/mujer-adolescente-camisa-cuadros-gorro-gesticulando-aislado_176474-97232.jpg?t=st=1713496228~exp=1713499828~hmac=1ebac0229eaf65ca3390aaa5a8445406f79345d1be48db459230df921a785a92&w=1380", title: "Pantalones" },
-    { id: 4, imageUrl: "https://img.freepik.com/foto-gratis/chica-manos-cruzadas-pecho-mirando-izquierda_23-2148333190.jpg?t=st=1713496368~exp=1713499968~hmac=cc9026b3d774516c28fdcf7f3678b6faae62483f32650f0e241c4f1bfdbffa6a&w=1380", title: "Abrigos" },
+    { id: 1, imageUrl: "https://i.ibb.co/6RddvmQ/ni-os-imagen1.jpg", title: "Sudaderas" },
+    { id: 2, imageUrl: "https://i.ibb.co/p2RYTQS/ni-os-imagen2.webp", title: "Camisas" },
+    { id: 3, imageUrl: "https://i.ibb.co/hgpP7cG/ni-os-imagen3.jpg", title: "Pantalones" },
+    { id: 4, imageUrl: "https://i.ibb.co/cTHRvHZ/ni-os-imagen4.jpg", title: "Abrigos" },
   ];
 
   return (
-    <div className="trending-section">
-      <h1 className="mujeres-header">NIÑOS</h1>
-      <h2 className="trending-header">TENDENCIAS</h2>
+    <div className="trending-section" style={{ fontFamily: 'Prompt, sans-serif' }}>
+      <link rel="stylesheet" href={googleFontsURL} />
+      <h1 className="seccion-ropa-header">NIÑOS</h1>
+      <h3 className="trending-header">------- TENDENCIAS -------</h3>
       <div className="card-container">
         {trendingItems.map((item) => (
           <div key={item.id} className="card-wrapper">

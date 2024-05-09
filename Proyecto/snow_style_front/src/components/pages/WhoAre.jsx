@@ -1,11 +1,14 @@
 import React from "react";
 import videoBackground from "../Multimedia/videoWhoAreUs.mp4";
 import videoConocenos from "../Multimedia/videoWhoAreUs2.mp4";
+import googleFontsURL from "../Fuentes/FuenteLetras";
+
 
 const WhoAre = () => {
   return (
     <>
-      <div>
+      <div style={{ fontFamily: "Prompt, sans-serif" }}>
+        <link rel="stylesheet" href={googleFontsURL} />
         <video autoPlay muted loop className="background-video">
           <source src={videoBackground} type="video/mp4" />
           Tu navegador no admite el elemento de video.
@@ -15,30 +18,39 @@ const WhoAre = () => {
             <div className="text-overlay">
               <div className="text-content">
                 <header>
-                  <h2 >QUIÉNES SOMOS</h2>
+                  <h2>QUIÉNES SOMOS</h2>
                 </header>
-                <h4 >
-                  Bienvenido a SnowStyle, tu destino definitivo para la moda en
-                  la nieve y el frío. Nos enorgullece presentar una selección
-                  cuidadosamente curada de ropa diseñada para aquellos que aman
-                  la aventura al aire libre y buscan estilo sin sacrificar
-                  funcionalidad.
-                </h4>
-                <h4>
-                  Nuestra pasión por la moda en la nieve se refleja en cada
-                  aspecto de nuestro negocio. Desde la cuidadosa selección de
-                  marcas de renombre hasta nuestro compromiso con la calidad y
-                  el servicio al cliente excepcional, nos esforzamos por
-                  brindarte una experiencia de compra impecable en cada visita a
-                  nuestro sitio.
-                </h4>
+                <div className="h4-container">
+                  <div className="h4-item">
+                    <h4 style={{ lineHeight: "1.5" }}>
+                      Bienvenido a SnowStyle, tu destino definitivo para la moda
+                      en la nieve y el frío. Nos enorgullece presentar una
+                      selección cuidadosamente curada de ropa diseñada para
+                      aquellos que aman la aventura al aire libre y buscan
+                      estilo sin sacrificar funcionalidad.
+                    </h4>
+                  </div>
+                  <div className="h4-item">
+                    <h4 style={{ lineHeight: "1.5" }}>
+                      Nuestra pasión por la moda en la nieve se refleja en cada
+                      aspecto de nuestro negocio. Desde la cuidadosa selección
+                      de marcas de renombre hasta nuestro compromiso con la
+                      calidad y el servicio al cliente excepcional, nos
+                      esforzamos por brindarte una experiencia de compra
+                      impecable en cada visita a nuestro sitio.
+                    </h4>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
         </div>
       </div>
 
-      <div className="who-are-container">
+      <div
+        className="who-are-container"
+        style={{ fontFamily: "Prompt, sans-serif" }}
+      >
         <video
           autoPlay
           muted
@@ -77,7 +89,7 @@ const WhoAre = () => {
             </address>
           </div>
         </div>
-        </div>
+      </div>
     </>
   );
 };
