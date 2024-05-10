@@ -11,11 +11,12 @@ import WhoAre from "./components/pages/WhoAre";
 import DetalleProducto from "./components/pages/DetalleProducto";
 import LostP from "./components/pages/LostP";
 import Pago from "./components/pages/Pago";
-
+import CardsPrenda from "./components/pages/CardsPrenda";
+import DetallePrenda from "./components/pages/DetallePrenda";
 function App() {
   return (
     <div className="App">
-      <NavBar data={false} />
+      <NavBar />
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="EXPLOR" element={<Explorar />} />
@@ -28,6 +29,11 @@ function App() {
         <Route path="WHOARE" element={<WhoAre />} />
         <Route path="DETALLEPRODUCTO" element={<DetalleProducto />} />
         <Route path="PAGO" element={<Pago />} />
+        <Route
+          path="/prendas/:tipoPrendaId/:departamento"
+          element={<CardsPrenda />}
+        />
+        <Route path="/detalle/:id_prenda" element={<DetallePrenda />} />
       </Routes>
       <Footer />
     </div>

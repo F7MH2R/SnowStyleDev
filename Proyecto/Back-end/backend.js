@@ -135,6 +135,46 @@ app.post("/register", async (req, res) => {
     }
   }
 });
+// Endpoint para obtener prendas por tipo de prenda
+app.get("/api/prendas/tipo/:tipoPrendaId/:departamento", async (req, res) => {
+  const { tipoPrendaId, departamento } = req.params;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM prenda WHERE id_tipo_prenda = $1 AND id_departamento = $2",
+      [tipoPrendaId, departamento]
+    );
+
+    if (result.rows.length > 0) {
+      res.json(result.rows);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No se encontraron prendas de este tipo." });
+    }
+  } catch (err) {
+    console.error("Error al obtener prendas por tipo:", err);
+    res.status(500).json({ message: "Error al obtener prendas." });
+  }
+});
+// Endpoint para obtener detalles de una prenda por ID
+app.get("/api/prendas/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "SELECT * FROM prenda WHERE id_prenda = $1",
+      [id]
+    );
+    if (result.rows.length === 0) {
+      res.status(404).json({ error: "Prenda no encontrada" });
+    } else {
+      res.json(result.rows[0]);
+    }
+  } catch (error) {
+    console.error("Error al obtener detalles de la prenda:", error);
+    res.status(500).json({ error: "Error al obtener detalles de la prenda" });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en el puerto ${port}`);

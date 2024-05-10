@@ -12,6 +12,12 @@ CREATE TABLE IF NOT EXISTS departamento (
     nombre VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS public.tipo_prenda (
+    id_tipo_prenda int PRIMARY KEY,
+    nombre_tipo character varying(255) COLLATE pg_catalog."default" NOT NULL
+);
+
+
 -- Creación de la tabla talla
 CREATE TABLE IF NOT EXISTS talla (
     id_talla SERIAL PRIMARY KEY,
@@ -60,6 +66,17 @@ ADD COLUMN imagen3 VARCHAR(255),
 ADD COLUMN imagen4 VARCHAR(255);
 ALTER TABLE public.prenda
 ADD COLUMN nombre_prenda VARCHAR(255) COLLATE pg_catalog."default";
+
+
+ALTER TABLE public.prenda
+ADD COLUMN id_tipo_prenda integer;
+
+-- Crear la relación de clave foránea entre prenda y tipo_prenda
+ALTER TABLE public.prenda
+ADD CONSTRAINT fk_prenda_tipo_prenda
+FOREIGN KEY (id_tipo_prenda)
+REFERENCES public.tipo_prenda (id_tipo_prenda)
+ON DELETE SET NULL; -- Define qué hacer si el tipo de prenda se elimina
 
 -- Creación de la tabla Carrito
 CREATE TABLE IF NOT EXISTS Carrito (
