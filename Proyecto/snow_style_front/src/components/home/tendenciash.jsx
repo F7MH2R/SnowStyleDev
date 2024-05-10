@@ -1,7 +1,7 @@
 import React from "react";
 import "../pages/css/Modal.css";
 import { Link } from "react-router-dom";
-
+import googleFontsURL from "../Fuentes/FuenteLetras";
 const TrendingSectionH = () => {
   const trendingItems = [
     {
@@ -31,7 +31,10 @@ const TrendingSectionH = () => {
   ];
 
   return (
-    <div className="trending-section">
+    <div
+      className="trending-section"
+      style={{ fontFamily: "Prompt, sans-serif" }}
+    >
       <h1 className="seccion-ropa-header">CABALLERO</h1>
       <h3 className="trending-header">------- TENDENCIAS -------</h3>
       <div className="card-container">
@@ -49,7 +52,7 @@ const TrendingSectionH = () => {
                 className="card-img"
               />
             </Link>
-            <div className="card-title">
+            <div className="title-container">
               <h4>{item.title}</h4>
             </div>
           </div>

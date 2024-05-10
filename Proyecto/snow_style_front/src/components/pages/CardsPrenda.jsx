@@ -57,6 +57,33 @@ const CardsPrenda = () => {
                     />
                   </Carousel.Item>
                 )}
+                {prenda.imagen2 && (
+                  <Carousel.Item>
+                    <img
+                      className="d-block w-100"
+                      src={prenda.imagen1}
+                      alt={`Imagen de ${prenda.nombre_prenda}`}
+                    />
+                  </Carousel.Item>
+                )}
+                {prenda.imagen3 && (
+                  <Carousel.Item>
+                    <img
+                      className="d-block w-100"
+                      src={prenda.imagen1}
+                      alt={`Imagen de ${prenda.nombre_prenda}`}
+                    />
+                  </Carousel.Item>
+                )}
+                {prenda.imagen4 && (
+                  <Carousel.Item>
+                    <img
+                      className="d-block w-100"
+                      src={prenda.imagen1}
+                      alt={`Imagen de ${prenda.nombre_prenda}`}
+                    />
+                  </Carousel.Item>
+                )}
               </Carousel>
               <Card.Body>
                 <Card.Title>
