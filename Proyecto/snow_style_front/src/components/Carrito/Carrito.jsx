@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Item from "../Item/Item";
 import { Button, Offcanvas } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
@@ -8,20 +8,29 @@ import "./Carrito.css"; // Cambio en la importación del CSS
 import { ejecutarGet } from "../compartidos/request";
 
 const Carrito = () => {
-  let items = useRef(ejecutarGet("/api/carrito/2/items"));
-
-  console.log("items: ====>", items);
-
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
 
-  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    async function fetchItems() {
+      const idUsuario = localStorage.getItem("UserId");
+      const itemsCarrito = await ejecutarGet(`/api/carrito/${idUsuario}/items`);
+      let costoTotal = 0;
+      if (itemsCarrito.data) {
+        costoTotal = itemsCarrito.data.reduce(
+          (total, item) => total + parseFloat(item.precio),
+          0
+        );
+      }
+      setTotal(parseFloat(costoTotal));
+      setItems(itemsCarrito.data);
+    }
 
-  const handleShowModal = () => setShowModal(true);
-
-  let total = items.reduce((total, item) => total + item.precio, 0);
+    fetchItems();
+  }, []);
 
   return (
     <>
@@ -52,14 +61,13 @@ const Carrito = () => {
         <Offcanvas.Body className="carrito-offcanvas-body">
           {" "}
           {/* Cambio en la clase */}
-          {items.current.values ? (
-            items.current.values.map((item) => {
-              total += item.precio;
+          {items.length > 0 ? (
+            items.map((item) => {
               return (
                 <Item
                   imagen={item.imagen}
                   descripcion={item.descripcion}
-                  precio={item.precio}
+                  precio={parseFloat(item.precio)}
                   id={item.id}
                   key={item.id} // Agregado el key prop para evitar advertencias en la consola
                 />
@@ -76,9 +84,13 @@ const Carrito = () => {
                 style={{ fontFamily: "Prompt, sans-serif" }}
                 className="carrito-col"
               >
-                <span style={{ marginRight: "70%" }}>Total:</span>{" "}
-                {/* Espacio adicional a la derecha */}
-                <span>${total}</span>
+                <span style={{ marginRight: "70%" }}>Total:&nbsp;</span>
+                <span>
+                  {total.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
+                </span>
               </div>
             </div>
             <div className="carrito-row">
@@ -88,7 +100,6 @@ const Carrito = () => {
                 <button
                   variant="outline-success"
                   style={{ fontFamily: "Prompt, sans-serif" }}
-                  onClick={handleShowModal}
                   className="carrito-pay-button"
                 >
                   Pagar
