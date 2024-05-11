@@ -1,42 +1,67 @@
-import React from "react";
-import img1 from "../Multimedia/a1.png";
-import img2 from "../Multimedia/a2.png";
-import img3 from "../Multimedia/a3.png";
-import img4 from "../Multimedia/Sueter 3.png";
-import s1 from "../Multimedia/s1.png";
-import s2 from "../Multimedia/s2.png";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import googleFontsURL from "../Fuentes/FuenteLetras";
-
+import { Table } from "react-bootstrap";
 const DetalleProducto = () => {
+  const { id_prenda } = useParams(); // Obtener el ID de la prenda de la URL
+  const [prenda, setPrenda] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPrenda = async () => {
+      try {
+        const response = await axios.get(`/api/prendas/${id_prenda}`); // Llamada a la API
+        setPrenda(response.data); // Establecer la prenda obtenida
+        setLoading(false);
+      } catch (err) {
+        setError("No se pudieron obtener los detalles de la prenda.");
+        setLoading(false);
+      }
+    };
+
+    fetchPrenda();
+  }, [id_prenda]); // Ejecutar el efecto cuando cambia el ID de la prenda
+
+  if (loading) {
+    return <div>Cargando detalles de la prenda...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
   return (
     <div style={{ fontFamily: "Prompt, sans-serif" }}>
       <div style={styles.detalleProductoContainer}>
         <link rel="stylesheet" href={googleFontsURL} />
         <div style={styles.detalleProductoImage}>
           <img
-            src={img4}
+            src={prenda.imagen4}
             alt="Logo de SnowStyle"
             className="logo"
             style={{ ...styles.imagen }}
           />
         </div>
         <div style={styles.detalleProductoContent}>
-          <h1 style={styles.titulo}>Jersey cropped punto rib hombro caído</h1>
+          <h1 style={styles.titulo}>{prenda.nombre_prenda}</h1>
           <div style={styles.caracteristicasContainer}>
             <p style={styles.caracteristicas}>Ref 2174/376/700</p>
             <div style={styles.imagenesContainer1}>
               <img
-                src={s1}
+                src={prenda.imagen1}
                 alt="Imagen 1"
                 style={{ ...styles.imagenMiniatura }}
               />
               <img
-                src={s2}
+                src={prenda.imagen2}
                 alt="Imagen 2"
                 style={{ ...styles.imagenMiniatura }}
               />
             </div>
-            <p style={styles.caracteristicas}>Precio: $39.95</p>
+            <p style={styles.caracteristicas}>
+              Precio: ${prenda.precio_unitario}
+            </p>
           </div>
           <h1 style={styles.titulo}>Tallas Disponibles</h1>
           <div style={styles.botonesContainer}>
@@ -58,30 +83,57 @@ const DetalleProducto = () => {
           </div>
           <div style={styles.descripcionContainer}>
             <h1 style={styles.titulo}>Descripcion</h1>
-            <p style={styles.descripcion}>
-              Blusa diseño estampado con detalle fruncido y revuelo en bordes,
-              estilo casual. Prenda versátil que puedes combinar con pantalones,
-              jeans o short, su estilo romántico denota feminidad y calidez,
-              además aporta un look juvenil a tu atuendo. Cuello cuadrado y
-              tirantes gruesos.
-            </p>
-
-            <p style={styles.descripcion}>
-              Medidas de la modelo: Busto: 87cm, cintura: 65cm, cadera: 99cm,
-              estatura: 1.68cm. *Utiliza talla S
-            </p>
-            <p style={styles.descripcion}>
-              Cuidados de la prenda: lavar con prendas de colores similares, no
-              use blanqueador, cuelgue la prenda para secar.
-            </p>
+            <p style={styles.descripcion}>{prenda.descripcion}</p>
           </div>
+          <Table striped bordered hover responsive="md" style={styles.table}>
+            <thead>
+              <tr>
+                <th>Medida</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Busto</td>
+                <td>87cm</td>
+              </tr>
+              <tr>
+                <td>Cintura</td>
+                <td>65cm</td>
+              </tr>
+              <tr>
+                <td>Cadera</td>
+                <td>99cm</td>
+              </tr>
+              <tr>
+                <td>Estatura</td>
+                <td>1.68cm</td>
+              </tr>
+              <tr>
+                <td>Talla</td>
+                <td>S</td>
+              </tr>
+            </tbody>
+          </Table>
           <button className="btn btn-dark" style={styles.btnAgregarCarrito}>
             Agregar al carrito
           </button>
           <div style={styles.imagenesContainer}>
-            <img src={img2} alt="Imagen 1" style={{ ...styles.imagenadd }} />
-            <img src={img3} alt="Imagen 2" style={{ ...styles.imagenadd }} />
-            <img src={img1} alt="Imagen 3" style={{ ...styles.imagenadd }} />
+            <img
+              src={prenda.imagen1}
+              alt="Imagen 1"
+              style={{ ...styles.imagenadd }}
+            />
+            <img
+              src={prenda.imagen2}
+              alt="Imagen 2"
+              style={{ ...styles.imagenadd }}
+            />
+            <img
+              src={prenda.imagen3}
+              alt="Imagen 3"
+              style={{ ...styles.imagenadd }}
+            />
           </div>
         </div>
       </div>
@@ -181,5 +233,12 @@ const styles = {
     fontSize: "14px",
     marginRight: "10px", // Aumentamos el margen entre los botones
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Agregamos una sombra
+  },
+  table: {
+    marginTop: "20px",
+    marginBottom: "20px",
+    borderRadius: "10px",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    overflowX: "auto",
   },
 };

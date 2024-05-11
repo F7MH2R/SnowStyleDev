@@ -87,12 +87,10 @@ const CardsPrenda = () => {
               </Carousel>
               <Card.Body>
                 <Card.Title>
-                  <Link
-                    to={`/detalle/${prenda.id_prenda}`}
-                    className="card-link"
-                  >
-                    {prenda.nombre_prenda}
-                  </Link>
+                  <h3>{prenda.nombre_prenda} </h3>
+                </Card.Title>
+                <Card.Title>
+                  <h4>Precio: ${prenda.precio_unitario} </h4>
                 </Card.Title>
                 <Button
                   variant="primary"

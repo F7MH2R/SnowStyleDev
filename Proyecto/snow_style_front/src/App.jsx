@@ -12,7 +12,7 @@ import DetalleProducto from "./components/pages/DetalleProducto";
 import LostP from "./components/pages/LostP";
 import Pago from "./components/pages/Pago";
 import CardsPrenda from "./components/pages/CardsPrenda";
-import DetallePrenda from "./components/pages/DetallePrenda";
+//import DetallePrenda from "./components/pages/DetallePrenda";
 function App() {
   return (
     <div className="App">
@@ -33,7 +33,7 @@ function App() {
           path="/prendas/:tipoPrendaId/:departamento"
           element={<CardsPrenda />}
         />
-        <Route path="/detalle/:id_prenda" element={<DetallePrenda />} />
+        <Route path="/detalle/:id_prenda" element={<DetalleProducto />} />
       </Routes>
       <Footer />
     </div>

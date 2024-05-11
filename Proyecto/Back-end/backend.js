@@ -157,6 +157,7 @@ app.get("/api/prendas/tipo/:tipoPrendaId/:departamento", async (req, res) => {
     res.status(500).json({ message: "Error al obtener prendas." });
   }
 });
+
 // Endpoint para obtener detalles de una prenda por ID
 app.get("/api/prendas/:id", async (req, res) => {
   const { id } = req.params;
