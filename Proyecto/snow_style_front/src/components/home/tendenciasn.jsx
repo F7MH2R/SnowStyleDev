@@ -10,7 +10,7 @@ const TrendingSectionN = () => {
       id: 1,
       imageUrl: "https://i.ibb.co/6RddvmQ/ni-os-imagen1.jpg",
       title: "Sudaderas",
-      departamento: 2,
+      departamento: 3,
     },
     {
       id: 2,

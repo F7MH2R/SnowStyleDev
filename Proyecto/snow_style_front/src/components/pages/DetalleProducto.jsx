@@ -88,30 +88,30 @@ const DetalleProducto = () => {
           <Table striped bordered hover responsive="md" style={styles.table}>
             <thead>
               <tr>
-                <th>Medida</th>
-                <th>Valor</th>
+                <th>Información</th>
+                <th>Detalle</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Busto</td>
-                <td>87cm</td>
+                <td>Exportado</td>
+                <td>{prenda.material1}</td>
               </tr>
               <tr>
-                <td>Cintura</td>
-                <td>65cm</td>
+                <td>Fabricado</td>
+                <td>{prenda.material2}</td>
               </tr>
               <tr>
-                <td>Cadera</td>
-                <td>99cm</td>
+                <td>Material</td>
+                <td>{prenda.material3}</td>
               </tr>
               <tr>
-                <td>Estatura</td>
-                <td>1.68cm</td>
+                <td>Medida</td>
+                <td>{prenda.material4} metros</td>
               </tr>
               <tr>
-                <td>Talla</td>
-                <td>S</td>
+                <td>Marca</td>
+                <td>{prenda.material5}</td>
               </tr>
             </tbody>
           </Table>

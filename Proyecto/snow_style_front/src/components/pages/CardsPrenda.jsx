@@ -61,7 +61,7 @@ const CardsPrenda = () => {
                   <Carousel.Item>
                     <img
                       className="d-block w-100"
-                      src={prenda.imagen1}
+                      src={prenda.imagen2}
                       alt={`Imagen de ${prenda.nombre_prenda}`}
                     />
                   </Carousel.Item>
@@ -70,7 +70,7 @@ const CardsPrenda = () => {
                   <Carousel.Item>
                     <img
                       className="d-block w-100"
-                      src={prenda.imagen1}
+                      src={prenda.imagen3}
                       alt={`Imagen de ${prenda.nombre_prenda}`}
                     />
                   </Carousel.Item>
@@ -79,7 +79,7 @@ const CardsPrenda = () => {
                   <Carousel.Item>
                     <img
                       className="d-block w-100"
-                      src={prenda.imagen1}
+                      src={prenda.imagen4}
                       alt={`Imagen de ${prenda.nombre_prenda}`}
                     />
                   </Carousel.Item>
