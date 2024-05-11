@@ -1,28 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Item from "../Item/Item";
-import { Button, Offcanvas, Modal } from "react-bootstrap";
+import { Button, Offcanvas } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import { FaShoppingCart } from "react-icons/fa";
 import shoppingCartIcon from "../Multimedia/shopping-cart-icon.png"; // Ruta a tu imagen de icono de carrito de compras
 import "./Carrito.css"; // Cambio en la importación del CSS
-//remover al unir con el backend
-import imagen from "../Multimedia/blusaCarrito.jpg";
+import { ejecutarGet } from "../compartidos/request";
 
-const Carrito = ({ items }) => {
-  items = [
-    {
-      imagen: imagen,
-      descripcion: "Jersey cropped",
-      precio: 10.25,
-      id: 1,
-    },
-    {
-      imagen: imagen,
-      descripcion: "Jersey cropped",
-      precio: 10.25,
-      id: 2,
-    },
-  ];
+const Carrito = () => {
+  let items = useRef(ejecutarGet("/api/carrito/2/items"));
+
+  console.log("items: ====>", items);
 
   const [show, setShow] = useState(false);
 
@@ -31,46 +19,7 @@ const Carrito = ({ items }) => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const handleCloseModal  = () => setShowModal(false);
-  const handleShowModal  = () => setShowModal(true);
-
-  const generarFactura = () => {
-    const factura = items.map((item) => ({
-      nombre: item.descripcion,
-      cantidad: 1,
-      subtotal: item.precio,
-      imagen: item.imagen, // Añade la imagen al objeto de la factura
-    }));
-
-    return factura;
-  };
-
-  const descargarFactura = () => {
-    const factura = generarFactura();
-    const facturaTexto = factura.map(
-      (item, index) =>
-        `Producto ${index + 1} - ${item.nombre} - Cantidad: ${
-          item.cantidad
-        } - Subtotal: ${item.subtotal}\n`
-    );
-    facturaTexto.push(
-      `Total: ${items.reduce((total, item) => total + item.precio, 0)}`
-    );
-
-    const facturaBlob = new Blob([facturaTexto.join("\n")], {
-      type: "text/plain",
-    });
-    const url = window.URL.createObjectURL(facturaBlob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "factura.txt");
-    document.body.appendChild(link);
-    link.click();
-
-    link.parentNode.removeChild(link);
-    window.URL.revokeObjectURL(url);
-  };
+  const handleShowModal = () => setShowModal(true);
 
   let total = items.reduce((total, item) => total + item.precio, 0);
 
@@ -103,8 +52,8 @@ const Carrito = ({ items }) => {
         <Offcanvas.Body className="carrito-offcanvas-body">
           {" "}
           {/* Cambio en la clase */}
-          {items ? (
-            items.map((item) => {
+          {items.current.values ? (
+            items.current.values.map((item) => {
               total += item.precio;
               return (
                 <Item
@@ -136,7 +85,12 @@ const Carrito = ({ items }) => {
               {" "}
               {/* Cambio en la clase */}
               <a href="/PAGO">
-                <button variant="outline-success" style={{ fontFamily: "Prompt, sans-serif" }} onClick={handleShowModal} className="carrito-pay-button">
+                <button
+                  variant="outline-success"
+                  style={{ fontFamily: "Prompt, sans-serif" }}
+                  onClick={handleShowModal}
+                  className="carrito-pay-button"
+                >
                   Pagar
                 </button>
               </a>
