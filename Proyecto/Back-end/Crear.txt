@@ -131,3 +131,51 @@ CREATE TABLE IF NOT EXISTS detalle_factura (
 
 ALTER TABLE Usuario
 ADD COLUMN img_perfil VARCHAR(255);
+
+
+
+ALTER TABLE public.talla
+ADD COLUMN id_prenda integer;
+
+
+ALTER TABLE public.talla
+ADD CONSTRAINT fk_prenda
+FOREIGN KEY (id_prenda) 
+REFERENCES public.prenda(id_prenda);
+
+
+
+CREATE TABLE tallas_prenda (
+    id_prenda INT,
+    id_talla INT,
+    PRIMARY KEY (id_prenda, id_talla)
+);
+
+
+
+ALTER TABLE IF EXISTS public.tallas_prenda
+    ADD CONSTRAINT fk_id_prenda FOREIGN KEY (id_prenda)
+    REFERENCES public.prenda (id_prenda) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+CREATE INDEX IF NOT EXISTS fki_fk_id_prenda
+    ON public.tallas_prenda(id_prenda);
+
+
+ALTER TABLE IF EXISTS public.tallas_prenda
+    ADD CONSTRAINT fk_id_talla FOREIGN KEY (id_talla)
+    REFERENCES public.talla (id_talla) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+CREATE INDEX IF NOT EXISTS fki_fk_id_talla
+    ON public.tallas_prenda(id_talla);
+
+
+consulta prenda solo esas tallas
+select * from prenda p, talla t, tallas_prenda tp
+where 
+p.id_prenda = tp.id_prenda and 
+t.id_talla = tp.id_talla and
+p.id_prenda = $1
