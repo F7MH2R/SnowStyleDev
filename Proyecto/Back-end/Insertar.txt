@@ -108,8 +108,8 @@ INSERT INTO items_Carrito (id_itemCarrito, id_carrito, id_prenda, cantidad) VALU
 --Insertando Prendas Hombres
 
 INSERT INTO public.prenda(
-	id_marca, id_departamento, id_talla, disponibilidad, cantidad, id_proveedor, precio_unitario, imagen1, imagen2, imagen3, imagen4, nombre_prenda, id_tipo_prenda, descripcion, material1, material2, material3, material4, material5)
-	VALUES ( 1, 1, 1, 1, 100, 2, 25.99, 'https://i.ibb.co/BwtgpJF/63ade1b10c5b96fd2c3a1539f7ce7d5d-2239653700-2-4-0.jpg', 'https://i.ibb.co/zZxNgYy/603af13fc1ee06579804f315a5fe3189-2239653700-1-1-0.jpg', 'https://i.ibb.co/d4bPQ5f/c6b7a1cdf0157590453285d4bcbeeeb6-2239653700-2-1-0.jpg', '
+	id_marca, id_departamento, disponibilidad, cantidad, id_proveedor, precio_unitario, imagen1, imagen2, imagen3, imagen4, nombre_prenda, id_tipo_prenda, descripcion, material1, material2, material3, material4, material5)
+	VALUES ( 1, 1,  1, 100, 2, 25.99, 'https://i.ibb.co/BwtgpJF/63ade1b10c5b96fd2c3a1539f7ce7d5d-2239653700-2-4-0.jpg', 'https://i.ibb.co/zZxNgYy/603af13fc1ee06579804f315a5fe3189-2239653700-1-1-0.jpg', 'https://i.ibb.co/d4bPQ5f/c6b7a1cdf0157590453285d4bcbeeeb6-2239653700-2-1-0.jpg', '
 https://i.ibb.co/4JB13Xx/c76f79612123260707905efb93ab56b9-2239653700-2-5-0.jpg', 'Jersey efecto lavado', 4, 'Sumérgete en la comodidad y el estilo relajado con nuestro Jersey de Efecto Lavado. Confeccionado con un proceso especial que le confiere una textura suave y un aspecto vintage, este jersey es la opción perfecta para aquellos que buscan un toque de distinción en su guardarropa.', 'Exportación de Grecia', 'Fabricado de alta costura', 'Ceda Australiana', '1.60', 'GUCCI');
 
 
