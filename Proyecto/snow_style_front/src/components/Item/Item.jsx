@@ -26,14 +26,15 @@ const Item = ({ imagen, descripcion, precio, id }) => {
       <div className="container">
         <div className="row">
           <div className="col imagen-small">
-            {imagen ? (
-              <img src={imagen} alt="Item" />
-            ) : (
-              <div>No imagen</div>
-            )}
+            {imagen ? <img src={imagen} alt="Item" /> : <div>No imagen</div>}
           </div>
           <div className="col precio-descripcion">
-            <div className="row">$ {precio}</div>
+            <div className="row">
+              {precio.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
             <div className="row">{descripcion}</div>
             <div className="row">
               <Button className="btn-ver-detalles" onClick={handleShow}>
@@ -43,7 +44,11 @@ const Item = ({ imagen, descripcion, precio, id }) => {
           </div>
         </div>
 
-        <Modal show={showModal} onHide={handleClose} style={{ fontFamily: "Prompt, sans-serif" }}>
+        <Modal
+          show={showModal}
+          onHide={handleClose}
+          style={{ fontFamily: "Prompt, sans-serif" }}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Detalles de compra</Modal.Title>
           </Modal.Header>

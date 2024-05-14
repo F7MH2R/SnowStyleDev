@@ -6,6 +6,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken"); // Añade la importación de JWT
 const app = express();
 const port = process.env.PORT || 3077;
+const { queryCarrito } = require("./queries");
 
 // Configuración de CORS para permitir solicitudes desde cualquier origen
 app.use(cors());
@@ -133,6 +134,26 @@ app.post("/register", async (req, res) => {
       console.error(error);
       res.status(500).json({ message: "Error interno del servidor" });
     }
+  }
+});
+
+app.get("/api/carrito/:idUsuario/items", async (req, res) => {
+  const idUsuario = req.params.idUsuario;
+  console.log("Id de usuario: ", idUsuario);
+  console.log("Query: ", queryCarrito);
+  try {
+    const result = await pool.query(queryCarrito, [idUsuario]);
+
+    if (result.rowCount > 0) {
+      console.log("Datos encontrados:", result.rows); // Mostrar ID en consola
+      res.status(200).json(result.rows);
+    } else {
+      res.status(200).json([]);
+      console.log("Carrito vacio");
+    }
+  } catch (error) {
+    console.error("Error al obtener las prendas del carrito:", error);
+    res.status(500).json({ error: "Error al obtener las prendas del carrito" });
   }
 });
 
