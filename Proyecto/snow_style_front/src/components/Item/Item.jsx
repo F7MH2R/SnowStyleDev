@@ -2,20 +2,31 @@ import React, { useState } from "react";
 import { Modal, Button, Form, FormControl } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import "./Item.css";
+import { ejecutarPatch } from "../compartidos/request";
 
-const Item = ({ imagen, descripcion, precio, id }) => {
+const Item = ({
+  imagen,
+  descripcion,
+  precio,
+  id,
+  cantidad,
+  idItemsCarrito,
+}) => {
   const [showModal, setShowModal] = useState(false);
-  const [cantidad, setCantidad] = useState(1);
+  const [cantidadItems, setCantidad] = useState(cantidad);
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
   const aumentarCantidad = () => {
+    // async function actualizarCantidad() {
+    //   const resultado = await ejecutarPatch(``, {cantidad: cantidadItems + 1})
+    // }
     setCantidad((prevCantidad) => prevCantidad + 1);
   };
 
   const reducirCantidad = () => {
-    if (cantidad > 1) {
+    if (cantidadItems > 1) {
       setCantidad((prevCantidad) => prevCantidad - 1);
     }
   };
@@ -33,7 +44,9 @@ const Item = ({ imagen, descripcion, precio, id }) => {
               {precio.toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
-              })}
+              }) +
+                ` x ` +
+                cantidadItems}
             </div>
             <div className="row">{descripcion}</div>
             <div className="row">
@@ -72,7 +85,7 @@ const Item = ({ imagen, descripcion, precio, id }) => {
                   <FormControl
                     className="mx-2"
                     type="number"
-                    value={cantidad}
+                    value={cantidadItems}
                     readOnly
                   />
                   <Button className="btn-aumentar" onClick={aumentarCantidad}>

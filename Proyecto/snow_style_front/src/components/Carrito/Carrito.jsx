@@ -21,7 +21,7 @@ const Carrito = () => {
       let costoTotal = 0;
       if (itemsCarrito.data) {
         costoTotal = itemsCarrito.data.reduce(
-          (total, item) => total + parseFloat(item.precio),
+          (total, item) => total + parseFloat(item.precio * item.cantidad),
           0
         );
       }
@@ -68,8 +68,10 @@ const Carrito = () => {
                   imagen={item.imagen}
                   descripcion={item.descripcion}
                   precio={parseFloat(item.precio)}
+                  cantidad={parseFloat(item.cantidad)}
                   id={item.id}
                   key={item.id} // Agregado el key prop para evitar advertencias en la consola
+                  idItemsCarrito={item.id_itemcarrito}
                 />
               );
             })

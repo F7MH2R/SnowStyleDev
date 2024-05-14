@@ -6,7 +6,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken"); // Añade la importación de JWT
 const app = express();
 const port = process.env.PORT || 3077;
-const { queryCarrito } = require("./queries");
+const { queryCarrito, updateCantidadItems } = require("./queries");
 
 // Configuración de CORS para permitir solicitudes desde cualquier origen
 app.use(cors());
@@ -139,8 +139,6 @@ app.post("/register", async (req, res) => {
 
 app.get("/api/carrito/:idUsuario/items", async (req, res) => {
   const idUsuario = req.params.idUsuario;
-  console.log("Id de usuario: ", idUsuario);
-  console.log("Query: ", queryCarrito);
   try {
     const result = await pool.query(queryCarrito, [idUsuario]);
 
@@ -154,6 +152,22 @@ app.get("/api/carrito/:idUsuario/items", async (req, res) => {
   } catch (error) {
     console.error("Error al obtener las prendas del carrito:", error);
     res.status(500).json({ error: "Error al obtener las prendas del carrito" });
+  }
+});
+
+app.patch("/api/carrito/items/:idItemCarrito", async (req, res) => {
+  const idItemCarrito = req.params.idItemCarrito;
+  const cantidad = req.body.cantidad;
+  try {
+    const resultado = await pool.query(updateCantidadItems, [
+      cantidad,
+      idItemCarrito,
+    ]);
+    res.status(200).json({ cantidad: cantidad, resultado: resultado });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al actualizaar la cantidad de items" });
   }
 });
 
