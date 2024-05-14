@@ -14,10 +14,10 @@ app.use(bodyParser.json()); // Middleware para analizar cuerpos JSON
 
 // Configuración de la base de datos PostgreSQL
 const pool = new Pool({
-  user: "postgres", // Cambia por tu usuario
+  user: "slayer", // Cambia por tu usuario
   host: "localhost",
   database: "snowstyle", // Nombre de tu base de datos
-  password: "ivonne.33.", // Cambia por tu contraseña
+  password: "deku", // Cambia por tu contraseña
   port: 5432, // Puerto estándar para PostgreSQL
 });
 
