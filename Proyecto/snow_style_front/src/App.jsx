@@ -25,7 +25,7 @@ function App() {
     // Simula una operación de carga
     setTimeout(() => {
       setLoading(false); // Cuando la carga está completa, cambia loading a false
-    }, 3000); // Simula una carga de 3 segundos
+    }, 1000); // Simula una carga de 3 segundos
   }, []);
   return (
     <div>

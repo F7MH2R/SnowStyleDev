@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken"); // Añade la importación de JWT
 const app = express();
 const crypto = require("crypto");
 const port = process.env.PORT || 3077;
-
+const path = require("path");
 // Configuración de CORS para permitir solicitudes desde cualquier origen
 app.use(cors());
 app.use(bodyParser.json()); // Middleware para analizar cuerpos JSON
@@ -212,9 +212,75 @@ app.post("/api/request-password-change", async (req, res) => {
       from: "snowstyle342@gmail.com",
       subject: "Solicitud de cambio de contraseña",
       text: `Recibiste esto porque solicitaste cambiar tu contraseña.\n\n
-             Por favor, haz clic en el siguiente enlace o pégalo en tu navegador para completar el proceso:\n\n
-             ${resetLink}\n\n
-             Si no solicitaste esto, ignora este correo y tu contraseña permanecerá igual.\n`,
+         Por favor, haz clic en el siguiente enlace o pégalo en tu navegador para completar el proceso:\n\n
+         ${resetLink}\n\n
+         Si no solicitaste esto, ignora este correo y tu contraseña permanecerá igual.\n`,
+      html: `
+    <html>
+    <head>
+      <style>
+        /* Estilos personalizados aquí */
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f5f5f5;
+          color: #333;
+          margin: 0;
+          padding: 0;
+        }
+        .card {
+          max-width: 400px;
+          margin: 20px auto;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+          font-size: 20px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        .card-content {
+          margin-bottom: 20px;
+        }
+        .btn {
+          display: inline-block;
+          padding: 10px 20px;
+          background-color: transparent;
+          color: #007bff;
+          text-decoration: none;
+          border: 2px solid #007bff;
+          border-radius: 4px;
+          transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+          background-color: #007bff;
+          color: #fff;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <div class="card-content">
+          <h2 class="card-title">Solicitud Para Cambiar Contraseña</h2>
+          <p>Haz solicitado cambiar tu contraseña.</p>
+          <p>Por favor, haz clic en el siguiente enlace o pégalo en tu navegador para completar el proceso:</p>
+          <a href="${resetLink}" class="btn">Click Aquí Para Cambiar Contraseña</a>
+        </div>
+        <div class="card-image">
+          <img src="https://i.ibb.co/n11ZmdR/Snow-Style.jpg" alt="Logo de la empresa" style="width: 100%;">
+        </div>
+      </div>
+    </body>
+    </html>
+  `,
+      attachments: [
+        {
+          filename: "logo.png",
+          path: path.join(__dirname, "./logo/SnowStyle.jpg"),
+          cid: "logo", // mismo cid que en el src de la imagen
+        },
+      ],
     };
 
     transporter.sendMail(mailOptions, (error) => {
