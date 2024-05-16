@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import "../pages/css/Modal.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FiltroPrendas from "./FiltroPrendas";
-
+import withLoader from "../Load/withLoader ";
 const CardsPrenda = () => {
   const { tipoPrendaId, departamento } = useParams();
   const [prendas, setPrendas] = useState([]);
@@ -174,4 +174,4 @@ CardsPrenda.propTypes = {
   tipoPrendaId: PropTypes.string,
 };
 
-export default CardsPrenda;
+export default withLoader(CardsPrenda);

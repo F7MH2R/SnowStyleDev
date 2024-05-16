@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Card, Button, Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import withLoader from "../Load/withLoader ";
 const DetallePrenda = () => {
   const { id_prenda } = useParams(); // Obtener el ID de la prenda de la URL
   const [prenda, setPrenda] = useState(null);
@@ -91,4 +91,4 @@ const DetallePrenda = () => {
   );
 };
 
-export default DetallePrenda;
+export default withLoader(DetallePrenda);
