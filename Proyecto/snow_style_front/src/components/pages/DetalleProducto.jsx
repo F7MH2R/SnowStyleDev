@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import { Table } from "react-bootstrap";
+import withLoader from "../Load/withLoader ";
 const DetalleProducto = () => {
   const { id_prenda } = useParams(); // Obtener el ID de la prenda de la URL
   const [prenda, setPrenda] = useState(null);
@@ -141,7 +142,7 @@ const DetalleProducto = () => {
   );
 };
 
-export default DetalleProducto;
+export default withLoader(DetalleProducto);
 
 const styles = {
   detalleProductoContainer: {
