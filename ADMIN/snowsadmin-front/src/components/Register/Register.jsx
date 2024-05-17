@@ -15,7 +15,7 @@ function Register() {
     img_perfil: "",
   });
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,11 +25,20 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/register", user);
-      toast.success("Usuario creado correctamente");
-      history.push("/login");
+      const response = await axios.post("/api/register", user);
+      if (response.status === 201) {
+        toast.success("Usuario creado correctamente");
+        navigate("/login");
+      } else {
+        toast.error("Error inesperado al crear usuario");
+      }
     } catch (error) {
-      toast.error("Error al crear usuario");
+      console.error("Error during registration:", error);
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Error al crear usuario");
+      }
     }
   };
 

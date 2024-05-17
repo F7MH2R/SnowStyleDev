@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const bcrypt = require("bcrypt");
-const { Pool } = require("pg"); // Asegúrate de tener 'pg' instalado: npm install pg
+const { Pool } = require("pg");
 const app = express();
 const port = 3076;
 
@@ -10,12 +9,11 @@ app.use(bodyParser.json());
 const pool = new Pool({
   user: "slayer",
   host: "localhost",
-  database: "snowstyle",
-  password: "deku",
-  port: 5432,
+  database: "snow",
+  password: "1234",
+  port: 5433,
 });
 
-// Ruta de registro de usuario
 app.post("/api/register", async (req, res) => {
   const {
     nombre,
@@ -29,14 +27,13 @@ app.post("/api/register", async (req, res) => {
   } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await pool.query(
       "INSERT INTO public.usuario (nombre, apellidos, correo_electronico, password, direccion, telefono, dui, img_perfil) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
       [
         nombre,
         apellidos,
         correo_electronico,
-        hashedPassword,
+        password, // Sin hashear la contraseña
         direccion,
         telefono,
         dui,
@@ -44,12 +41,12 @@ app.post("/api/register", async (req, res) => {
       ]
     );
 
-    res
-      .status(201)
-      .send({ message: "Usuario creado correctamente", user: newUser.rows[0] });
+    return res.status(201).json({ message: "Usuario creado correctamente", user: newUser.rows[0] });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ message: "Error al crear usuario" });
+    if (!res.headersSent) {
+      return res.status(500).json({ message: "Error al crear usuario" });
+    }
   }
 });
 
@@ -64,15 +61,10 @@ app.post("/api/login", async (req, res) => {
     );
 
     if (user.rows.length > 0) {
-      const validPassword = await bcrypt.compare(
-        password,
-        user.rows[0].password
-      );
+      const validPassword = user.rows[0].password === password;
 
       if (validPassword) {
-        // Verificar si el usuario es administrador
-        const isAdmin = true; // Cambia esta lógica según tus necesidades
-        res.send({ isAdmin });
+        res.status(200).send({ message: "Inicio de sesión exitoso" });
       } else {
         res.status(401).send({ message: "Credenciales incorrectas" });
       }
@@ -84,6 +76,8 @@ app.post("/api/login", async (req, res) => {
     res.status(500).send({ message: "Error al iniciar sesión" });
   }
 });
+
+
 
 // Ruta para obtener todos los usuarios (solo para admins)
 app.get("/api/users", async (req, res) => {

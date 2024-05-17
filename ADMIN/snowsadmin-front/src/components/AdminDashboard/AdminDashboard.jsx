@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import DepartmentComponent from "./DepartamentComponent"; // Importa tu nuevo componente aquí
+import "./admin.css"; // Importa tu archivo CSS aquí
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -29,12 +31,14 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div>
+    <div className="admin-container">
       <h2>Dashboard del Administrador</h2>
       <button onClick={handleLogout}>Cerrar Sesión</button>
+      <h3>Departamentos</h3>
+      <DepartmentComponent />
       <h3>Lista de Usuarios</h3>
       {users.length > 0 ? (
-        <table>
+        <table className="admin-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -58,7 +62,7 @@ const AdminDashboard = () => {
                 <td>{user.telefono}</td>
                 <td>{user.dui}</td>
                 <td>
-                  <img src={user.img_perfil} alt="Perfil" width="50" />
+                  <img src={user.img_perfil} alt="Perfil" />
                 </td>
               </tr>
             ))}

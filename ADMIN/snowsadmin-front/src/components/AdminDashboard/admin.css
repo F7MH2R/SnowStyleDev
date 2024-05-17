@@ -1,0 +1,56 @@
+.department-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente los elementos */
+  }
+  
+  .department-card {
+    flex: 1;
+    margin: 0 10px;
+    text-align: center;
+  }
+  
+  .department-card h3 {
+    margin-top: 10px; /* Espacio superior para el título */
+  }
+  
+  .department-card img {
+    width: 100%; /* Asegura que todas las imágenes tengan el mismo ancho */
+    height: auto; /* Permite que la altura se ajuste automáticamente para mantener la proporción */
+    max-height: 200px; /* Establece una altura máxima para las imágenes */
+    display: block; /* Asegura que la imagen no tenga espacios en blanco debajo */
+    margin: 0 auto; /* Centra horizontalmente la imagen */
+  }
+  
+  .department-actions {
+    margin-top: 10px; /* Espacio superior para los botones */
+  }
+  
+  .department-actions button {
+    margin: 0 auto; /* Centra horizontalmente el botón */
+  }
+  
+
+  .admin-container {
+    text-align: center; /* Centra los elementos dentro del contenedor */
+  }
+  
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse; /* Combina los bordes de las celdas */
+  }
+  
+  .admin-table th,
+  .admin-table td {
+    border: 1px solid #ddd; /* Agrega bordes a las celdas */
+    padding: 8px; /* Espacio interno de las celdas */
+  }
+  
+  .admin-table th {
+    background-color: #f2f2f2; /* Color de fondo para las celdas de encabezado */
+  }
+  
+  .admin-table td img {
+    max-width: 50px; /* Limita el tamaño máximo de las imágenes */
+    height: auto; /* Permite que la altura se ajuste automáticamente para mantener la proporción */
+  }
+  

@@ -8,7 +8,7 @@ function Login() {
     correo_electronico: "",
     password: "",
   });
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,13 +19,14 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post("/api/login", credentials);
-      if (response.data.isAdmin) {
+      if (response.status === 200) {
         toast.success("Inicio de sesión exitoso");
-        history.push("/admin");
+        navigate("/admin"); // Redirige a la página de administrador después del inicio de sesión exitoso
       } else {
-        toast.error("No tienes permisos de administrador");
+        toast.error("Credenciales incorrectas");
       }
     } catch (error) {
+      console.error("Error during login:", error);
       toast.error("Error al iniciar sesión");
     }
   };
