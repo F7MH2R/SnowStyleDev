@@ -103,7 +103,7 @@ const Login = ({ handleClose, onLoginSuccess }) => {
                 Iniciar Sesión{" "}
               </span>
             </button>
-            <Link to={"/lost"} className="lost">
+            <Link to={"/perdi"} className="lost">
               Olvidé mi contraseña
             </Link>
             <Link to="/REGIST" className="lost">

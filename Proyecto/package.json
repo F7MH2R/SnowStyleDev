@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install:all": "npm install --prefix front-end && npm install --prefix back-end",
+    "install:all": "npm install --prefix snow_style_front && npm install --prefix back-end",
     "start": "concurrently \"npm start --prefix snow_style_front\" \"nodemon Back-end/backend.js\""
   },
   "dependencies": {
-    "concurrently": "^7.6.0"
+    "concurrently": "^7.6.0",
+    "nodemailer": "^6.9.13"
   }
 }
