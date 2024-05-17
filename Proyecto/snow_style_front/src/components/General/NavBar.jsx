@@ -26,16 +26,21 @@ function NavBar(props) {
   const [showSearch, setShowSearch] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+  const [idUsuario, setIdUsuario] = useState(null);
   const navigate = useNavigate();
-  const idUsu = localStorage.getItem("UserId")
-    ? JSON.parse(localStorage.getItem("UserId"))
-    : 0;
 
-  const UsuarioEnSesionImg = `http://localhost:3001/imagenUsuario_${idUsu}.jpg`;
+  const UsuarioEnSesionImg = `http://localhost:3001/imagenUsuario_${idUsuario}.jpg`;
 
   useEffect(() => {
     setIsLogged(props.data);
   }, [props.data]);
+
+  useEffect(() => {
+    if (localStorage.getItem("UserId")) {
+      setIsLogged(true);
+      setIdUsuario(localStorage.getItem("UserId"));
+    }
+  }, []);
 
   useEffect(() => {
     console.log("Estado de autenticación actualizado:", isLogged);
@@ -52,7 +57,7 @@ function NavBar(props) {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem(idUsu);
+    localStorage.removeItem("UserId");
     setIsLogged(false);
     navigate("/");
   };

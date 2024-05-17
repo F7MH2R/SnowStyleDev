@@ -1,12 +1,9 @@
 const express = require("express");
 const { Pool } = require("pg");
-const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-const jwt = require("jsonwebtoken"); // Añade la importación de JWT
 const app = express();
-const crypto = require("crypto");
 const port = process.env.PORT || 3077;
 const {
   queryCarrito,

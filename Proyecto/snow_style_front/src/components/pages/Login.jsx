@@ -9,7 +9,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = ({ handleClose, onLoginSuccess }) => {
-  // Agrega la prop onLoginSuccess
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +38,6 @@ const Login = ({ handleClose, onLoginSuccess }) => {
 
     try {
       const response = await axios.post("http://localhost:3077/login", user);
-      console.log("Respuesta del servidor:", response.data); // Agregado para depuración
 
       if (response.data.IDUsuario) {
         // Redirige al usuario a la página
@@ -51,7 +49,6 @@ const Login = ({ handleClose, onLoginSuccess }) => {
         setError("Credenciales incorrectas");
       }
     } catch (error) {
-      console.error("Error de inicio de sesión:", error.response.data.message);
       setError("Error de inicio de sesión: " + error.response.data.message);
     }
   };
