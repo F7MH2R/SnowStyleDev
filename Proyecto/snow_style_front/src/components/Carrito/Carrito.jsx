@@ -15,22 +15,22 @@ const Carrito = () => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    async function fetchItems() {
-      const idUsuario = localStorage.getItem("UserId");
-      const itemsCarrito = await ejecutarGet(`/api/carrito/${idUsuario}/items`);
-      let costoTotal = 0;
-      if (itemsCarrito.data) {
-        costoTotal = itemsCarrito.data.reduce(
-          (total, item) => total + parseFloat(item.precio * item.cantidad),
-          0
-        );
-      }
-      setTotal(parseFloat(costoTotal));
-      setItems(itemsCarrito.data);
-    }
-
     fetchItems();
   }, []);
+
+  async function fetchItems() {
+    const idUsuario = localStorage.getItem("UserId");
+    const itemsCarrito = await ejecutarGet(`/api/carrito/${idUsuario}/items`);
+    let costoTotal = 0;
+    if (itemsCarrito.data) {
+      costoTotal = itemsCarrito.data.reduce(
+        (total, item) => total + parseFloat(item.precio * item.cantidad),
+        0
+      );
+      setItems(itemsCarrito.data);
+    }
+    setTotal(parseFloat(costoTotal));
+  }
 
   return (
     <>
@@ -72,6 +72,7 @@ const Carrito = () => {
                   id={item.id}
                   key={item.id} // Agregado el key prop para evitar advertencias en la consola
                   idItemsCarrito={item.id_itemcarrito}
+                  fetchItems={fetchItems}
                 />
               );
             })

@@ -6,7 +6,11 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken"); // Añade la importación de JWT
 const app = express();
 const port = process.env.PORT || 3077;
-const { queryCarrito, updateCantidadItems } = require("./queries");
+const {
+  queryCarrito,
+  updateCantidadItems,
+  deleteItemCarrito,
+} = require("./queries");
 
 // Configuración de CORS para permitir solicitudes desde cualquier origen
 app.use(cors());
@@ -168,6 +172,16 @@ app.patch("/api/carrito/items/:idItemCarrito", async (req, res) => {
     res
       .status(500)
       .json({ error: "Error al actualizaar la cantidad de items" });
+  }
+});
+
+app.delete("/api/carrito/items/:id/delete", async (req, res) => {
+  const idItemCarrito = req.params.id;
+  try {
+    const resultado = await pool.query(deleteItemCarrito, [idItemCarrito]);
+    res.status(200).json({ estado: "eliminado", resultado: resultado });
+  } catch (error) {
+    res.status(500).json({ error: "Error al eliminar un item del carrito" });
   }
 });
 

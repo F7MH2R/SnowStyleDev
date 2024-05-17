@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button, Form, FormControl } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import "./Item.css";
-import { ejecutarPatch } from "../compartidos/request";
+import { ejecutarPatch, eliminarItem } from "../compartidos/request";
 
 const Item = ({
   imagen,
@@ -11,6 +11,7 @@ const Item = ({
   id,
   cantidad,
   idItemsCarrito,
+  fetchItems,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [cantidadItems, setCantidad] = useState(cantidad);
@@ -19,15 +20,40 @@ const Item = ({
   const handleShow = () => setShowModal(true);
 
   const aumentarCantidad = () => {
-    // async function actualizarCantidad() {
-    //   const resultado = await ejecutarPatch(``, {cantidad: cantidadItems + 1})
-    // }
-    setCantidad((prevCantidad) => prevCantidad + 1);
+    async function actualizarCantidad() {
+      await ejecutarPatch(`/api/carrito/items/${idItemsCarrito}`, {
+        cantidad: cantidadItems + 1,
+      });
+      setCantidad((prevCantidad) => prevCantidad + 1);
+      fetchItems();
+    }
+
+    actualizarCantidad();
   };
 
   const reducirCantidad = () => {
     if (cantidadItems > 1) {
+      descontarCantidad();
+      fetchItems();
+    }
+
+    async function descontarCantidad() {
+      await ejecutarPatch(`/api/carrito/items/${idItemsCarrito}`, {
+        cantidad: cantidadItems - 1,
+      });
       setCantidad((prevCantidad) => prevCantidad - 1);
+    }
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("¿desea eliminar la prenda?") === true) {
+      eliminar();
+    }
+
+    async function eliminar() {
+      console.log("EJecutando eliminar!", idItemsCarrito);
+      await eliminarItem(`/api/carrito/items/${idItemsCarrito}/delete`, {});
+      fetchItems();
     }
   };
 
@@ -99,10 +125,7 @@ const Item = ({
             <Button variant="secondary" onClick={handleClose}>
               Cerrar
             </Button>
-            <Button
-              variant="danger"
-              onClick={() => console.log(`Eliminar ${id}`)}
-            >
+            <Button variant="danger" onClick={handleDelete}>
               Eliminar
             </Button>
           </Modal.Footer>

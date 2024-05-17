@@ -19,7 +19,12 @@ const updateCantidadItems = `update items_carrito
 	where
 		id_itemcarrito = $2`;
 
+const deleteItemCarrito = `delete from items_carrito
+where
+	id_itemcarrito = $1`;
+
 module.exports = {
   queryCarrito: queryCarrito,
   updateCantidadItems: updateCantidadItems,
+  deleteItemCarrito: deleteItemCarrito,
 };
