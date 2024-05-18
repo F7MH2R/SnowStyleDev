@@ -13,6 +13,7 @@ function Register() {
     telefono: "",
     dui: "",
     img_perfil: "",
+    admin: true,
   });
 
   const navigate = useNavigate();
@@ -28,13 +29,17 @@ function Register() {
       const response = await axios.post("/api/register", user);
       if (response.status === 201) {
         toast.success("Usuario creado correctamente");
-        navigate("/login");
+        navigate("/");
       } else {
         toast.error("Error inesperado al crear usuario");
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         toast.error(error.response.data.message);
       } else {
         toast.error("Error al crear usuario");
