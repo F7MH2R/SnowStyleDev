@@ -20,7 +20,7 @@ const Loading = () => {
         ariaLabel="Loading"
         timeout={3000} // Duración máxima de carga en milisegundos
       />
-      <p>Loading...</p>
+      <p>Cargando...</p>
     </div>
   );
 };

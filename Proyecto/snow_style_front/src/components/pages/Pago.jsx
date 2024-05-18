@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Button, Form, Alert, Modal, Table } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import imagen from "../Multimedia/blusaCarrito.jpg";
-import { PDFDocument, rgb } from 'pdf-lib';
-import { saveAs } from 'file-saver';
+import { PDFDocument, rgb } from "pdf-lib";
+import { saveAs } from "file-saver";
 import "./css/Modal.css";
 
 const Pago = ({ total, items, nombre, correo }) => {
@@ -49,24 +49,29 @@ const Pago = ({ total, items, nombre, correo }) => {
     try {
       const pdfDoc = await PDFDocument.create();
       const page = pdfDoc.addPage();
-  
+
       //contenido de la factura
-      const facturaTexto = generateFacturaTexto(items, total, nombreTarjeta, correoElectronico);
-  
+      const facturaTexto = generateFacturaTexto(
+        items,
+        total,
+        nombreTarjeta,
+        correoElectronico
+      );
+
       const { width, height } = page.getSize();
       const fontSize = 12;
       const textX = 50; // Posición X del texto
       let textY = height - 50; // Posición Y inicial del texto
-      const textLines = facturaTexto.split('\n');
-  
-      page.drawText('Factura SnowStyle', {
+      const textLines = facturaTexto.split("\n");
+
+      page.drawText("Factura SnowStyle", {
         x: width / 2 - 50, // centrar el texto horizontalmente
         y: textY,
         size: 20,
         color: rgb(0, 0, 0), // color negro
       });
       textY -= 30; // espacio después del título
-  
+
       // editar el texto
       for (const line of textLines) {
         page.drawText(line, {
@@ -77,22 +82,21 @@ const Pago = ({ total, items, nombre, correo }) => {
         });
         textY -= 20; // espacio entre líneas
       }
-  
+
       // generar el archivo PDF
       const pdfBytes = await pdfDoc.save();
-      const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
-  
+      const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
+
       // crear un enlace de descarga para el PDF
-      const downloadLink = document.createElement('a');
+      const downloadLink = document.createElement("a");
       downloadLink.href = URL.createObjectURL(pdfBlob);
-      downloadLink.download = 'SnowStyleFactura.pdf';
-  
+      downloadLink.download = "SnowStyleFactura.pdf";
+
       downloadLink.click();
     } catch (error) {
-      console.error('Error al generar el PDF:', error);
+      console.error("Error al generar el PDF:", error);
     }
   };
-  
 
   const generateFacturaTexto = (items, total, nombre, correo) => {
     let facturaTexto = `Factura\n\nCliente: ${nombre}\nCorreo: ${correo}\n\nProductos:\n`;
@@ -104,11 +108,13 @@ const Pago = ({ total, items, nombre, correo }) => {
   };
 
   return (
-
     <>
       <link rel="stylesheet" href={googleFontsURL} />
-      <div className="container-primero" style={{ fontFamily: "Prompt, sans-serif" }}>
-        <div className="container payment-container" >
+      <div
+        className="container-primero"
+        style={{ fontFamily: "Prompt, sans-serif" }}
+      >
+        <div className="container payment-container">
           {pagoExitoso && (
             <div className="text-center">
               <h2 className="text-center mb-4">Pago en línea</h2>
@@ -122,8 +128,14 @@ const Pago = ({ total, items, nombre, correo }) => {
           )}
 
           {!pagoExitoso && (
-            <Form onSubmit={handleSubmit} className="mx-auto custom-payment-form">
-              <Form.Group controlId="formNombreTarjeta" className="custom-form-group">
+            <Form
+              onSubmit={handleSubmit}
+              className="mx-auto custom-payment-form"
+            >
+              <Form.Group
+                controlId="formNombreTarjeta"
+                className="custom-form-group"
+              >
                 <h2 className="text-center mb-4">Pago en línea</h2>
                 <h5 className="text-center mb-4">Datos Personales:</h5>
                 <Form.Label className="label">Nombre en la tarjeta</Form.Label>
@@ -135,7 +147,10 @@ const Pago = ({ total, items, nombre, correo }) => {
                   required
                 />
               </Form.Group>
-              <Form.Group controlId="formCorreoElectronico" className="custom-form-group">
+              <Form.Group
+                controlId="formCorreoElectronico"
+                className="custom-form-group"
+              >
                 <Form.Label className="label">Correo electrónico</Form.Label>
                 <Form.Control
                   type="email"
@@ -145,7 +160,10 @@ const Pago = ({ total, items, nombre, correo }) => {
                   required
                 />
               </Form.Group>
-              <Form.Group controlId="formCodigoPostal" className="custom-form-group">
+              <Form.Group
+                controlId="formCodigoPostal"
+                className="custom-form-group"
+              >
                 <Form.Label className="label">Código postal</Form.Label>
                 <Form.Control
                   type="text"
@@ -167,10 +185,17 @@ const Pago = ({ total, items, nombre, correo }) => {
 
           <Modal show={mostrarFactura} onHide={handleCloseFactura}>
             <Modal.Header closeButton>
-              <Modal.Title style={{ fontFamily: "Prompt, sans-serif" }}>Factura</Modal.Title>
+              <Modal.Title style={{ fontFamily: "Prompt, sans-serif" }}>
+                Factura
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Table striped bordered hover style={{ fontFamily: "Prompt, sans-serif" }}>
+              <Table
+                striped
+                bordered
+                hover
+                style={{ fontFamily: "Prompt, sans-serif" }}
+              >
                 <thead>
                   <tr>
                     <th>Producto</th>
@@ -188,12 +213,23 @@ const Pago = ({ total, items, nombre, correo }) => {
                   ))}
                 </tbody>
               </Table>
-              <p className="fw-bold" style={{ fontFamily: "Prompt, sans-serif" }}>Total: ${total}</p>
+              <p
+                className="fw-bold"
+                style={{ fontFamily: "Prompt, sans-serif" }}
+              >
+                Total: ${total}
+              </p>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleDescargarFactura} style={{ fontFamily: "Prompt, sans-serif" }}>Descargar Factura</Button>
+              <Button
+                variant="secondary"
+                onClick={handleDescargarFactura}
+                style={{ fontFamily: "Prompt, sans-serif" }}
+              >
+                Descargar Factura
+              </Button>
             </Modal.Footer>
-          </Modal>
+          </Modal>
         </div>
       </div>
     </>

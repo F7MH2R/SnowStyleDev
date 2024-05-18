@@ -1,13 +1,19 @@
 const express = require("express");
 const { Pool } = require("pg");
-const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-const jwt = require("jsonwebtoken"); // Añade la importación de JWT
 const app = express();
-const crypto = require("crypto");
 const port = process.env.PORT || 3077;
+const {
+  queryCarrito,
+  updateCantidadItems,
+  deleteItemCarrito,
+  insertarItemsCarrito,
+  insertarCarrito,
+  obtenerCarritoPorUsuario,
+} = require("./queries");
+
 const path = require("path");
 // Configuración de CORS para permitir solicitudes desde cualquier origen
 app.use(cors());
@@ -91,8 +97,14 @@ app.post("/login", async (req, res) => {
       const user = result.rows[0];
       if (password === user.password) {
         const IDUsuario = user.id_usuario; // Corregir el acceso al ID de usuario
-        console.log("ID del usuario después de la verificación:", IDUsuario);
-        res.status(200).json({ IDUsuario });
+        const imagenURL = user.img_perfil;
+        console.log(
+          "ID del usuario después de la verificación:",
+          IDUsuario,
+          " ,",
+          imagenURL
+        );
+        res.status(200).json({ IDUsuario: IDUsuario, imgPerfil: imagenURL });
       } else {
         // Contraseña incorrecta
         res.status(401).json({ message: "Credenciales incorrectas" });
@@ -356,6 +368,73 @@ app.get("/api/user/:userId", async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
+
+app.get("/api/carrito/:idUsuario/items", async (req, res) => {
+  const idUsuario = req.params.idUsuario;
+  try {
+    const result = await pool.query(queryCarrito, [idUsuario]);
+
+    if (result.rowCount > 0) {
+      console.log("Datos encontrados:", result.rows); // Mostrar ID en consola
+      res.status(200).json(result.rows);
+    } else {
+      res.status(200).json([]);
+      console.log("Carrito vacio");
+    }
+  } catch (error) {
+    console.error("Error al obtener las prendas del carrito:", error);
+    res.status(500).json({ error: "Error al obtener las prendas del carrito" });
+  }
+});
+
+app.patch("/api/carrito/items/:idItemCarrito", async (req, res) => {
+  const idItemCarrito = req.params.idItemCarrito;
+  const cantidad = req.body.cantidad;
+  try {
+    const resultado = await pool.query(updateCantidadItems, [
+      cantidad,
+      idItemCarrito,
+    ]);
+    res.status(200).json({ cantidad: cantidad, resultado: resultado });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al actualizaar la cantidad de items" });
+  }
+});
+
+app.delete("/api/carrito/items/:id/delete", async (req, res) => {
+  const idItemCarrito = req.params.id;
+  try {
+    const resultado = await pool.query(deleteItemCarrito, [idItemCarrito]);
+    res.status(200).json({ estado: "eliminado", resultado: resultado });
+  } catch (error) {
+    res.status(500).json({ error: "Error al eliminar un item del carrito" });
+  }
+});
+
+app.post("/api/carrito/items/add", async (req, res) => {
+  const idPrenda = req.body.idPrenda;
+  const idUsuario = req.body.idUsuario;
+  try {
+    const carrito = await pool.query(obtenerCarritoPorUsuario, [idUsuario]);
+
+    if (carrito.rowCount > 0) {
+      const idCarrito = carrito.rows[0].id;
+      await pool.query(insertarItemsCarrito, [idCarrito, idPrenda]);
+      res.status(200).json({ estado: "Carrito actualizado - Prenda agregada" });
+    } else {
+      await pool.query(insertarCarrito, [idUsuario, idPrenda]);
+      const carrito = await pool.query(obtenerCarritoPorUsuario, [idUsuario]);
+      const idCarrito = carrito.rows[0].id;
+      await pool.query(insertarItemsCarrito, [idCarrito, idPrenda]);
+      res.status(200).json({ estado: "Carrito creado - prenda agregada" });
+    }
+  } catch (error) {
+    res.status(500).json({ mensaje: error });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en el puerto ${port}`);
 });

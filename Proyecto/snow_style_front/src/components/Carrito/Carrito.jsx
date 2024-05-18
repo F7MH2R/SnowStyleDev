@@ -1,78 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Item from "../Item/Item";
-import { Button, Offcanvas, Modal } from "react-bootstrap";
+import { Button, Offcanvas } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import { FaShoppingCart } from "react-icons/fa";
 import shoppingCartIcon from "../Multimedia/shopping-cart-icon.png"; // Ruta a tu imagen de icono de carrito de compras
 import "./Carrito.css"; // Cambio en la importación del CSS
-//remover al unir con el backend
-import imagen from "../Multimedia/blusaCarrito.jpg";
+import { ejecutarGet } from "../compartidos/request";
 
-const Carrito = ({ items }) => {
-  items = [
-    {
-      imagen: imagen,
-      descripcion: "Jersey cropped",
-      precio: 10.25,
-      id: 1,
-    },
-    {
-      imagen: imagen,
-      descripcion: "Jersey cropped",
-      precio: 10.25,
-      id: 2,
-    },
-  ];
-
+const Carrito = () => {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
 
-  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
-  const handleCloseModal  = () => setShowModal(false);
-  const handleShowModal  = () => setShowModal(true);
-
-  const generarFactura = () => {
-    const factura = items.map((item) => ({
-      nombre: item.descripcion,
-      cantidad: 1,
-      subtotal: item.precio,
-      imagen: item.imagen, // Añade la imagen al objeto de la factura
-    }));
-
-    return factura;
-  };
-
-  const descargarFactura = () => {
-    const factura = generarFactura();
-    const facturaTexto = factura.map(
-      (item, index) =>
-        `Producto ${index + 1} - ${item.nombre} - Cantidad: ${
-          item.cantidad
-        } - Subtotal: ${item.subtotal}\n`
-    );
-    facturaTexto.push(
-      `Total: ${items.reduce((total, item) => total + item.precio, 0)}`
-    );
-
-    const facturaBlob = new Blob([facturaTexto.join("\n")], {
-      type: "text/plain",
-    });
-    const url = window.URL.createObjectURL(facturaBlob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "factura.txt");
-    document.body.appendChild(link);
-    link.click();
-
-    link.parentNode.removeChild(link);
-    window.URL.revokeObjectURL(url);
-  };
-
-  let total = items.reduce((total, item) => total + item.precio, 0);
+  async function fetchItems() {
+    const idUsuario = localStorage.getItem("UserId");
+    const itemsCarrito = await ejecutarGet(`/api/carrito/${idUsuario}/items`);
+    let costoTotal = 0;
+    if (itemsCarrito.data) {
+      costoTotal = itemsCarrito.data.reduce(
+        (total, item) => total + parseFloat(item.precio * item.cantidad),
+        0
+      );
+      setItems(itemsCarrito.data);
+    }
+    setTotal(parseFloat(costoTotal));
+  }
 
   return (
     <>
@@ -103,16 +61,18 @@ const Carrito = ({ items }) => {
         <Offcanvas.Body className="carrito-offcanvas-body">
           {" "}
           {/* Cambio en la clase */}
-          {items ? (
+          {items.length > 0 ? (
             items.map((item) => {
-              total += item.precio;
               return (
                 <Item
                   imagen={item.imagen}
                   descripcion={item.descripcion}
-                  precio={item.precio}
+                  precio={parseFloat(item.precio)}
+                  cantidad={parseFloat(item.cantidad)}
                   id={item.id}
                   key={item.id} // Agregado el key prop para evitar advertencias en la consola
+                  idItemsCarrito={item.id_itemcarrito}
+                  fetchItems={fetchItems}
                 />
               );
             })
@@ -127,16 +87,24 @@ const Carrito = ({ items }) => {
                 style={{ fontFamily: "Prompt, sans-serif" }}
                 className="carrito-col"
               >
-                <span style={{ marginRight: "70%" }}>Total:</span>{" "}
-                {/* Espacio adicional a la derecha */}
-                <span>${total}</span>
+                <span style={{ marginRight: "70%" }}>Total:&nbsp;</span>
+                <span>
+                  {total.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
+                </span>
               </div>
             </div>
             <div className="carrito-row">
               {" "}
               {/* Cambio en la clase */}
               <a href="/PAGO">
-                <button variant="outline-success" style={{ fontFamily: "Prompt, sans-serif" }} onClick={handleShowModal} className="carrito-pay-button">
+                <button
+                  variant="outline-success"
+                  style={{ fontFamily: "Prompt, sans-serif" }}
+                  className="carrito-pay-button"
+                >
                   Pagar
                 </button>
               </a>

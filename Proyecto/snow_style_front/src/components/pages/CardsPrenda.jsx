@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios, { Axios } from "axios";
+import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { Row, Col, Card, Carousel, Button, Offcanvas } from "react-bootstrap";
 import PropTypes from "prop-types";
@@ -7,6 +7,8 @@ import "../pages/css/Modal.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FiltroPrendas from "./FiltroPrendas";
 import withLoader from "../Load/withLoader ";
+import { ejecutarPost } from "../compartidos/request";
+
 const CardsPrenda = () => {
   const { tipoPrendaId, departamento } = useParams();
   const [prendas, setPrendas] = useState([]);
@@ -34,7 +36,16 @@ const CardsPrenda = () => {
   }, [tipoPrendaId, departamento]);
 
   const handleComprar = (prendaId) => {
-    console.log(`Comprar prenda con ID: ${prendaId}`);
+    const idUsuario = localStorage.getItem("UserId");
+
+    agregarAlCarrito(prendaId, idUsuario);
+
+    async function agregarAlCarrito(prendaId, idUsuario) {
+      await ejecutarPost(`/api/carrito/items/add`, {
+        idPrenda: prendaId,
+        idUsuario: idUsuario,
+      });
+    }
   };
 
   const filtrarPrendas = (

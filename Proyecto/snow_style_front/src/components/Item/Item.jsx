@@ -2,21 +2,58 @@ import React, { useState } from "react";
 import { Modal, Button, Form, FormControl } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import "./Item.css";
+import { ejecutarPatch, eliminarItem } from "../compartidos/request";
 
-const Item = ({ imagen, descripcion, precio, id }) => {
+const Item = ({
+  imagen,
+  descripcion,
+  precio,
+  id,
+  cantidad,
+  idItemsCarrito,
+  fetchItems,
+}) => {
   const [showModal, setShowModal] = useState(false);
-  const [cantidad, setCantidad] = useState(1);
+  const [cantidadItems, setCantidad] = useState(cantidad);
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
   const aumentarCantidad = () => {
-    setCantidad((prevCantidad) => prevCantidad + 1);
+    async function actualizarCantidad() {
+      await ejecutarPatch(`/api/carrito/items/${idItemsCarrito}`, {
+        cantidad: cantidadItems + 1,
+      });
+      setCantidad((prevCantidad) => prevCantidad + 1);
+      fetchItems();
+    }
+
+    actualizarCantidad();
   };
 
   const reducirCantidad = () => {
-    if (cantidad > 1) {
+    if (cantidadItems > 1) {
+      descontarCantidad();
+      fetchItems();
+    }
+
+    async function descontarCantidad() {
+      await ejecutarPatch(`/api/carrito/items/${idItemsCarrito}`, {
+        cantidad: cantidadItems - 1,
+      });
       setCantidad((prevCantidad) => prevCantidad - 1);
+    }
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("¿desea eliminar la prenda?") === true) {
+      eliminar();
+    }
+
+    async function eliminar() {
+      console.log("EJecutando eliminar!", idItemsCarrito);
+      await eliminarItem(`/api/carrito/items/${idItemsCarrito}/delete`, {});
+      fetchItems();
     }
   };
 
@@ -26,14 +63,17 @@ const Item = ({ imagen, descripcion, precio, id }) => {
       <div className="container">
         <div className="row">
           <div className="col imagen-small">
-            {imagen ? (
-              <img src={imagen} alt="Item" />
-            ) : (
-              <div>No imagen</div>
-            )}
+            {imagen ? <img src={imagen} alt="Item" /> : <div>No imagen</div>}
           </div>
           <div className="col precio-descripcion">
-            <div className="row">$ {precio}</div>
+            <div className="row">
+              {precio.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              }) +
+                ` x ` +
+                cantidadItems}
+            </div>
             <div className="row">{descripcion}</div>
             <div className="row">
               <Button className="btn-ver-detalles" onClick={handleShow}>
@@ -43,7 +83,11 @@ const Item = ({ imagen, descripcion, precio, id }) => {
           </div>
         </div>
 
-        <Modal show={showModal} onHide={handleClose} style={{ fontFamily: "Prompt, sans-serif" }}>
+        <Modal
+          show={showModal}
+          onHide={handleClose}
+          style={{ fontFamily: "Prompt, sans-serif" }}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Detalles de compra</Modal.Title>
           </Modal.Header>
@@ -67,7 +111,7 @@ const Item = ({ imagen, descripcion, precio, id }) => {
                   <FormControl
                     className="mx-2"
                     type="number"
-                    value={cantidad}
+                    value={cantidadItems}
                     readOnly
                   />
                   <Button className="btn-aumentar" onClick={aumentarCantidad}>
@@ -81,10 +125,7 @@ const Item = ({ imagen, descripcion, precio, id }) => {
             <Button variant="secondary" onClick={handleClose}>
               Cerrar
             </Button>
-            <Button
-              variant="danger"
-              onClick={() => console.log(`Eliminar ${id}`)}
-            >
+            <Button variant="danger" onClick={handleDelete}>
               Eliminar
             </Button>
           </Modal.Footer>
