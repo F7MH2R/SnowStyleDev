@@ -39,9 +39,10 @@ const Login = ({ handleClose, onLoginSuccess }) => {
     try {
       const response = await axios.post("http://localhost:3077/login", user);
 
-      if (response.data.IDUsuario) {
+      if (response.data) {
         // Redirige al usuario a la página
         localStorage.setItem("UserId", response.data.IDUsuario);
+        localStorage.setItem("imgUrl", response.data.imgPerfil);
         navigate("/");
         handleClose(); // Cierra el modal
         onLoginSuccess(); // Llama a la función de devolución de llamada para el inicio de sesión exitoso

@@ -9,6 +9,9 @@ const {
   queryCarrito,
   updateCantidadItems,
   deleteItemCarrito,
+  insertarItemsCarrito,
+  insertarCarrito,
+  obtenerCarritoPorUsuario,
 } = require("./queries");
 
 const path = require("path");
@@ -94,8 +97,14 @@ app.post("/login", async (req, res) => {
       const user = result.rows[0];
       if (password === user.password) {
         const IDUsuario = user.id_usuario; // Corregir el acceso al ID de usuario
-        console.log("ID del usuario después de la verificación:", IDUsuario);
-        res.status(200).json({ IDUsuario });
+        const imagenURL = user.img_perfil;
+        console.log(
+          "ID del usuario después de la verificación:",
+          IDUsuario,
+          " ,",
+          imagenURL
+        );
+        res.status(200).json({ IDUsuario: IDUsuario, imgPerfil: imagenURL });
       } else {
         // Contraseña incorrecta
         res.status(401).json({ message: "Credenciales incorrectas" });
@@ -401,6 +410,28 @@ app.delete("/api/carrito/items/:id/delete", async (req, res) => {
     res.status(200).json({ estado: "eliminado", resultado: resultado });
   } catch (error) {
     res.status(500).json({ error: "Error al eliminar un item del carrito" });
+  }
+});
+
+app.post("/api/carrito/items/add", async (req, res) => {
+  const idPrenda = req.body.idPrenda;
+  const idUsuario = req.body.idUsuario;
+  try {
+    const carrito = await pool.query(obtenerCarritoPorUsuario, [idUsuario]);
+
+    if (carrito.rowCount > 0) {
+      const idCarrito = carrito.rows[0].id;
+      await pool.query(insertarItemsCarrito, [idCarrito, idPrenda]);
+      res.status(200).json({ estado: "Carrito actualizado - Prenda agregada" });
+    } else {
+      await pool.query(insertarCarrito, [idUsuario, idPrenda]);
+      const carrito = await pool.query(obtenerCarritoPorUsuario, [idUsuario]);
+      const idCarrito = carrito.rows[0].id;
+      await pool.query(insertarItemsCarrito, [idCarrito, idPrenda]);
+      res.status(200).json({ estado: "Carrito creado - prenda agregada" });
+    }
+  } catch (error) {
+    res.status(500).json({ mensaje: error });
   }
 });
 

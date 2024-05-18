@@ -13,8 +13,13 @@ export async function ejecutarPatch(sufijo, datos) {
 
 export async function eliminarItem(sufijo, datos) {
   const endpoint = generarEndpoint(sufijo);
-  console.log(endpoint);
   return axios.delete(endpoint, datos);
+}
+
+export async function ejecutarPost(sufijo, datos) {
+  const endpoint = generarEndpoint(sufijo);
+  console.log(endpoint);
+  return axios.post(endpoint, datos);
 }
 
 const generarEndpoint = (sufijo) => url.concat(sufijo);
