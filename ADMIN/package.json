@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install:all": "npm install --prefix snowsAdmin-Front && npm install --prefix back-end",
-    "start": "concurrently \"npm start --prefix snow_style_front\" \"nodemon Back-end/backend.js\""
+    "install:all": "npm install --prefix snowsadmin-front && npm install --prefix back-end",
+    "start": "concurrently \"npm start --prefix snowsadmin-front\" \"nodemon back-end/server.js\""
   },
   "dependencies": {
     "concurrently": "^7.6.0",
