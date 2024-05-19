@@ -18,11 +18,13 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "file-saver": "^2.0.5",
+    "my-fullstack-project": "file:..",
     "pdf-lib": "^1.17.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-icons": "^5.1.0",
+    "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^6.22.3",
     "react-scripts": "^5.0.1",
     "react-slick": "^0.30.2",
@@ -52,5 +54,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:3077"
 }

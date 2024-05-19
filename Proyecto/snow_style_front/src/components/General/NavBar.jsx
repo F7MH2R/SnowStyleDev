@@ -16,7 +16,7 @@ import {
   faMagnifyingGlass,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
-import usplaceholder from "../Multimedia/estaticos/userplaceholder.png";
+import imagen from "./img/userplaceholder.png";
 import "../pages/css/Modal.css";
 import Login from "../pages/Login";
 import Carrito from "../Carrito/Carrito";
@@ -26,22 +26,24 @@ function NavBar(props) {
   const [showSearch, setShowSearch] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+  const [urlImagenUsuario, setImagenUrlImgUsuario] = useState(null);
   const navigate = useNavigate();
-  const idUsu = localStorage.getItem("UserId")
-    ? JSON.parse(localStorage.getItem("UserId"))
-    : 0;
-
-  const UsuarioEnSesionImg = `http://localhost:3001/imagenUsuario_${idUsu}.jpg`;
 
   useEffect(() => {
     setIsLogged(props.data);
   }, [props.data]);
 
   useEffect(() => {
-    console.log("Estado de autenticación actualizado:", isLogged);
-  }, [isLogged]);
+    if (localStorage.getItem("UserId")) {
+      setIsLogged(true);
+    }
+  }, []);
 
-  console.log("Renderizando NavBar. Estado de autenticación:", isLogged);
+  useEffect(() => {
+    if (localStorage.getItem("imgUrl") !== "null") {
+      setImagenUrlImgUsuario(localStorage.getItem("imgUrl"));
+    }
+  }, [isLogged]);
 
   const openLoginModal = () => {
     setShowLoginModal(true);
@@ -52,7 +54,8 @@ function NavBar(props) {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem(idUsu);
+    localStorage.removeItem("UserId");
+    localStorage.removeItem("imgUrl");
     setIsLogged(false);
     navigate("/");
   };
@@ -130,25 +133,33 @@ function NavBar(props) {
               {isLogged ? (
                 <>
                   <Nav.Link as={Link} className="d-inline">
-                    <h2
+                    <h3
                       className="d-inline mx-2 mt-auto normaltxt whitetxt"
                       onClick={handleSearchClick}
                     >
-                      <FontAwesomeIcon icon={faMagnifyingGlass} />{" "}
+                      <FontAwesomeIcon icon={faMagnifyingGlass} />
+                      &nbsp;
                       <b className="d-none d-xl-inline-block">Buscar</b>
-                    </h2>
+                    </h3>
                   </Nav.Link>
                   <Filtro />
                   <Carrito />
-                  <Nav.Link as={Link} to="properties" className="d-inline">
-                    <h2 className="d-inline mx-2 mt-auto normaltxt whitetxt">
+                  <Nav.Link as={Link} to="#" className="d-inline">
+                    {urlImagenUsuario ? (
                       <img
-                        src={UsuarioEnSesionImg ?? usplaceholder}
-                        alt=""
-                        height="50px"
+                        src={urlImagenUsuario}
+                        height={"50px"}
                         style={{ borderRadius: "50%" }}
+                        alt="perfil"
                       />
-                    </h2>
+                    ) : (
+                      <img
+                        src={imagen}
+                        height={"50px"}
+                        style={{ borderRadius: "50%" }}
+                        alt="perfil"
+                      />
+                    )}
                   </Nav.Link>
                   <Nav.Link
                     as={Link}
@@ -157,7 +168,7 @@ function NavBar(props) {
                     onClick={handleLogout}
                   >
                     <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
-                      <FontAwesomeIcon icon={faUser} /> Cerrar Sesión
+                      Cerrar Sesión
                     </h3>
                   </Nav.Link>
                 </>
