@@ -45,6 +45,7 @@ const CardsPrenda = () => {
         idPrenda: prendaId,
         idUsuario: idUsuario,
       });
+      window.location.reload();
     }
   };
 
