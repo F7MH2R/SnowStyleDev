@@ -1,0 +1,57 @@
+.container{
+    background: linear-gradient(to right, #9dafb3, #cac6c0);
+    margin-top: 2%;
+}
+
+.custom-form {
+  width: calc(33.33% - 20px);
+  margin-right: 20px;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 5%;
+}
+
+.custom-form:last-child {
+  margin-right: 0;
+}
+
+.custom-form-group {
+  margin-bottom: 20px;
+}
+
+.custom-label {
+  font-weight: bold;
+}
+
+.custom-control {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-button {
+  width: 20%;
+  padding: 10px;
+  border: none;
+  border-radius:20px;
+  background-color: #34404d;
+  color: #fff;
+  display: flex;
+  justify-content: center; 
+  flex-wrap: wrap; 
+  margin: auto;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.custom-button:hover {
+  background-color: #566a80;
+  color: white; 
+  border: none; 
+  padding: 5px 10px; 
+  cursor: pointer; 
+}

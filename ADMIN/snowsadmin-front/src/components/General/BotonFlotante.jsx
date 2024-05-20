@@ -7,8 +7,9 @@ const BotonFlotante = ({ isAuthenticated }) => {
 
   return (
     <div className="boton-flotante">
-      <Button href="/FormPrenda" variant="info">
-        Botón Flotante
+
+      <Button href="/FormPrenda" variant="success">
+        + Agregar Prenda
       </Button>
     </div>
   );

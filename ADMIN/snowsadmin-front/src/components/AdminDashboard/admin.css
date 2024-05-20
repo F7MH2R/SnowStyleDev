@@ -36,7 +36,6 @@
   background-color: white;
   padding: 20px;
   border-radius: 5px;
-
   margin-bottom: 20px;
 }
 
@@ -52,7 +51,7 @@
 
 .admin-table th,
 .admin-table td {
-  padding: 10px;
+  padding: 20px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -138,4 +137,16 @@
   .department-card {
     width: 100%;
   }
+}
+
+.admin-table button {
+  background-color: #da5461; 
+  color: white; 
+  border: none; 
+  padding: 5px 10px; 
+  cursor: pointer; 
+}
+
+.admin-table button:hover {
+  background-color: #c82333;
 }

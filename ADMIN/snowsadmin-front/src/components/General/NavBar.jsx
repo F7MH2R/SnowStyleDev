@@ -43,14 +43,14 @@ const NavBar = () => {
           <img
             src={Logo}
             width="100%"
-            height="50"
+            height="45"
             className="d-inline-block align-top"
             alt="Logo"
           />
         </Navbar.Brand>
         <Nav className="ml-auto">
           {!isAuthenticated ? (
-            <Button variant="primary" onClick={handleShow}>
+            <Button className="logo-inicio-button logo-inicio-button:hover" onClick={handleShow}>
               Iniciar Sesión
             </Button>
           ) : (

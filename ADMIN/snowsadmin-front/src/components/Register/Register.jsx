@@ -21,8 +21,6 @@ function Register() {
 
   const [imgPreview, setImgPreview] = useState("");
 
-  const [imgPreview, setImgPreview] = useState("");
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -143,6 +141,7 @@ function Register() {
                 type="tel"
                 name="telefono"
                 id="telefono"
+                placeholder="Ej. 7777-7777"
                 onChange={handleChange}
               />
             </div>
@@ -157,6 +156,7 @@ function Register() {
                 type="text"
                 name="dui"
                 id="dui"
+                placeholder="Ej. 12345678-9"
                 onChange={handleChange}
               />
             </div>
@@ -169,10 +169,21 @@ function Register() {
                 type="text"
                 name="img_perfil"
                 id="img_perfil"
+                placeholder="Ej. https://"
                 onChange={handleChange}
               />
             </div>
           </div>
+          {imgPreview && (
+          <div className="text-center mt-3">
+            <img
+              src={imgPreview}
+              alt="Vista previa de imagen de perfil"
+              className="img-thumbnail"
+              style={{ maxWidth: "200px", maxHeight: "200px" }}
+            />
+          </div>
+          )}
           <div className="register-button-container">
             <button
               style={{ fontFamily: "Prompt, sans-serif" }}

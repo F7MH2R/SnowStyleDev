@@ -1,7 +1,11 @@
 import React, { useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
+import googleFontsURL from "../FuenteLetra/FuenteLetra";
+import "./Login.css";
 
-function Login() {
+function Login({ onLoginSuccess }) {
   const [credentials, setCredentials] = useState({
     correo_electronico: "",
     password: "",
@@ -62,8 +66,11 @@ function Login() {
             onChange={handleChange}
             required
           />
-          <button style={{ fontFamily: "Prompt, sans-serif" }} type="submit" className="login__button">Iniciar Sesión</button>
+          <button style={{ fontFamily: "Prompt, sans-serif" }} type="submit" className="login__button mb-4">Iniciar Sesión</button>
         </form>
+        <Link to="/register" className="lost" style={{color: "black"}}>
+              No tengo cuenta || Crear cuenta
+          </Link>
       </div>
     </div>
     

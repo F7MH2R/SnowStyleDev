@@ -42,7 +42,6 @@ const AdminDashboard = () => {
       <link rel="stylesheet" href={googleFontsURL} />
       <div className="admin-header">
         <h2>Dashboard del Administrador</h2>
-        <button onClick={handleLogout} style={{ fontFamily: "Prompt, sans-serif" }}>Cerrar Sesión</button>
       </div>
       <div className="admin-section">
         <h3>Departamentos</h3>
@@ -62,6 +61,7 @@ const AdminDashboard = () => {
                 <th>Teléfono</th>
                 <th>DUI</th>
                 <th>Imagen de Perfil</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
