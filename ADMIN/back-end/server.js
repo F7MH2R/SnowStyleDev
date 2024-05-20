@@ -8,11 +8,11 @@ const cors = require("cors");
 app.use(bodyParser.json());
 
 const pool = new Pool({
-  user: "slayer",
+  user: "postgres",
   host: "localhost",
-  database: "snowstyle",
-  password: "deku",
-  port: 5432,
+  database: "snows",
+  password: "1704",
+  port: 5433,
 });
 
 app.use(cors({ origin: "http://localhost:4000" }));

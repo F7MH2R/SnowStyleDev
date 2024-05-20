@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const NavBar = () => {
   const [show, setShow] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState("/admin"); // Estado para almacenar la URL de redirección
 
   useEffect(() => {
     // Cargar el estado de autenticación desde localStorage cuando el componente se monte
@@ -26,18 +27,19 @@ const NavBar = () => {
     setIsAuthenticated(true);
     localStorage.setItem("isAuthenticated", "true"); // Guardar el estado en localStorage
     handleClose();
+    navigate(redirectUrl); // Redirige a la URL almacenada después del inicio de sesión exitoso
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("isAuthenticated"); // Eliminar el estado de localStorage
-    navigate("/"); // Redirige a la página de administrador después del inicio de sesión exitoso
+    navigate("/"); // Redirige a la página de inicio después del cierre de sesión
   };
 
   return (
     <>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#" className="mx-auto">
+        <Navbar.Brand href={isAuthenticated ? redirectUrl : "/"} className="mx-auto">
           <img
             src={Logo}
             width="100%"
