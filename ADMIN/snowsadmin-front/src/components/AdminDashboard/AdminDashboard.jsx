@@ -24,6 +24,15 @@ const AdminDashboard = () => {
     fetchUsers();
   }, [history]);
 
+  const handleDeleteUser = async (userId) => {
+    try {
+      await axios.delete(`/api/users/${userId}`);
+      setUsers(users.filter(user => user.id_usuario !== userId));
+      toast.success("Usuario eliminado con éxito");
+    } catch (error) {
+      toast.error("Error al eliminar usuario");
+    }
+  };
 
   return (
     <div className="admin-container">
@@ -43,6 +52,7 @@ const AdminDashboard = () => {
               <th>Teléfono</th>
               <th>DUI</th>
               <th>Imagen de Perfil</th>
+              <th>Acción</th>
             </tr>
           </thead>
           <tbody>
@@ -56,7 +66,12 @@ const AdminDashboard = () => {
                 <td>{user.telefono}</td>
                 <td>{user.dui}</td>
                 <td>
-                  <img src={user.img_perfil} alt="Perfil" />
+                  <img src={user.img_perfil} alt="Perfil" width="50" height="50" />
+                </td>
+                <td>
+                  <button onClick={() => handleDeleteUser(user.id_usuario)}>
+                    Eliminar Usuario
+                  </button>
                 </td>
               </tr>
             ))}
