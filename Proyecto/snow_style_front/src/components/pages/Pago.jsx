@@ -21,8 +21,22 @@ const Pago = () => {
     // Simulación de proceso de pago ficticio
     setTimeout(() => {
       setLoading(false);
-      setPagoExitoso(true);
-      actualizarCarrito();
+      validarInventario(items)
+        .then((resultado) => {
+          console.log("Valor retornado: ", resultado);
+          if (resultado) {
+            setPagoExitoso(true);
+            actualizarCarrito();
+            descontarInventario(items).then(
+              console.log("Inventario actualizado")
+            );
+          } else {
+            window.alert(
+              "Lo sentimos, pero no hay suficiente inventario para esta compra."
+            );
+          }
+        })
+        .catch((error) => console.log("Ha ocurrido un error: ", error));
     }, 2000); // Simulación de un proceso de pago de 2 segundos
   };
 
@@ -33,6 +47,48 @@ const Pago = () => {
         idUsuario: idUsuario,
       });
     }
+  }
+
+  async function validarInventario(items) {
+    try {
+      // Usamos Promise.all para ejecutar todas las consultas a la API simultáneamente
+      const consultas = items.map(async (item) => {
+        const prenda = await ejecutarGet(`/api/prendas/${item.id}`);
+        if (prenda.cantidad <= item.cantidad) {
+          return false; // Si no hay suficiente cantidad, devolvemos false
+        }
+        return true;
+      });
+
+      // Esperamos a que todas las consultas se completen
+      const resultados = await Promise.all(consultas);
+
+      // Verificamos si algún resultado es false
+      if (resultados.includes(false)) {
+        return false; // Si hay al menos un resultado false, retornamos false
+      }
+
+      return true; // Si todas las consultas pasaron, retornamos true
+    } catch (error) {
+      console.error("Error al validar inventario:", error);
+      throw error; // Rechazamos la promesa si hay un error
+    }
+  }
+
+  async function descontarInventario(items) {
+    const consultas = items.map(async (item) => {
+      const prenda = await ejecutarPatch(`/api/prendas/update`, {
+        idPrenda: item.id,
+        cantidad: item.cantidad,
+      });
+      if (prenda.cantidad <= item.cantidad) {
+        return false; // Si no hay suficiente cantidad, devolvemos false
+      }
+      return true;
+    });
+
+    // Esperamos a que todas las consultas se completen
+    const resultados = await Promise.all(consultas);
   }
 
   const handleVerFactura = () => {
