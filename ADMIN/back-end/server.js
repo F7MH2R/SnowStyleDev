@@ -8,11 +8,11 @@ const cors = require("cors");
 app.use(bodyParser.json());
 
 const pool = new Pool({
-  user: "postgres",
+  user: "slayer",
   host: "localhost",
-  database: "snows",
-  password: "1704",
-  port: 5433,
+  database: "snowstyle",
+  password: "deku",
+  port: 5432,
 });
 
 app.use(cors({ origin: "http://localhost:3000" }));
@@ -99,7 +99,6 @@ app.post("/api/register", async (req, res) => {
 // Ruta de inicio de sesión
 app.post("/api/login", async (req, res) => {
   const { correo_electronico, password } = req.body;
-  
 
   try {
     const user = await pool.query(
