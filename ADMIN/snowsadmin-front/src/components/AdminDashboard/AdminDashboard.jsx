@@ -25,14 +25,18 @@ const AdminDashboard = () => {
   }, [history]);
 
   const handleDeleteUser = async (userId) => {
+    console.log("Deleting user with ID:", userId); // Registro para verificar el ID del usuario
     try {
       await axios.delete(`/api/users/${userId}`);
-      setUsers(users.filter(user => user.id_usuario !== userId));
+      // Utiliza una función de callback para asegurarte de que estás utilizando la última versión del estado
+      setUsers(prevUsers => prevUsers.filter(user => user.id_usuario !== userId));
       toast.success("Usuario eliminado con éxito");
     } catch (error) {
       toast.error("Error al eliminar usuario");
     }
   };
+  
+  
 
   return (
     <div className="admin-container">

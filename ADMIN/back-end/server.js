@@ -129,6 +129,33 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
+// Ruta para eliminar un usuario por su ID
+app.delete("/api/users/:id", async (req, res) => {
+  console.log("DELETE request received"); // Registro para verificar que la solicitud llegue al servidor
+  const userId = req.params.id;
+
+  try {
+    console.log("Deleting user with ID:", userId); // Registro para verificar el ID del usuario
+    const deletedUser = await pool.query(
+      "DELETE FROM public.usuario WHERE id_usuario = $1 RETURNING *",
+      [userId]
+    );
+    
+    
+    if (deletedUser.rows.length === 0) {
+      // Si no se encontró el usuario con el ID proporcionado
+      return res.status(404).send({ message: "Usuario no encontrado" });
+    }
+
+    console.log("User deleted:", deletedUser.rows[0]); // Registro para verificar si el usuario se ha eliminado correctamente
+    res.status(200).send({ message: "Usuario eliminado correctamente", user: deletedUser.rows[0] });
+  } catch (error) {
+    console.error("Error deleting user:", error); // Registro para verificar si hay errores en la consulta DELETE
+    res.status(500).send({ message: "Error al eliminar usuario" });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
