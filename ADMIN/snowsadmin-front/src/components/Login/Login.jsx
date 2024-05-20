@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function Login() {
+function Login({ onLoginSuccess }) {
   const [credentials, setCredentials] = useState({
     correo_electronico: "",
     password: "",
@@ -21,6 +21,7 @@ function Login() {
       const response = await axios.post("/api/login", credentials);
       if (response.status === 200) {
         toast.success("Inicio de sesión exitoso");
+        onLoginSuccess();
         navigate("/admin"); // Redirige a la página de administrador después del inicio de sesión exitoso
       } else {
         toast.error("Credenciales incorrectas");

@@ -24,16 +24,10 @@ const AdminDashboard = () => {
     fetchUsers();
   }, [history]);
 
-  const handleLogout = () => {
-    // Aquí puedes implementar la lógica de cierre de sesión
-    toast.success("Sesión cerrada");
-    history.push("/login");
-  };
 
   return (
     <div className="admin-container">
       <h2>Dashboard del Administrador</h2>
-      <button onClick={handleLogout}>Cerrar Sesión</button>
       <h3>Departamentos</h3>
       <DepartmentComponent />
       <h3>Lista de Usuarios</h3>
