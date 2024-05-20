@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Navbar, Nav, Button, Modal } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
 import Logo from "./img/Logo SnowStyle.PNG";
-import Login from "../Login/Login";
+import Login from '../Login/Login';
+import BotonFlotante from './BotonFlotante';
+import { useNavigate } from "react-router-dom";
+
+
 
 const NavBar = () => {
   const [show, setShow] = useState(false);
@@ -9,24 +13,27 @@ const NavBar = () => {
 
   useEffect(() => {
     // Cargar el estado de autenticación desde localStorage cuando el componente se monte
-    const authStatus = localStorage.getItem("isAuthenticated");
-    if (authStatus === "true") {
+    const authStatus = localStorage.getItem('isAuthenticated');
+    if (authStatus === 'true') {
       setIsAuthenticated(true);
     }
   }, []);
+
+  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleLogin = () => {
     setIsAuthenticated(true);
-    localStorage.setItem("isAuthenticated", "true"); // Guardar el estado en localStorage
+    localStorage.setItem('isAuthenticated', 'true'); // Guardar el estado en localStorage
     handleClose();
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem("isAuthenticated"); // Eliminar el estado de localStorage
+    localStorage.removeItem('isAuthenticated'); // Eliminar el estado de localStorage
+    navigate("/"); // Redirige a la página de administrador después del inicio de sesión exitoso
   };
 
   return (
@@ -63,10 +70,18 @@ const NavBar = () => {
       </Navbar>
 
       <Modal show={show} onHide={handleClose}>
-        <Login onLoginSuccess={handleLogin} />
+        <Modal.Header closeButton>
+          <Modal.Title>Iniciar Sesión</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Login onLoginSuccess={handleLogin} />
+        </Modal.Body>
       </Modal>
+      
+      <BotonFlotante isAuthenticated={isAuthenticated} />
+
     </>
   );
-};
+}
 
 export default NavBar;
