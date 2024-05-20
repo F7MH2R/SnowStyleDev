@@ -37,7 +37,7 @@ const NavBar = () => {
   return (
     <>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#" className="mx-auto">
+        <Navbar.Brand href="/" className="mx-auto">
           <img
             src={Logo}
             width="100%"
