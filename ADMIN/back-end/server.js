@@ -8,11 +8,11 @@ const nodemailer = require("nodemailer");
 app.use(bodyParser.json());
 
 const pool = new Pool({
-  user: "slayer",
+  user: "postgres",
   host: "localhost",
-  database: "snowstyle",
-  password: "deku",
-  port: 5432,
+  database: "snows",
+  password: "1704",
+  port: 5433,
 });
 // Opción 1: Verificar la conexión inmediatamente
 pool.connect((err, client, release) => {
@@ -91,6 +91,7 @@ app.post("/api/register", async (req, res) => {
 // Ruta de inicio de sesión
 app.post("/api/login", async (req, res) => {
   const { correo_electronico, password } = req.body;
+  
 
   try {
     const user = await pool.query(
