@@ -64,6 +64,19 @@ const actualizarEstadoCarrito = `update carrito
 		estado_carrito = '${ESTADOS_CARRITO.EN_ESPERA}'
 	`;
 
+const obtenerDatosPrenda = `SELECT * 
+	FROM 
+		prenda 
+	WHERE 
+		id_prenda = $1`;
+
+const descontarInventario = `update prenda
+	set 
+		cantidad = (cantidad - $1)
+	where
+		id_prenda = $2
+	`;
+
 module.exports = {
   queryCarrito: queryCarrito,
   updateCantidadItems: updateCantidadItems,
@@ -72,4 +85,6 @@ module.exports = {
   insertarCarrito: insertarCarrito,
   obtenerCarritoPorUsuario: obtenerCarritoPorUsuario,
   actualizarEstadoCarrito: actualizarEstadoCarrito,
+  obtenerDatosPrenda: obtenerDatosPrenda,
+  descontarInventario: descontarInventario,
 };
