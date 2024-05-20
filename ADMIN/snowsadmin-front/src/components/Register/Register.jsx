@@ -19,11 +19,16 @@ function Register() {
     admin: true,
   });
 
+  const [imgPreview, setImgPreview] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
+    if (name === "img_perfil") {
+      setImgPreview(value);
+    }
   };
 
   const handleSubmit = async (e) => {

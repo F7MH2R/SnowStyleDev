@@ -25,10 +25,16 @@ const AdminDashboard = () => {
     fetchUsers();
   }, [history]);
 
-  const handleLogout = () => {
-    // Aquí puedes implementar la lógica de cierre de sesión
-    toast.success("Sesión cerrada");
-    history.push("/login");
+  const handleDeleteUser = async (userId) => {
+    console.log("Deleting user with ID:", userId); // Registro para verificar el ID del usuario
+    try {
+      await axios.delete(`/api/users/${userId}`);
+      // Utiliza una función de callback para asegurarte de que estás utilizando la última versión del estado
+      setUsers(prevUsers => prevUsers.filter(user => user.id_usuario !== userId));
+      toast.success("Usuario eliminado con éxito");
+    } catch (error) {
+      toast.error("Error al eliminar usuario");
+    }
   };
 
   return (
@@ -71,6 +77,11 @@ const AdminDashboard = () => {
                   <td>
                     <img src={user.img_perfil} alt="Perfil" />
                   </td>
+                  <td>
+                  <button onClick={() => handleDeleteUser(user.id_usuario)}>
+                    Eliminar Usuario
+                  </button>
+                </td>
                 </tr>
               ))}
             </tbody>
