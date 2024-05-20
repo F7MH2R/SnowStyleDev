@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef } from "react";
 import { toast } from "react-toastify";
-import googleFontsURL from "../FuenteLetra/FuenteLetra";
-import "./Login.css";
 
 function Login() {
   const [credentials, setCredentials] = useState({
     correo_electronico: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const modalRef = useRef(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -23,14 +22,21 @@ function Login() {
       const response = await axios.post("/api/login", credentials);
       if (response.status === 200) {
         toast.success("Inicio de sesión exitoso");
-        navigate("/admin");
+        onLoginSuccess();
+        navigate("/admin"); // Redirige a la página de administrador después del inicio de sesión exitoso
       } else {
+        setError("Credenciales incorrectas");
         toast.error("Credenciales incorrectas");
       }
     } catch (error) {
       console.error("Error during login:", error);
+      setError("Error al iniciar sesión");
       toast.error("Error al iniciar sesión");
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   return (

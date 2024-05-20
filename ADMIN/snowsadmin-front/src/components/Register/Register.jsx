@@ -21,11 +21,16 @@ function Register() {
 
   const [imgPreview, setImgPreview] = useState("");
 
+  const [imgPreview, setImgPreview] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
+    if (name === "img_perfil") {
+      setImgPreview(value);
+    }
     if (name === "img_perfil") {
       setImgPreview(value);
     }
@@ -37,6 +42,7 @@ function Register() {
       const response = await axios.post("/api/register", user);
       if (response.status === 201) {
         toast.success("Usuario creado correctamente");
+
         navigate("/");
       } else {
         toast.error("Error inesperado al crear usuario");
