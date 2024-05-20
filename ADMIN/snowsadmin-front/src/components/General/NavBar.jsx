@@ -3,6 +3,8 @@ import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
 import Logo from "./img/Logo SnowStyle.PNG";
 import Login from '../Login/Login';
 import BotonFlotante from './BotonFlotante';
+import { useNavigate } from "react-router-dom";
+
 
 
 const NavBar = () => {
@@ -17,6 +19,8 @@ const NavBar = () => {
     }
   }, []);
 
+  const navigate = useNavigate();
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -29,6 +33,7 @@ const NavBar = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('isAuthenticated'); // Eliminar el estado de localStorage
+    navigate("/"); // Redirige a la página de administrador después del inicio de sesión exitoso
   };
 
   return (
