@@ -15,7 +15,7 @@ const pool = new Pool({
   port: 5432,
 });
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "http://localhost:4000" }));
 // Opción 1: Verificar la conexión inmediatamente
 pool.connect((err, client, release) => {
   if (err) {
@@ -28,8 +28,8 @@ pool.connect((err, client, release) => {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "snowstyle342@gmail.com",
-    pass: "grhf xjfn wsxs lrby",
+    user: "snowstyleofficial@gmail.com",
+    pass: "edci zorh yhkf fvsy",
   },
 });
 
@@ -72,7 +72,7 @@ app.post("/api/register", async (req, res) => {
 
     // Configura el correo electrónico
     const mailOptions = {
-      from: "snowstyle342@gmail.com",
+      from: "snowstyleofficial@gmail.com",
       to: correo_electronico,
       subject: "Cuenta creada exitosamente",
       text: `Hola ✔😊 ${nombre},\n\nTu cuenta administrador se ha sido creada exitosamente.\n\nSaludos,\nEl equipo de soporte`,
