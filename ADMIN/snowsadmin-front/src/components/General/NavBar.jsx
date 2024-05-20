@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
 import Logo from "./img/Logo SnowStyle.PNG";
 import Login from '../Login/Login';
+import BotonFlotante from './BotonFlotante';
+
 
 const NavBar = () => {
   const [show, setShow] = useState(false);
@@ -70,6 +72,9 @@ const NavBar = () => {
           <Login onLoginSuccess={handleLogin} />
         </Modal.Body>
       </Modal>
+      
+      <BotonFlotante isAuthenticated={isAuthenticated} />
+
     </>
   );
 }
