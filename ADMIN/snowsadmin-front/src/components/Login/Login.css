@@ -1,0 +1,152 @@
+.login-body {
+  background: linear-gradient(to right, #9dafb3, #cac6c0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+}
+
+.login__container {
+  text-align: center;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  margin: 80px auto;
+  padding: 20px 40px 40px;
+  border: 1px solid #ccc;
+}
+
+.login-header {
+  grid-area: header;
+  text-align: center;
+  color: #333333;
+  padding: 20px 0;
+}
+
+.login-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.avatar {
+  background: url("https://i.ibb.co/D7ckP8T/LOGO-SNOWSTYLE.png");
+  width: 100px;
+  height: 100px;
+  margin: 10px auto 30px;
+  border-radius: 100%;
+  border: 2px solid #aaa;
+  background-size: cover;
+}
+
+.login__container::before,
+.login__container::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 3.5px;
+  left: 0;
+  background: #fff;
+  z-index: -1;
+  transform: rotateZ(4deg);
+  border: 1px solid #ccc;
+}
+
+.login__container::after {
+  top: 5px;
+  z-index: -2;
+  transform: rotateZ(-2deg);
+}
+
+.login__output {
+  position: absolute;
+  width: 300px;
+  top: -75px;
+  left: 0;
+  color: #fff;
+}
+
+.login__output--success {
+  background: rgb(25, 204, 25);
+}
+
+.login__output--danger {
+  background: rgb(228, 105, 105);
+}
+
+.login__form-box input {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  height: 40px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  transition: 0.2s ease-in-out;
+  font-size: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.login__form-box input:focus {
+  outline: 0;
+  background: #eee;
+}
+
+.login__button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #349677;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.login__button:hover {
+  background-color: #2f6453;
+}
+
+.login__animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes login__fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login__fadeInUp {
+  animation-name: login__fadeInUp;
+}
+
+@media (max-width: 600px) {
+  .login__container {
+    padding: 1rem;
+    box-shadow: none;
+  }
+
+  .login__form-box input {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .login__button {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
