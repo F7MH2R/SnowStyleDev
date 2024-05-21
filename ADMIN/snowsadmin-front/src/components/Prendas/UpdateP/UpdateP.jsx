@@ -1,8 +1,10 @@
+// src/components/PrendaForm.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-const PrendaForm = () => {
+import { useNavigate, useParams } from "react-router-dom";
+
+const UpdateP = () => {
   const [formData, setFormData] = useState({
     id_marca: "",
     id_departamento: "",
@@ -23,15 +25,15 @@ const PrendaForm = () => {
     material4: "",
     material5: "",
   });
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const { id } = useParams(); // Obtener el id de los parámetros de la URL
   const [marcas, setMarcas] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
   const [proveedores, setProveedores] = useState([]);
   const [tipoPrendas, setTipoPrendas] = useState([]);
 
   useEffect(() => {
-    // Fetch data for dropdowns
     const fetchData = async () => {
       const marcasResult = await axios.get("http://localhost:3076/marcas");
       const departamentosResult = await axios.get(
@@ -51,41 +53,61 @@ const PrendaForm = () => {
     };
 
     fetchData();
-  }, []);
+
+    if (id) {
+      // Si hay un id, estamos en modo de actualización
+      const fetchPrenda = async () => {
+        const result = await axios.get(`http://localhost:3076/prendas/${id}`);
+        setFormData(result.data);
+      };
+      fetchPrenda();
+    }
+  }, [id]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
-      "http://localhost:3076/prendas",
-      formData
-    );
-    const prendaId = response.data.id_prenda;
-    setFormData({
-      id_marca: "",
-      id_departamento: "",
-      disponibilidad: "",
-      cantidad: "",
-      id_proveedor: "",
-      precio_unitario: "",
-      imagen1: "",
-      imagen2: "",
-      imagen3: "",
-      imagen4: "",
-      nombre_prenda: "",
-      id_tipo_prenda: "",
-      descripcion: "",
-      material1: "",
-      material2: "",
-      material3: "",
-      material4: "",
-      material5: "",
-    });
-
-    navigate(`/tallas/${prendaId}`);
+    try {
+      if (id) {
+        // Si hay un id, actualizar la prenda existente
+        await axios.put(`http://localhost:3076/prendas/${id}`, formData);
+      } else {
+        // Si no hay id, crear una nueva prenda
+        const response = await axios.post(
+          "http://localhost:3076/prendas",
+          formData
+        );
+        const prendaId = response.data.id_prenda;
+        navigate(`/tallas/${prendaId}`);
+      }
+      setFormData({
+        id_marca: "",
+        id_departamento: "",
+        disponibilidad: "",
+        cantidad: "",
+        id_proveedor: "",
+        precio_unitario: "",
+        imagen1: "",
+        imagen2: "",
+        imagen3: "",
+        imagen4: "",
+        nombre_prenda: "",
+        id_tipo_prenda: "",
+        descripcion: "",
+        material1: "",
+        material2: "",
+        material3: "",
+        material4: "",
+        material5: "",
+      });
+    } catch (error) {
+      console.error("Error al guardar la prenda", error);
+    }
+    navigate("/tablePrenda");
   };
 
   return (
@@ -240,7 +262,6 @@ const PrendaForm = () => {
             />
           )}
         </Form.Group>
-
         <Form.Group>
           <Form.Label>Tipo Prenda</Form.Label>
           <Form.Control
@@ -312,11 +333,11 @@ const PrendaForm = () => {
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Add Prenda
+          {id ? "Actualizar Prenda" : "Agregar Prenda"}
         </Button>
       </Form>
     </div>
   );
 };
 
-export default PrendaForm;
+export default UpdateP;
