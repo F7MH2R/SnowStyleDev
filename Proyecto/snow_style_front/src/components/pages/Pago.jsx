@@ -1,31 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Alert, Modal, Table } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
-import imagen from "../Multimedia/blusaCarrito.jpg";
 import { PDFDocument, rgb } from "pdf-lib";
-import { saveAs } from "file-saver";
 import "./css/Modal.css";
+import { ejecutarGet, ejecutarPatch } from "../compartidos/request";
 
-const Pago = ({ total, items, nombre, correo }) => {
-  items = [
-    {
-      imagen: imagen,
-      descripcion: "Jersey cropped",
-      precio: 10.25,
-      id: 1,
-    },
-    {
-      imagen: imagen,
-      descripcion: "Jersey cropped",
-      precio: 10.25,
-      id: 2,
-    },
-  ];
+const Pago = () => {
+  const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [pagoExitoso, setPagoExitoso] = useState(false);
   const [mostrarFactura, setMostrarFactura] = useState(false);
-  const [nombreTarjeta, setNombreTarjeta] = useState(nombre);
-  const [correoElectronico, setCorreoElectronico] = useState(correo);
+  const [nombreTarjeta, setNombreTarjeta] = useState("");
+  const [correoElectronico, setCorreoElectronico] = useState("");
+  const [codigoPostal, setCodigoPostal] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,8 +22,18 @@ const Pago = ({ total, items, nombre, correo }) => {
     setTimeout(() => {
       setLoading(false);
       setPagoExitoso(true);
+      actualizarCarrito();
     }, 2000); // Simulación de un proceso de pago de 2 segundos
   };
+
+  async function actualizarCarrito() {
+    if (localStorage.getItem("UserId")) {
+      const idUsuario = localStorage.getItem("UserId");
+      await ejecutarPatch("/api/carrito/update", {
+        idUsuario: idUsuario,
+      });
+    }
+  }
 
   const handleVerFactura = () => {
     setMostrarFactura(true);
@@ -52,7 +50,6 @@ const Pago = ({ total, items, nombre, correo }) => {
 
       //contenido de la factura
       const facturaTexto = generateFacturaTexto(
-        items,
         total,
         nombreTarjeta,
         correoElectronico
@@ -98,13 +95,51 @@ const Pago = ({ total, items, nombre, correo }) => {
     }
   };
 
-  const generateFacturaTexto = (items, total, nombre, correo) => {
+  const generateFacturaTexto = (total, nombre, correo) => {
     let facturaTexto = `Factura\n\nCliente: ${nombre}\nCorreo: ${correo}\n\nProductos:\n`;
     items.forEach((item) => {
-      facturaTexto += `${item.nombre} - Cantidad: ${item.cantidad} - Precio unitario: ${item.precio}\n`;
+      facturaTexto += `${item.descripcion} - Cantidad: ${
+        item.cantidad
+      } - Precio unitario: ${item.precio.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })}\n`;
     });
-    facturaTexto += `\nTotal: ${total}`; // Corregido para agregar el total al texto de la factura
+    facturaTexto += `\nTotal: ${total.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    })}`; // Corregido para agregar el total al texto de la factura
     return facturaTexto;
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  async function fetchItems() {
+    const idUsuario = localStorage.getItem("UserId");
+    const itemsCarrito = await ejecutarGet(`/api/carrito/${idUsuario}/items`);
+    let costoTotal = 0;
+    if (itemsCarrito.data) {
+      costoTotal = itemsCarrito.data.reduce(
+        (total, item) => total + parseFloat(item.precio * item.cantidad),
+        0
+      );
+      setItems(itemsCarrito.data);
+    }
+    setTotal(parseFloat(costoTotal));
+  }
+
+  const handleNombre = (evento) => {
+    setNombreTarjeta(evento.target.value);
+  };
+
+  const handleCorreo = (evento) => {
+    setCorreoElectronico(evento.target.value);
+  };
+
+  const handleCodigoPostal = (evento) => {
+    setCodigoPostal(evento.target.value);
   };
 
   return (
@@ -142,8 +177,9 @@ const Pago = ({ total, items, nombre, correo }) => {
                 <Form.Control
                   type="text"
                   name="nombreTarjeta"
-                  defaultValue={nombre}
+                  defaultValue={nombreTarjeta}
                   placeholder="Ingrese su nombre"
+                  onChange={handleNombre}
                   required
                 />
               </Form.Group>
@@ -155,8 +191,9 @@ const Pago = ({ total, items, nombre, correo }) => {
                 <Form.Control
                   type="email"
                   name="correoElectronico"
-                  defaultValue={correo}
+                  defaultValue={correoElectronico}
                   placeholder="Ingrese su correo electrónico"
+                  onChange={handleCorreo}
                   required
                 />
               </Form.Group>
@@ -169,6 +206,8 @@ const Pago = ({ total, items, nombre, correo }) => {
                   type="text"
                   name="postalCode"
                   placeholder="Ingrese su código postal"
+                  onChange={handleCodigoPostal}
+                  value={codigoPostal}
                   required
                 />
               </Form.Group>
@@ -206,7 +245,7 @@ const Pago = ({ total, items, nombre, correo }) => {
                 <tbody>
                   {items.map((item) => (
                     <tr key={item.id}>
-                      <td>{item.nombre}</td>
+                      <td>{item.descripcion}</td>
                       <td>{item.cantidad}</td>
                       <td>${item.precio}</td>
                     </tr>
@@ -217,7 +256,11 @@ const Pago = ({ total, items, nombre, correo }) => {
                 className="fw-bold"
                 style={{ fontFamily: "Prompt, sans-serif" }}
               >
-                Total: ${total}
+                Total:{" "}
+                {total.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })}
               </p>
             </Modal.Body>
             <Modal.Footer>
