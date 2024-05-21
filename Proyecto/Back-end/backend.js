@@ -13,6 +13,9 @@ const {
   insertarCarrito,
   obtenerCarritoPorUsuario,
   actualizarEstadoCarrito,
+  obtenerDatosPrenda,
+  descontarInventario,
+  obtenerTallasPorPrenda,
 } = require("./queries");
 
 const path = require("path");
@@ -58,7 +61,6 @@ app.post("/api/check-email", async (req, res) => {
 
 app.post("/api/reset-password", async (req, res) => {
   const { userId, newPassword } = req.body; // Usa userId en lugar de email
-  console.log("Id es " + userId);
   try {
     const hashedPassword = newPassword; // Hashear la nueva contraseña
 
@@ -161,17 +163,17 @@ app.get("/api/prendas/tipo/:tipoPrendaId/:departamento", async (req, res) => {
 app.get("/api/prendas/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await pool.query(
-      "SELECT * FROM prenda WHERE id_prenda = $1",
-      [id]
-    );
+    const result = await pool.query(obtenerDatosPrenda, [id]);
     if (result.rows.length === 0) {
       res.status(404).json({ error: "Prenda no encontrada" });
     } else {
       res.json(result.rows[0]);
     }
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener detalles de la prenda" });
+    res.status(500).json({
+      mensaje: "Error al obtener detalles de la prenda",
+      error: error,
+    });
   }
 });
 
@@ -187,7 +189,6 @@ const transporter = nodemailer.createTransport({
 app.post("/api/request-password-change", async (req, res) => {
   const { email } = req.body;
 
-  console.log(email);
   try {
     const result = await pool.query(
       "SELECT id_usuario FROM usuario WHERE correo_electronico = $1",
@@ -294,8 +295,6 @@ app.post("/api/request-password-change", async (req, res) => {
 app.post("/api/reset-password/:userId", async (req, res) => {
   const { userId } = req.params;
   const { newPassword } = req.body;
-  console.log(newPassword);
-  console.log(userId);
   try {
     // Buscar al usuario por su ID
     const result = await pool.query(
@@ -418,6 +417,31 @@ app.patch("/api/carrito/update", async (req, res) => {
     res
       .status(500)
       .json({ mensaje: "Error al eliminar el carrito", error: error });
+  }
+});
+
+app.patch("/api/prendas/update", async (req, res) => {
+  const idPrenda = req.body.idPrenda;
+  const cantidad = req.body.cantidad;
+  try {
+    await pool.query(descontarInventario, [cantidad, idPrenda]);
+    res.status(200).json({ mensaje: "Inventario actualizado" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ mensaje: "Error al actualizar el inventario", error: error });
+  }
+});
+
+app.get("/api/prendas/:id/tallas", async (req, res) => {
+  const idPrenda = req.params.id;
+  try {
+    const tallas = await pool.query(obtenerTallasPorPrenda, [idPrenda]);
+    res.status(200).json({ tallasDisponibles: tallas.rows });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ mensaje: "Error al obtener tallas de la prenda", error: error });
   }
 });
 

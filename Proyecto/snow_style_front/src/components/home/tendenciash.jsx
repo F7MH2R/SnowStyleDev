@@ -1,7 +1,7 @@
 import React from "react";
 import "../pages/css/Modal.css";
+import "../pages/css/Modal.css";
 import { Link } from "react-router-dom";
-import googleFontsURL from "../Fuentes/FuenteLetras";
 const TrendingSectionH = () => {
   const trendingItems = [
     {
@@ -29,11 +29,13 @@ const TrendingSectionH = () => {
       departamento: 1,
     },
   ];
+  
 
   return (
     <div
       className="trending-section"
       style={{ fontFamily: "Prompt, sans-serif" }}
+      id="caballero"
     >
       <h1 className="seccion-ropa-header">CABALLERO</h1>
       <h3 className="trending-header">------- TENDENCIAS -------</h3>

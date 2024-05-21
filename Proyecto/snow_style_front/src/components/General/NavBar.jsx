@@ -20,7 +20,6 @@ import imagen from "./img/userplaceholder.png";
 import "../pages/css/Modal.css";
 import Login from "../pages/Login";
 import Carrito from "../Carrito/Carrito";
-import Filtro from "../Filtro/Filtro";
 
 function NavBar(props) {
   const [showSearch, setShowSearch] = useState(false);
@@ -87,17 +86,29 @@ function NavBar(props) {
             className="d-flex justify-content-center align-items-center"
           >
             <Nav className="w-100 whitetxt justify-content-center">
-              <Nav.Link as={Link} to="mujeres" className="text-center">
+              <Nav.Link
+                as={Link}
+                onClick={() => (window.location.href = "/#dama")}
+                className="text-center"
+              >
                 <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Dama
                 </h3>
               </Nav.Link>
-              <Nav.Link as={Link} to="hombres" className="text-center">
+              <Nav.Link
+                as={Link}
+                onClick={() => (window.location.href = "/#caballero")}
+                className="text-center"
+              >
                 <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Caballero
                 </h3>
               </Nav.Link>
-              <Nav.Link as={Link} to="niños" className="text-center">
+              <Nav.Link
+                as={Link}
+                onClick={() => (window.location.href = "/#ninios")}
+                className="text-center"
+              >
                 <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Niños
                 </h3>
@@ -142,7 +153,6 @@ function NavBar(props) {
                       <b className="d-none d-xl-inline-block">Buscar</b>
                     </h3>
                   </Nav.Link>
-                  <Filtro />
                   <Carrito />
                   <Nav.Link as={Link} to="#" className="d-inline">
                     {urlImagenUsuario ? (
