@@ -87,17 +87,29 @@ function NavBar(props) {
             className="d-flex justify-content-center align-items-center"
           >
             <Nav className="w-100 whitetxt justify-content-center">
-              <Nav.Link as={Link} to="mujeres" className="text-center">
+              <Nav.Link
+                as={Link}
+                onClick={() => (window.location.href = "/#dama")}
+                className="text-center"
+              >
                 <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Dama
                 </h3>
               </Nav.Link>
-              <Nav.Link as={Link} to="hombres" className="text-center">
+              <Nav.Link
+                as={Link}
+                onClick={() => (window.location.href = "/#caballero")}
+                className="text-center"
+              >
                 <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Caballero
                 </h3>
               </Nav.Link>
-              <Nav.Link as={Link} to="niños" className="text-center">
+              <Nav.Link
+                as={Link}
+                onClick={() => (window.location.href = "/#ninios")}
+                className="text-center"
+              >
                 <h3 className="d-inline mx-2 mt-auto normaltxt whitetxt">
                   Niños
                 </h3>

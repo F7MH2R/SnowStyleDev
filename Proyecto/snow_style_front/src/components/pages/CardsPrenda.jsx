@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import FiltroPrendas from "./FiltroPrendas";
 import withLoader from "../Load/withLoader ";
 import { ejecutarPost } from "../compartidos/request";
+import { Tallas } from "../Tallas/Tallas";
 
 const CardsPrenda = () => {
   const { tipoPrendaId, departamento } = useParams();
@@ -139,24 +140,27 @@ const CardsPrenda = () => {
                     <h4>Precio: ${prenda.precio_unitario} </h4>
                   </Card.Title>
                   {/* Botones de tallas */}
-                  <p>Tallas disponibles:</p>
-                  <Button>{prenda.nom_talla}</Button>
-                  {prendas.map((talla, index) => (
-                    <Button key={index}>{talla.nom_talla}</Button>
-                  ))}
-                  <Button
-                    variant="primary"
-                    as={Link}
-                    to={`/detalle/${prenda.id_prenda}`}
-                  >
-                    Ver más
-                  </Button>{" "}
-                  <Button
-                    variant="success"
-                    onClick={() => handleComprar(prenda.id_prenda)}
-                  >
-                    Comprar
-                  </Button>
+                  <h5>Tallas disponibles:</h5>
+                  <Tallas idPrenda={prenda.id_prenda} />
+                  <Row className="p-2">
+                    <Col>
+                      <Button
+                        variant="primary"
+                        as={Link}
+                        to={`/detalle/${prenda.id_prenda}`}
+                      >
+                        Ver más
+                      </Button>
+                    </Col>
+                    <Col>
+                      <Button
+                        variant="success"
+                        onClick={() => handleComprar(prenda.id_prenda)}
+                      >
+                        Comprar
+                      </Button>
+                    </Col>
+                  </Row>
                 </Card.Body>
               </Card>
             </Col>

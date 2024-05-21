@@ -15,6 +15,7 @@ const {
   actualizarEstadoCarrito,
   obtenerDatosPrenda,
   descontarInventario,
+  obtenerTallasPorPrenda,
 } = require("./queries");
 
 const path = require("path");
@@ -60,7 +61,6 @@ app.post("/api/check-email", async (req, res) => {
 
 app.post("/api/reset-password", async (req, res) => {
   const { userId, newPassword } = req.body; // Usa userId en lugar de email
-  console.log("Id es " + userId);
   try {
     const hashedPassword = newPassword; // Hashear la nueva contraseña
 
@@ -189,7 +189,6 @@ const transporter = nodemailer.createTransport({
 app.post("/api/request-password-change", async (req, res) => {
   const { email } = req.body;
 
-  console.log(email);
   try {
     const result = await pool.query(
       "SELECT id_usuario FROM usuario WHERE correo_electronico = $1",
@@ -296,8 +295,6 @@ app.post("/api/request-password-change", async (req, res) => {
 app.post("/api/reset-password/:userId", async (req, res) => {
   const { userId } = req.params;
   const { newPassword } = req.body;
-  console.log(newPassword);
-  console.log(userId);
   try {
     // Buscar al usuario por su ID
     const result = await pool.query(
@@ -433,6 +430,18 @@ app.patch("/api/prendas/update", async (req, res) => {
     res
       .status(500)
       .json({ mensaje: "Error al actualizar el inventario", error: error });
+  }
+});
+
+app.get("/api/prendas/:id/tallas", async (req, res) => {
+  const idPrenda = req.params.id;
+  try {
+    const tallas = await pool.query(obtenerTallasPorPrenda, [idPrenda]);
+    res.status(200).json({ tallasDisponibles: tallas.rows });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ mensaje: "Error al obtener tallas de la prenda", error: error });
   }
 });
 

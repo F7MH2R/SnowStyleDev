@@ -77,6 +77,15 @@ const descontarInventario = `update prenda
 		id_prenda = $2
 	`;
 
+const obtenerTallasPorPrenda = `select t.nom_talla as talla 
+	from 
+		prenda p, tallas_prenda tp , talla t 
+	where 
+		p.id_prenda = tp.id_prenda and
+		tp.id_talla = t.id_talla and 
+		p.id_prenda = $1
+	`;
+
 module.exports = {
   queryCarrito: queryCarrito,
   updateCantidadItems: updateCantidadItems,
@@ -87,4 +96,5 @@ module.exports = {
   actualizarEstadoCarrito: actualizarEstadoCarrito,
   obtenerDatosPrenda: obtenerDatosPrenda,
   descontarInventario: descontarInventario,
+  obtenerTallasPorPrenda: obtenerTallasPorPrenda,
 };

@@ -5,6 +5,7 @@ import googleFontsURL from "../Fuentes/FuenteLetras";
 import { Button, Table } from "react-bootstrap";
 import withLoader from "../Load/withLoader ";
 import { ejecutarPost } from "../compartidos/request";
+import { Tallas } from "../Tallas/Tallas";
 const DetalleProducto = () => {
   const { id_prenda } = useParams(); // Obtener el ID de la prenda de la URL
   const [prenda, setPrenda] = useState(null);
@@ -82,21 +83,7 @@ const DetalleProducto = () => {
           </div>
           <h1 style={styles.titulo}>Tallas Disponibles</h1>
           <div style={styles.botonesContainer}>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              S
-            </button>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              M
-            </button>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              L
-            </button>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              XL
-            </button>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              XXL
-            </button>
+            <Tallas idPrenda={id_prenda} />
           </div>
           <div style={styles.descripcionContainer}>
             <h1 style={styles.titulo}>Descripcion</h1>

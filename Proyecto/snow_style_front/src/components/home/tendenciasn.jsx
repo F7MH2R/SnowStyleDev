@@ -36,6 +36,7 @@ const TrendingSectionN = () => {
     <div
       className="trending-section"
       style={{ fontFamily: "Prompt, sans-serif" }}
+      id="ninios"
     >
       <link rel="stylesheet" href={googleFontsURL} />
       <h1 className="seccion-ropa-header">NIÑOS</h1>
