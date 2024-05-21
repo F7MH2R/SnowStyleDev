@@ -3,17 +3,11 @@ const bodyParser = require("body-parser");
 const { Pool } = require("pg");
 const app = express();
 const port = 3076;
+const queries = require("./FQUERY.JS");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
 app.use(bodyParser.json());
-
-const pool = new Pool({
-  user: "slayer",
-  host: "localhost",
-  database: "snowstyle",
-  password: "1234",
-  port: 5433,
-});
+const pool = require("./config/database");
 
 app.use(cors({ origin: "http://localhost:4000" }));
 // Opción 1: Verificar la conexión inmediatamente
@@ -494,6 +488,67 @@ app.delete("/departamentos/:id", async (req, res) => {
   }
 });
 
+//endpoint para estadisticas
+app.get("/api/sales-by-date", async (req, res) => {
+  const data = await queries.getSalesByDate();
+  res.json(data);
+});
+
+app.get("/api/sales-by-department", async (req, res) => {
+  const data = await queries.getSalesByDepartment();
+  res.json(data);
+});
+
+app.get("/api/sales-by-size", async (req, res) => {
+  const data = await queries.getSalesBySize();
+  res.json(data);
+});
+
+app.get("/api/sales-by-provider", async (req, res) => {
+  const data = await queries.getSalesByProvider();
+  res.json(data);
+});
+
+app.get("/api/sales-by-brand", async (req, res) => {
+  const data = await queries.getSalesByBrand();
+  res.json(data);
+});
+
+app.get("/api/sales-by-month", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        EXTRACT(MONTH FROM f.fecha) AS month,
+        SUM(p.precio_unitario * ic.cantidad) AS total_vendido
+      FROM factura f
+      JOIN detalle_factura df ON f.id_factura = df.id_factura
+    JOIN items_carrito ic ON df.id_prenda = ic.id_prenda
+    JOIN prenda p ON ic.id_prenda = p.id_prenda
+      GROUP BY month
+      ORDER BY month;
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Definir la ruta GET /tallas
+app.get("/tallas", async (req, res) => {
+  try {
+    // Consultar todas las tallas desde la base de datos
+    const result = await pool.query(
+      "SELECT id_talla, nom_talla, codigo FROM public.talla"
+    );
+
+    // Devolver las tallas como respuesta en formato JSON
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error al obtener las tallas", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

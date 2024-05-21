@@ -13,6 +13,9 @@ exports.getTallasPrenda = async (req, res) => {
 exports.createTallasPrenda = async (req, res) => {
   try {
     const { id_prenda, id_talla } = req.body;
+
+    console.log(id_prenda);
+
     const result = await pool.query(
       "INSERT INTO tallas_prenda (id_prenda, id_talla) VALUES ($1, $2) RETURNING *",
       [id_prenda, id_talla]

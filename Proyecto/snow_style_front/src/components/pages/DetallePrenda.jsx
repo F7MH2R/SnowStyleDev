@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Card, Button, Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import withLoader from "../Load/withLoader ";
+import { ejecutarPost } from "../compartidos/request";
 const DetallePrenda = () => {
   const { id_prenda } = useParams(); // Obtener el ID de la prenda de la URL
   const [prenda, setPrenda] = useState(null);
@@ -32,6 +33,20 @@ const DetallePrenda = () => {
   if (error) {
     return <div>{error}</div>;
   }
+
+  const handleComprar = (prendaId) => {
+    const idUsuario = localStorage.getItem("UserId");
+
+    agregarAlCarrito(prendaId, idUsuario);
+
+    async function agregarAlCarrito(prendaId, idUsuario) {
+      await ejecutarPost(`/api/carrito/items/add`, {
+        idPrenda: prendaId,
+        idUsuario: idUsuario,
+      });
+      window.location.reload();
+    }
+  };
 
   return (
     <div>
@@ -78,10 +93,12 @@ const DetallePrenda = () => {
               )}
             </Carousel>
             <Card.Text>
-              {prenda.descripcion} {/* Descripción de la prenda */}
+              {prenda.descripcion + "    asdfasdfasdfsf"}{" "}
+              {/* Descripción de la prenda */}
             </Card.Text>
-            <Button variant="primary">Agregar al carrito</Button>{" "}
-            {/* Botón para agregar al carrito */}
+            <Button variant="primary" onClick={() => handleComprar(id_prenda)}>
+              Agregar al carrito
+            </Button>{" "}
           </Card.Body>
         </Card>
       ) : (

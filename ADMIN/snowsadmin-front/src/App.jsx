@@ -13,7 +13,12 @@ import FormProveedor from "./components/Proveedores/Create/ProveedorForm ";
 import TallasForm from "./components/Prendas/AddTalla/TallasForm";
 import Loader from "./components/Load/Loading";
 import { AuthProvider } from "./components/General/AuthContext";
-
+import DepartamentoTable from "./components/Departamento/Table/DepartamentoTable";
+import Statistics from "./components/Estadistic/Statistics";
+import MarcaTable from "./components/Marca/Table/MarcaTable";
+import FormMarca from "./components/Marca/Form/MarcaForm";
+import UpdatePrenda from "./components/Prendas/UpdateP/UpdateP";
+import TallaTable from "./components/Tallas/TallaTable";
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -36,8 +41,18 @@ function App() {
             <Routes>
               <Route path="/" exact element={<Register />} />
               <Route path="register" element={<Register />} />
+              <Route path="tallas" element={<TallaTable />} />
+              <Route path="/marcaTable" element={<MarcaTable />} />
+              <Route path="estadisticas" element={<Statistics />} />
+              <Route path="tableproveedor" element={<TablaProveedor />} />
+              <Route path="tablePrenda" element={<TablePrenda />} />
+              <Route path="FormProveedor" element={<FormProveedor />} />
+              <Route path="depaTable" element={<DepartamentoTable />} />
+              <Route path="tallas/:id_prenda" element={<TallasForm />} />
               <Route path="admin" element={<AdminDashboard />} />
               <Route path="/FormPrenda" exact element={<FormPrenda />} />
+              <Route path="formMarca" exact element={<FormMarca />} />
+              <Route path="/UpdatePrenda/:id" element={<UpdatePrenda />} />
             </Routes>
           </div>
         )}

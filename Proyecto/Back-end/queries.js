@@ -4,20 +4,21 @@ const ESTADOS_CARRITO = {
 };
 
 const queryCarrito = `select 
-	p.nombre_prenda as descripcion,
-	p.precio_unitario as precio,
-	p.imagen1 as imagen,
-	ic.cantidad as cantidad,
-	p.id_prenda as id,
-	ic.id_itemcarrito as id_itemcarrito
-from usuario u, carrito c  , items_carrito ic , prenda p 
-where 
-u.id_usuario = c.id_usuario and 
-c.id_carrito = ic.id_carrito and 
-ic.id_prenda = p.id_prenda and
-u.id_usuario = $1 and
-estado_carrito = '${ESTADOS_CARRITO.EN_ESPERA}'
-order by ic.id_itemcarrito`;
+		p.nombre_prenda as descripcion,
+		p.precio_unitario as precio,
+		p.imagen1 as imagen,
+		ic.cantidad as cantidad,
+		p.id_prenda as id,
+		ic.id_itemcarrito as id_itemcarrito
+	from 
+		usuario u, carrito c  , items_carrito ic , prenda p 
+	where 
+		u.id_usuario = c.id_usuario and 
+		c.id_carrito = ic.id_carrito and 
+		ic.id_prenda = p.id_prenda and
+		u.id_usuario = $1 and
+		estado_carrito = '${ESTADOS_CARRITO.EN_ESPERA}'
+		order by ic.id_itemcarrito`;
 
 const updateCantidadItems = `update items_carrito 
 	set
@@ -55,6 +56,36 @@ const obtenerCarritoPorUsuario = `select id_carrito as id from carrito
 		estado_carrito = '${ESTADOS_CARRITO.EN_ESPERA}'
 	`;
 
+const actualizarEstadoCarrito = `update carrito
+	set
+		estado_carrito = '${ESTADOS_CARRITO.PAGADO}'
+	where 
+		id_usuario = $1 and
+		estado_carrito = '${ESTADOS_CARRITO.EN_ESPERA}'
+	`;
+
+const obtenerDatosPrenda = `SELECT * 
+	FROM 
+		prenda 
+	WHERE 
+		id_prenda = $1`;
+
+const descontarInventario = `update prenda
+	set 
+		cantidad = (cantidad - $1)
+	where
+		id_prenda = $2
+	`;
+
+const obtenerTallasPorPrenda = `select t.nom_talla as talla 
+	from 
+		prenda p, tallas_prenda tp , talla t 
+	where 
+		p.id_prenda = tp.id_prenda and
+		tp.id_talla = t.id_talla and 
+		p.id_prenda = $1
+	`;
+
 module.exports = {
   queryCarrito: queryCarrito,
   updateCantidadItems: updateCantidadItems,
@@ -62,4 +93,8 @@ module.exports = {
   insertarItemsCarrito: insertarItemsCarrito,
   insertarCarrito: insertarCarrito,
   obtenerCarritoPorUsuario: obtenerCarritoPorUsuario,
+  actualizarEstadoCarrito: actualizarEstadoCarrito,
+  obtenerDatosPrenda: obtenerDatosPrenda,
+  descontarInventario: descontarInventario,
+  obtenerTallasPorPrenda: obtenerTallasPorPrenda,
 };

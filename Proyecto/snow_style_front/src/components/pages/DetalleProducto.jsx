@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import googleFontsURL from "../Fuentes/FuenteLetras";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import withLoader from "../Load/withLoader ";
+import { ejecutarPost } from "../compartidos/request";
+import { Tallas } from "../Tallas/Tallas";
 const DetalleProducto = () => {
   const { id_prenda } = useParams(); // Obtener el ID de la prenda de la URL
   const [prenda, setPrenda] = useState(null);
@@ -32,6 +34,21 @@ const DetalleProducto = () => {
   if (error) {
     return <div>{error}</div>;
   }
+
+  const handleComprar = (prendaId) => {
+    const idUsuario = localStorage.getItem("UserId");
+
+    agregarAlCarrito(prendaId, idUsuario);
+
+    async function agregarAlCarrito(prendaId, idUsuario) {
+      await ejecutarPost(`/api/carrito/items/add`, {
+        idPrenda: prendaId,
+        idUsuario: idUsuario,
+      });
+      window.location.reload();
+    }
+  };
+
   return (
     <div style={{ fontFamily: "Prompt, sans-serif" }}>
       <div style={styles.detalleProductoContainer}>
@@ -66,21 +83,7 @@ const DetalleProducto = () => {
           </div>
           <h1 style={styles.titulo}>Tallas Disponibles</h1>
           <div style={styles.botonesContainer}>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              S
-            </button>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              M
-            </button>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              L
-            </button>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              XL
-            </button>
-            <button className="btn btn-outline-dark" style={styles.btnPequeno}>
-              XXL
-            </button>
+            <Tallas idPrenda={id_prenda} />
           </div>
           <div style={styles.descripcionContainer}>
             <h1 style={styles.titulo}>Descripcion</h1>
@@ -116,9 +119,13 @@ const DetalleProducto = () => {
               </tr>
             </tbody>
           </Table>
-          <button className="btn btn-dark" style={styles.btnAgregarCarrito}>
+          <Button
+            className="btn btn-dark"
+            style={styles.btnAgregarCarrito}
+            onClick={() => handleComprar(id_prenda)}
+          >
             Agregar al carrito
-          </button>
+          </Button>
           <div style={styles.imagenesContainer}>
             <img
               src={prenda.imagen1}
