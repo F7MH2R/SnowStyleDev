@@ -20,7 +20,6 @@ import imagen from "./img/userplaceholder.png";
 import "../pages/css/Modal.css";
 import Login from "../pages/Login";
 import Carrito from "../Carrito/Carrito";
-import Filtro from "../Filtro/Filtro";
 
 function NavBar(props) {
   const [showSearch, setShowSearch] = useState(false);
@@ -154,7 +153,6 @@ function NavBar(props) {
                       <b className="d-none d-xl-inline-block">Buscar</b>
                     </h3>
                   </Nav.Link>
-                  <Filtro />
                   <Carrito />
                   <Nav.Link as={Link} to="#" className="d-inline">
                     {urlImagenUsuario ? (
