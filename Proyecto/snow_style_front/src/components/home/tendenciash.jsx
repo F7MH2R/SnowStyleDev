@@ -1,5 +1,6 @@
 import React from "react";
 import "../pages/css/Modal.css";
+import "../pages/css/Modal.css";
 import { Link } from "react-router-dom";
 const TrendingSectionH = () => {
   const trendingItems = [
@@ -28,6 +29,7 @@ const TrendingSectionH = () => {
       departamento: 1,
     },
   ];
+  
 
   return (
     <div
