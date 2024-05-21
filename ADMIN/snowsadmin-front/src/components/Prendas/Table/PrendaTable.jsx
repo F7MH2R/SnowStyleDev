@@ -30,7 +30,7 @@ const PrendaTable = () => {
     <>
       <Button
         variant="primary"
-        onClick={() => navigate("/prenda-form")}
+        onClick={() => navigate("/FormPrenda")}
         style={{ marginBottom: "10px" }}
       >
         Agregar Prenda

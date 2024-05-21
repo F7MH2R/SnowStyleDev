@@ -184,13 +184,6 @@ const PrendaForm = () => {
             value={formData.imagen1}
             onChange={handleChange}
           />
-          {formData.imagen1 && (
-            <img
-              src={formData.imagen1}
-              alt="Previsualización Imagen 1"
-              style={{ width: "100px", height: "100px" }}
-            />
-          )}
         </Form.Group>
         <Form.Group>
           <Form.Label>Imagen 2</Form.Label>
@@ -200,13 +193,6 @@ const PrendaForm = () => {
             value={formData.imagen2}
             onChange={handleChange}
           />
-          {formData.imagen2 && (
-            <img
-              src={formData.imagen2}
-              alt="Previsualización Imagen 2"
-              style={{ width: "100px", height: "100px" }}
-            />
-          )}
         </Form.Group>
         <Form.Group>
           <Form.Label>Imagen 3</Form.Label>
@@ -216,13 +202,6 @@ const PrendaForm = () => {
             value={formData.imagen3}
             onChange={handleChange}
           />
-          {formData.imagen3 && (
-            <img
-              src={formData.imagen3}
-              alt="Previsualización Imagen 3"
-              style={{ width: "100px", height: "100px" }}
-            />
-          )}
         </Form.Group>
         <Form.Group>
           <Form.Label>Imagen 4</Form.Label>
@@ -232,15 +211,7 @@ const PrendaForm = () => {
             value={formData.imagen4}
             onChange={handleChange}
           />
-          {formData.imagen4 && (
-            <img
-              src={formData.imagen4}
-              alt="Previsualización Imagen 4"
-              style={{ width: "100px", height: "100px" }}
-            />
-          )}
         </Form.Group>
-
         <Form.Group>
           <Form.Label>Tipo Prenda</Form.Label>
           <Form.Control

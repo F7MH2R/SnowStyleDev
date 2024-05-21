@@ -48,7 +48,7 @@ function App() {
               <Route path="tablePrenda" element={<TablePrenda />} />
               <Route path="FormProveedor" element={<FormProveedor />} />
               <Route path="depaTable" element={<DepartamentoTable />} />
-              <Route path="TallasForm" element={<TallasForm />} />
+              <Route path="tallas/:id_prenda" element={<TallasForm />} />
               <Route path="admin" element={<AdminDashboard />} />
               <Route path="/FormPrenda" exact element={<FormPrenda />} />
               <Route path="formMarca" exact element={<FormMarca />} />

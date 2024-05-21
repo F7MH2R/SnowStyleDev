@@ -4,7 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 const TallasForm = () => {
-  const { prendaId } = useParams();
+  const { id_prenda } = useParams();
   const [tallas, setTallas] = useState([]);
   const [selectedTallas, setSelectedTallas] = useState(Array(5).fill(""));
 
@@ -26,11 +26,12 @@ const TallasForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    for (let i = 0; i < selectedTallas.length; i++) {
-      if (selectedTallas[i]) {
+    const tallas_Guardar = selectedTallas.filter((talla) => talla.length > 0);
+    for (let i = 0; i < tallas_Guardar.length; i++) {
+      if (tallas_Guardar[i]) {
         await axios.post("http://localhost:3076/tallas_prenda", {
-          id_prenda: prendaId,
-          id_talla: selectedTallas[i],
+          id_prenda: id_prenda,
+          id_talla: tallas_Guardar[i],
         });
       }
     }
