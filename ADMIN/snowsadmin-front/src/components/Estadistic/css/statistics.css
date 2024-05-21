@@ -1,0 +1,14 @@
+.statistics-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.chart-container {
+  flex: 1 1 calc(50% - 20px);
+  min-width: 300px;
+}
+
+.chart-container h3 {
+  text-align: center;
+}
