@@ -50,29 +50,21 @@ const NavBar = () => {
         </Navbar.Brand>
         <Nav className="ml-auto">
           {!isAuthenticated ? (
-            <Button className="logo-inicio-button logo-inicio-button:hover" onClick={handleShow}>
+            <Button style={{marginRight: "30px"}} className="logo-inicio-button logo-inicio-button:hover" onClick={handleShow}>
               Iniciar Sesión
             </Button>
           ) : (
             <>
-              <Button variant="secondary" className="mr-2">
-                Administrar
-              </Button>
-              <Button variant="secondary" className="mr-2">
-                Ver Detalles
-              </Button>
-              <Button variant="danger" onClick={handleLogout}>
+              <Button  style={{marginRight: "30px"}} className="logo-cerrar-button logo-cerrar-button:hover" onClick={handleLogout}>
                 Cerrar Sesión
               </Button>
             </>
           )}
         </Nav>
       </Navbar>
-
       <Modal show={show} onHide={handleClose}>
         <Login onLoginSuccess={handleLogin} />
       </Modal>
-
       <BotonFlotante isAuthenticated={isAuthenticated} />
     </>
   );

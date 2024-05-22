@@ -1,0 +1,37 @@
+.proveedor-form {
+  background-color: #e3e1dd;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 20px auto;
+  transition: box-shadow 0.3s ease;
+}
+
+.proveedor-form:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.proveedor-button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.proveedor-form-button {
+  max-width: 150px;
+  margin-right: 10px;
+  background-color: #349677;
+  color: #fff;
+  border: none;
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.proveedor-form-button:hover {
+  background-color: #2f6453;
+  transform: scale(1.05);
+}

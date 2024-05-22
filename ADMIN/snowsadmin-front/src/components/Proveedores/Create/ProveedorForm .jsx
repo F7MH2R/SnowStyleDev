@@ -1,9 +1,9 @@
-// src/components/ProveedorForm.js
 import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
+import "../Create/ProveedorForm.css"; // Importa tus estilos CSS aquí
 
-const ProveedorForm = () => {
+const ProveedorForm = ({ handleAddProveedor }) => {
   const [formData, setFormData] = useState({
     name_proveedor: "",
   });
@@ -14,24 +14,31 @@ const ProveedorForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:3076/proveedores", formData);
-    setFormData({ name_proveedor: "" });
+    try {
+      await axios.post("http://localhost:3076/proveedores", formData);
+      handleAddProveedor();
+    } catch (error) {
+      console.error("Error adding proveedor:", error);
+    }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="proveedor-form">
       <Form.Group>
-        <Form.Label>Nombre Proveedor</Form.Label>
+        <Form.Label className="form-label">Nombre Proveedor</Form.Label>
         <Form.Control
           type="text"
           name="name_proveedor"
           value={formData.name_proveedor}
           onChange={handleChange}
+          className="form-control"
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Add Proveedor
-      </Button>
+      <div className="proveedor-button-group">
+          <Button className="proveedor-form-button" variant="primary" type="submit">
+            Agregar Marca
+          </Button>
+      </div>
     </Form>
   );
 };

@@ -1,18 +1,15 @@
-// src/components/MarcaForm.js
 import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./MarcaForm.css";
 
-const MarcaForm = () => {
+const MarcaForm = ({ handleAddMarca }) => {
   const [formData, setFormData] = useState({
     nom_marca: "",
     codigo: "",
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,22 +19,25 @@ const MarcaForm = () => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:3076/marcas", formData);
-      toast.success("Marca agregada exitosamente!");
       setFormData({ nom_marca: "", codigo: "" });
-      setTimeout(() => {
-        navigate("/marcaTable");
-      }, 2000); // Redirige después de 2 segundos
+      handleAddMarca();
+      toast.success("Marca agregada con éxito.");
     } catch (error) {
       toast.error("Error al agregar la marca.");
     }
   };
 
+  const handleCancel = () => {
+    setFormData({ nom_marca: "", codigo: "" });
+  };
+
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <Form className="marca-form" onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Label>Nombre Marca</Form.Label>
+          <Form.Label className="marca-label">Nombre Marca</Form.Label>
           <Form.Control
+            className="marca-input"
             type="text"
             name="nom_marca"
             value={formData.nom_marca}
@@ -45,17 +45,20 @@ const MarcaForm = () => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Código</Form.Label>
+          <Form.Label className="marca-label">Código</Form.Label>
           <Form.Control
+            className="marca-input"
             type="text"
             name="codigo"
             value={formData.codigo}
             onChange={handleChange}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Add Marca
-        </Button>
+        <div className="button-group">
+          <Button className="marca-button" variant="primary" type="submit">
+            Agregar Marca
+          </Button>
+        </div>
       </Form>
       <ToastContainer />
     </>

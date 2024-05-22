@@ -15,7 +15,7 @@
   margin-bottom: 20px;
 }
 
-.admin-header h2 {
+.admin-header h4 {
   margin: 0;
 }
 
@@ -39,9 +39,10 @@
   margin-bottom: 20px;
 }
 
-.admin-section h3 {
+.admin-section h5 {
   margin-top: 2px;
   margin-bottom: 2%;
+  font-weight: bold;
 }
 
 .admin-table {
@@ -101,15 +102,15 @@
 
 .department-card {
   background-color: white;
-  padding: 15px;
+  padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  width: 30%;
-  min-width: 250px;
+  width: 25%;
+  min-width: 350px;
   text-align: center;
 }
 
-.department-card h3 {
+.department-card h4 {
   margin-bottom: 15px;
 }
 
@@ -149,4 +150,16 @@
 
 .admin-table button:hover {
   background-color: #c82333;
+}
+
+.nombre-menu{
+  text-align: center;
+  color: white;
+  font-size: x-large;
+  margin-bottom: 2%;
+}
+
+.confi-menu{
+  margin-top: 5%;
+  margin-bottom: 5%;
 }

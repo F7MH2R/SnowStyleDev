@@ -19,6 +19,7 @@ import MarcaTable from "./components/Marca/Table/MarcaTable";
 import FormMarca from "./components/Marca/Form/MarcaForm";
 import UpdatePrenda from "./components/Prendas/UpdateP/UpdateP";
 import TallaTable from "./components/Tallas/TallaTable";
+
 function App() {
   const [loading, setLoading] = useState(true);
 

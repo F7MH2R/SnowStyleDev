@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import googleFontsURL from "../FuenteLetra/FuenteLetra";
+import Menu from "../Menu/Menu";
 import DepartmentComponent from "./DepartamentComponent";
 import "./admin.css";
 
@@ -41,14 +42,18 @@ const AdminDashboard = () => {
     <div style={{ fontFamily: "Prompt, sans-serif" }} className="admin-container">
       <link rel="stylesheet" href={googleFontsURL} />
       <div className="admin-header">
-        <h2>Dashboard del Administrador</h2>
+        <h4>Dashboard del Administrador</h4>
       </div>
       <div className="admin-section">
-        <h3>Departamentos</h3>
+        <h5>Departamentos</h5>
         <DepartmentComponent />
       </div>
+      <div className="confi-menu">
+        <h5 className="nombre-menu">Menú</h5>
+        <Menu />
+      </div>
       <div className="admin-section">
-        <h3>Lista de Usuarios</h3>
+        <h5>Lista de Usuarios</h5>
         {users.length > 0 ? (
           <table className="admin-table">
             <thead>

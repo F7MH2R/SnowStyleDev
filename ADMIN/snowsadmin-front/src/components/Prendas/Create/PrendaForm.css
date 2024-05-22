@@ -1,26 +1,43 @@
-.container{
-    background: linear-gradient(to right, #9dafb3, #cac6c0);
-    margin-top: 2%;
+.prenda-form-container {
+  background: linear-gradient(to right, #9dafb3, #cac6c0);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  height: auto;
+  min-height: 150vh;
 }
 
-.custom-form {
-  width: calc(33.33% - 20px);
+.prenda-form-container:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.prenda-form-all{
+  background-color: #e3e1dd;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 900px;
+  margin: 20px auto;
+  margin-top: 5%;
+  transition: box-shadow 0.3s ease;
+  height: 100vh;
+}
+
+.prenda-custom-form {
+  width: calc(33.33% - 40px);
   margin-right: 20px;
   display: inline-block;
   vertical-align: top;
   margin-top: 5%;
 }
 
-.custom-form:last-child {
-  margin-right: 0;
-}
-
 .custom-form-group {
-  margin-bottom: 20px;
+margin-bottom: 10px;
+width: 100%;
 }
 
 .custom-label {
-  font-weight: bold;
+font-weight: bold;
 }
 
 .custom-control {
@@ -33,25 +50,17 @@
 }
 
 .custom-button {
-  width: 20%;
+  width: 60%;
+  margin-top: 20%;
   padding: 10px;
-  border: none;
   border-radius:20px;
-  background-color: #34404d;
+  background-color: #349677;
   color: #fff;
-  display: flex;
-  justify-content: center; 
-  flex-wrap: wrap; 
-  margin: auto;
+  border: none;
   font-size: 0.9rem;
-  transition: background-color 0.3s;
-  cursor: pointer;
 }
 
 .custom-button:hover {
-  background-color: #566a80;
-  color: white; 
-  border: none; 
-  padding: 5px 10px; 
-  cursor: pointer; 
+  background-color: #2f6453;
+  transform: scale(1.05);
 }

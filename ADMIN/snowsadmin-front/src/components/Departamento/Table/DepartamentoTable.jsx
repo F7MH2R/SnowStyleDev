@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button } from "react-bootstrap";
+import "../Table/DepartamentoTable.css";
 
 const DepartamentoTable = () => {
   const [departamentos, setDepartamentos] = useState([]);
@@ -16,7 +17,8 @@ const DepartamentoTable = () => {
   };
 
   return (
-    <Table striped bordered hover>
+    <div className="departamento-table-container">
+      <Table striped bordered hover className="departamento-container">
       <thead>
         <tr>
           <th>Nombre Departamento</th>
@@ -31,6 +33,7 @@ const DepartamentoTable = () => {
         ))}
       </tbody>
     </Table>
+    </div>
   );
 };
 

@@ -148,6 +148,8 @@
   }
 }
 
+
+/*Boton de Iniciar sesion*/
 .logo-inicio-button {
   margin-top: 15px;
   width: 150px;
@@ -163,4 +165,22 @@
 
 .logo-inicio-button:hover{
   background-color: #74c6ac;
+}
+
+/*Boton de Cerrar sesion*/
+.logo-cerrar-button {
+  margin-top: 15px;
+  width: 150px;
+  padding: 10px ;
+  background-color: #ff5656;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.logo-cerrar-button:hover{
+  background-color: #c72626;
 }
