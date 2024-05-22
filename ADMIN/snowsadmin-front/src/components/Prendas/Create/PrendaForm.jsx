@@ -63,6 +63,7 @@ const PrendaForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios.post("http://localhost:3076/prendas", formData);
+
     setFormData({
       id_marca: "",
       id_departamento: "",
@@ -84,16 +85,27 @@ const PrendaForm = () => {
       material5: "",
     });
 
-    navigate("/tablePrenda");
+    navigate(`/tallas/${prendaId}`);
   };
 
   return (
     <>
-      <div className="prenda-form-container"  style={{ fontFamily: "Prompt, sans-serif" }}>
+      <div
+        className="prenda-form-container"
+        style={{ fontFamily: "Prompt, sans-serif" }}
+      >
         <link rel="stylesheet" href={googleFontsURL} />
         <div className="prenda-form-all">
-          <h4><b>Nueva Prenda</b></h4>
-          <Form striped bordered hove onSubmit={handleSubmit} className="prenda-custom-form">
+          <h4>
+            <b>Nueva Prenda</b>
+          </h4>
+          <Form
+            striped
+            bordered
+            hove
+            onSubmit={handleSubmit}
+            className="prenda-custom-form"
+          >
             <Form.Group className="custom-form-group">
               <Form.Label className="custom-label">Nombre Prenda</Form.Label>
               <Form.Control
@@ -160,9 +172,8 @@ const PrendaForm = () => {
             </Form.Group>
           </Form>
 
-
           <Form onSubmit={handleSubmit} className="prenda-custom-form">
-            <Form.Group className="custom-form-group" >
+            <Form.Group className="custom-form-group">
               <Form.Label className="custom-label">Proveedor</Form.Label>
               <Form.Control
                 as="select"
@@ -234,92 +245,92 @@ const PrendaForm = () => {
               </Form.Group>
             </div>
           </Form>
-          
+
           <Form onSubmit={handleSubmit} className="prenda-custom-form">
             <div className="custom-form-section">
-                <Form.Group className="custom-form-group">
-                  <Form.Label className="custom-label">Tipo Prenda</Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="id_tipo_prenda"
-                    value={formData.id_tipo_prenda}
-                    onChange={handleChange}
-                    className="custom-control"
-                  >
-                    <option value="">Seleccione Tipo Prenda</option>
-                    {tipoPrendas.map((tipoPrenda, index) => (
-                      <option key={index} value={index + 1}>
-                        {tipoPrenda.nombre_tipo}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group className="custom-form-group">
-                  <Form.Label className="custom-label">Descripción</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="descripcion"
-                    value={formData.descripcion}
-                    onChange={handleChange}
-                    className="custom-control"
-                  />
-                </Form.Group>
-                <Form.Group className="custom-form-group">
-                  <Form.Label className="custom-label">Material 1</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="material1"
-                    value={formData.material1}
-                    onChange={handleChange}
-                    className="custom-control"
-                  />
-                </Form.Group>
-                <Form.Group className="custom-form-group">
-                  <Form.Label className="custom-label">Material 2</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="material2"
-                    value={formData.material2}
-                    onChange={handleChange}
-                    className="custom-control"
-                  />
-                </Form.Group>
-                <Form.Group className="custom-form-group">
-                  <Form.Label className="custom-label">Material 3</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="material3"
-                    value={formData.material3}
-                    onChange={handleChange}
-                    className="custom-control"
-                  />
-                </Form.Group>
-                <Form.Group className="custom-form-group">
-                  <Form.Label className="custom-label">Material 4</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="material4"
-                    value={formData.material4}
-                    onChange={handleChange}
-                    className="custom-control"
-                  />
-                </Form.Group>
-                <Form.Group className="custom-form-group">
-                  <Form.Label className="custom-label">Material 5</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="material5"
-                    value={formData.material5}
-                    onChange={handleChange}
-                    className="custom-control"
-                  />
-                </Form.Group>
-              </div>
-              <button className= "custom-button" variant="primary">
-              Agregar Prenda 
-              </button>
+              <Form.Group className="custom-form-group">
+                <Form.Label className="custom-label">Tipo Prenda</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="id_tipo_prenda"
+                  value={formData.id_tipo_prenda}
+                  onChange={handleChange}
+                  className="custom-control"
+                >
+                  <option value="">Seleccione Tipo Prenda</option>
+                  {tipoPrendas.map((tipoPrenda, index) => (
+                    <option key={index} value={index + 1}>
+                      {tipoPrenda.nombre_tipo}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group className="custom-form-group">
+                <Form.Label className="custom-label">Descripción</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="descripcion"
+                  value={formData.descripcion}
+                  onChange={handleChange}
+                  className="custom-control"
+                />
+              </Form.Group>
+              <Form.Group className="custom-form-group">
+                <Form.Label className="custom-label">Material 1</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="material1"
+                  value={formData.material1}
+                  onChange={handleChange}
+                  className="custom-control"
+                />
+              </Form.Group>
+              <Form.Group className="custom-form-group">
+                <Form.Label className="custom-label">Material 2</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="material2"
+                  value={formData.material2}
+                  onChange={handleChange}
+                  className="custom-control"
+                />
+              </Form.Group>
+              <Form.Group className="custom-form-group">
+                <Form.Label className="custom-label">Material 3</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="material3"
+                  value={formData.material3}
+                  onChange={handleChange}
+                  className="custom-control"
+                />
+              </Form.Group>
+              <Form.Group className="custom-form-group">
+                <Form.Label className="custom-label">Material 4</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="material4"
+                  value={formData.material4}
+                  onChange={handleChange}
+                  className="custom-control"
+                />
+              </Form.Group>
+              <Form.Group className="custom-form-group">
+                <Form.Label className="custom-label">Material 5</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="material5"
+                  value={formData.material5}
+                  onChange={handleChange}
+                  className="custom-control"
+                />
+              </Form.Group>
+            </div>
+            <button className="custom-button" variant="primary">
+              Agregar Prenda
+            </button>
           </Form>
-        </div> 
+        </div>
       </div>
     </>
   );
