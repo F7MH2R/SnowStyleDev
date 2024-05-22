@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import googleFontsURL from "../../FuenteLetra/FuenteLetra";
-import "./TallasForm.css"; 
+import "./TallasForm.css";
 
 const TallasForm = () => {
   const { id_prenda } = useParams();
   const [tallas, setTallas] = useState([]);
   const [selectedTallas, setSelectedTallas] = useState(Array(5).fill(""));
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchTallas = async () => {
       try {
@@ -44,15 +46,24 @@ const TallasForm = () => {
         }
       }
     }
+    navigate(`/admin`);
   };
 
   return (
-    <div className="tallas-form-container" style={{ fontFamily: "Prompt, sans-serif" }}>
+    <div
+      className="tallas-form-container"
+      style={{ fontFamily: "Prompt, sans-serif" }}
+    >
       <link rel="stylesheet" href={googleFontsURL} />
-      <Form onSubmit={handleSubmit} style={{ fontFamily: "Prompt, sans-serif" }}>
+      <Form
+        onSubmit={handleSubmit}
+        style={{ fontFamily: "Prompt, sans-serif" }}
+      >
         {[...Array(5)].map((_, index) => (
           <Form.Group key={index} className={`talla-select-group-${index}`}>
-            <Form.Label className={`talla-label-${index}`}>Talla {index + 1}</Form.Label>
+            <Form.Label className={`talla-label-${index}`}>
+              Talla {index + 1}
+            </Form.Label>
             <Form.Control
               as="select"
               value={selectedTallas[index]}
