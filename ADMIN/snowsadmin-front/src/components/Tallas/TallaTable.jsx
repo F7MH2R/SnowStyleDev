@@ -29,11 +29,14 @@ const TallaTable = () => {
   return (
     <div className="talla-container">
       <link rel="stylesheet" href={googleFontsURL} />
-      <div className="talla-table-container" style={{ fontFamily: "Prompt, sans-serif" }}>
+      <div
+        className="talla-table-container"
+        style={{ fontFamily: "Prompt, sans-serif" }}
+      >
         <h2>Tallas</h2>
-        <Button className="talla-table-button" onClick={handleShowModal}>
+        {/*<Button className="talla-table-button" onClick={handleShowModal}>
           + Nueva Talla
-        </Button>
+  </Button>*/}
         <Table striped bordered hover className="talla-table">
           <thead>
             <tr>
