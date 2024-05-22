@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import FiltroPrendas from "./FiltroPrendas";
 import withLoader from "../Load/withLoader ";
 import { ejecutarPost } from "../compartidos/request";
-import { Tallas } from "../Tallas/Tallas";
+import { Tallas } from "../tallas/tallas";
 
 const CardsPrenda = () => {
   const { tipoPrendaId, departamento } = useParams();
