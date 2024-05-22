@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import googleFontsURL from "../FuenteLetra/FuenteLetra";
 import Menu from "../Menu/Menu";
-import DepartmentComponent from "./DepartamentComponent";
+
 import "./admin.css";
 
 const AdminDashboard = () => {
@@ -31,7 +31,9 @@ const AdminDashboard = () => {
     try {
       await axios.delete(`/api/users/${userId}`);
       // Utiliza una función de callback para asegurarte de que estás utilizando la última versión del estado
-      setUsers(prevUsers => prevUsers.filter(user => user.id_usuario !== userId));
+      setUsers((prevUsers) =>
+        prevUsers.filter((user) => user.id_usuario !== userId)
+      );
       toast.success("Usuario eliminado con éxito");
     } catch (error) {
       toast.error("Error al eliminar usuario");
@@ -39,15 +41,15 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div style={{ fontFamily: "Prompt, sans-serif" }} className="admin-container">
+    <div
+      style={{ fontFamily: "Prompt, sans-serif" }}
+      className="admin-container"
+    >
       <link rel="stylesheet" href={googleFontsURL} />
       <div className="admin-header">
         <h4>Dashboard del Administrador</h4>
       </div>
-      <div className="admin-section">
-        <h5>Departamentos</h5>
-        <DepartmentComponent />
-      </div>
+
       <div className="confi-menu">
         <h5 className="nombre-menu">Menú</h5>
         <Menu />
@@ -83,10 +85,10 @@ const AdminDashboard = () => {
                     <img src={user.img_perfil} alt="Perfil" />
                   </td>
                   <td>
-                  <button onClick={() => handleDeleteUser(user.id_usuario)}>
-                    Eliminar Usuario
-                  </button>
-                </td>
+                    <button onClick={() => handleDeleteUser(user.id_usuario)}>
+                      Eliminar Usuario
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -271,13 +271,15 @@ const PrendaForm = () => {
               <Form.Group className="custom-form-group">
                 <Form.Label className="custom-label">Descripción</Form.Label>
                 <Form.Control
-                  type="text"
+                  as="textarea"
+                  rows={5}
                   name="descripcion"
                   value={formData.descripcion}
                   onChange={handleChange}
                   className="custom-control"
                 />
               </Form.Group>
+
               <Form.Group className="custom-form-group">
                 <Form.Label className="custom-label">Material 1</Form.Label>
                 <Form.Control

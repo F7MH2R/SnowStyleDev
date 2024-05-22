@@ -11,7 +11,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
-.prenda-form-all{
+.prenda-form-all {
   background-color: #e3e1dd;
   border-radius: 15px;
   padding: 25px;
@@ -20,7 +20,7 @@
   margin: 20px auto;
   margin-top: 5%;
   transition: box-shadow 0.3s ease;
-  height: 100vh;
+  height: 120vh;
 }
 
 .prenda-custom-form {
@@ -32,12 +32,12 @@
 }
 
 .custom-form-group {
-margin-bottom: 10px;
-width: 100%;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .custom-label {
-font-weight: bold;
+  font-weight: bold;
 }
 
 .custom-control {
@@ -53,7 +53,7 @@ font-weight: bold;
   width: 60%;
   margin-top: 20%;
   padding: 10px;
-  border-radius:20px;
+  border-radius: 20px;
   background-color: #349677;
   color: #fff;
   border: none;

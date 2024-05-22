@@ -114,7 +114,10 @@ const UpdateP = () => {
   return (
     <div className="container" style={{ fontFamily: "Prompt, sans-serif" }}>
       <link rel="stylesheet" href={googleFontsURL} />
-      <Form onSubmit={handleSubmit} style={{ fontFamily: "Prompt, sans-serif" }}>
+      <Form
+        onSubmit={handleSubmit}
+        style={{ fontFamily: "Prompt, sans-serif" }}
+      >
         <Form.Group>
           <Form.Label>Nombre Prenda</Form.Label>
           <Form.Control
