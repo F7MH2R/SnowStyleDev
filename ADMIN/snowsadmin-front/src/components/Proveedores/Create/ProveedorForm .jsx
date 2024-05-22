@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
-import "../Create/ProveedorForm.css"; // Importa tus estilos CSS aquí
+import googleFontsURL from "../../FuenteLetra/FuenteLetra";
+import "../Create/ProveedorForm.css"; 
 
 const ProveedorForm = ({ handleAddProveedor }) => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,9 @@ const ProveedorForm = ({ handleAddProveedor }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="proveedor-form">
+    <div style={{ fontFamily: "Prompt, sans-serif" }}>
+      <link rel="stylesheet" href={googleFontsURL} />
+      <Form onSubmit={handleSubmit} className="proveedor-form">
       <Form.Group>
         <Form.Label className="form-label">Nombre Proveedor</Form.Label>
         <Form.Control
@@ -34,12 +37,14 @@ const ProveedorForm = ({ handleAddProveedor }) => {
           className="form-control"
         />
       </Form.Group>
-      <div className="proveedor-button-group">
-          <Button className="proveedor-form-button" variant="primary" type="submit">
-            Agregar Marca
-          </Button>
-      </div>
-    </Form>
+        <div className="proveedor-button-group">
+            <Button className="proveedor-form-button" variant="primary" type="submit">
+              Agregar Proveedor
+            </Button>
+        </div>
+      </Form>
+    </div>
+    
   );
 };
 

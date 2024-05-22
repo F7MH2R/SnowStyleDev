@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
+import googleFontsURL from "../../FuenteLetra/FuenteLetra";
 import "react-toastify/dist/ReactToastify.css";
 import "./MarcaForm.css";
 
@@ -33,7 +34,8 @@ const MarcaForm = ({ handleAddMarca }) => {
 
   return (
     <>
-      <Form className="marca-form" onSubmit={handleSubmit}>
+      <link rel="stylesheet" href={googleFontsURL} />
+      <Form className="marca-form" onSubmit={handleSubmit} style={{ fontFamily: "Prompt, sans-serif" }}>
         <Form.Group>
           <Form.Label className="marca-label">Nombre Marca</Form.Label>
           <Form.Control

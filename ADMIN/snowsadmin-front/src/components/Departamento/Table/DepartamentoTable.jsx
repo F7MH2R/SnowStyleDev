@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button } from "react-bootstrap";
+import googleFontsURL from "../../FuenteLetra/FuenteLetra";
 import "../Table/DepartamentoTable.css";
 
 const DepartamentoTable = () => {
@@ -17,8 +18,9 @@ const DepartamentoTable = () => {
   };
 
   return (
-    <div className="departamento-table-container">
-      <Table striped bordered hover className="departamento-container">
+    <div className="departamento-table-container" style={{ fontFamily: "Prompt, sans-serif" }}>
+      <link rel="stylesheet" href={googleFontsURL} />
+      <Table striped bordered hover className="departamento-container" style={{ fontFamily: "Prompt, sans-serif" }}>
       <thead>
         <tr>
           <th>Nombre Departamento</th>

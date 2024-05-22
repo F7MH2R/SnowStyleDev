@@ -4,6 +4,7 @@ import { Table, Button, Modal } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MarcaForm from "../Form/MarcaForm";
+import googleFontsURL from "../../FuenteLetra/FuenteLetra";
 import "../Table/MarcaTable.css"
 
 const MarcaTable = () => {
@@ -35,8 +36,9 @@ const MarcaTable = () => {
 
   return (
     <>
-      <div className="marca-table-container">
-        <Table striped bordered hover className="table-container ">
+      <div className="marca-table-container" style={{ fontFamily: "Prompt, sans-serif" }}>
+        <link rel="stylesheet" href={googleFontsURL} />
+        <Table striped bordered hover className="table-container " style={{ fontFamily: "Prompt, sans-serif" }}>
           <Button 
             className="table-marca-button"
             variant="primary"

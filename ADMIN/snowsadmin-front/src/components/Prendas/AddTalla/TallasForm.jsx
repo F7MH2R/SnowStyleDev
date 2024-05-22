@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import "./TallasForm.css"; // Importa el archivo de estilos
+import googleFontsURL from "../../FuenteLetra/FuenteLetra";
+import "./TallasForm.css"; 
 
 const TallasForm = () => {
   const { id_prenda } = useParams();
@@ -10,7 +11,6 @@ const TallasForm = () => {
   const [selectedTallas, setSelectedTallas] = useState(Array(5).fill(""));
 
   useEffect(() => {
-    // Fetch tallas data
     const fetchTallas = async () => {
       try {
         const tallasResult = await axios.get("http://localhost:3076/tallas");
@@ -47,8 +47,9 @@ const TallasForm = () => {
   };
 
   return (
-    <div className="tallas-form-container">
-      <Form onSubmit={handleSubmit}>
+    <div className="tallas-form-container" style={{ fontFamily: "Prompt, sans-serif" }}>
+      <link rel="stylesheet" href={googleFontsURL} />
+      <Form onSubmit={handleSubmit} style={{ fontFamily: "Prompt, sans-serif" }}>
         {[...Array(5)].map((_, index) => (
           <Form.Group key={index} className={`talla-select-group-${index}`}>
             <Form.Label className={`talla-label-${index}`}>Talla {index + 1}</Form.Label>

@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Table, Button, Modal } from "react-bootstrap";
 import "../Table/ProveedorTable.css";
 import ProveedorForm from "../Create/ProveedorForm ";
+import googleFontsURL from "../../FuenteLetra/FuenteLetra";
 
 const ProveedorTable = () => {
   const [proveedores, setProveedores] = useState([]);
@@ -52,7 +53,8 @@ const ProveedorTable = () => {
 
   return (
     <>
-      <div className="proveedor-table-container">
+      <div className="proveedor-table-container" style={{ fontFamily: "Prompt, sans-serif" }}>
+        <link rel="stylesheet" href={googleFontsURL} />
         <Table striped bordered hover className="proveedor-container">
           <Button
             className="proveedor-table-button"
