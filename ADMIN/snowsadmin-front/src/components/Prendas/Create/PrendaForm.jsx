@@ -63,7 +63,7 @@ const PrendaForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios.post("http://localhost:3076/prendas", formData);
-
+    const prendaId = response.data.id_prenda;
     setFormData({
       id_marca: "",
       id_departamento: "",
