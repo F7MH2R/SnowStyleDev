@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import googleFontsURL from "../../FuenteLetra/FuenteLetra";
 import "../Create/PrendaForm.css";
@@ -329,7 +329,7 @@ const PrendaForm = () => {
                 />
               </Form.Group>
             </div>
-            <button className="custom-button" variant="primary">
+            <button className="custom-button" type="submit" variant="primary">
               Agregar Prenda
             </button>
           </Form>
