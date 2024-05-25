@@ -1,0 +1,92 @@
+.marca-form {
+  background-color: #e3e1dd;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 20px auto;
+  transition: box-shadow 0.3s ease;
+}
+
+.marca-form:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.marca-label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.marca-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ced4da;
+  border-radius: 10px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.marca-input:focus {
+  border-color: #1b522d;
+  outline: none;
+  box-shadow: 0 0 8px rgba(30, 144, 255, 0.5);
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.marca-button, .marca-button-secondary {
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.marca-button {
+  max-width: 150px;
+  margin-right: 10px;
+  background-color: #349677;
+  color: #fff;
+  border: none;
+}
+
+.marca-button:hover {
+  background-color: #2f6453;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .marca-form {
+    padding: 20px;
+  }
+
+  .marca-input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .marca-button, .marca-button-secondary {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .button-group {
+    flex-direction: column;
+  }
+
+  .marca-button, .marca-button-secondary {
+    margin-bottom: 10px;
+  }
+
+  .marca-button {
+    margin-right: 0;
+  }
+}

@@ -28,8 +28,8 @@ const pool = new Pool({
   user: "slayer", // Cambia por tu usuario
   host: "localhost",
   database: "snowstyle", // Nombre de tu base de datos
-  password: "deku", // Cambia por tu contraseña
-  port: 5432, // Puerto estándar para PostgreSQL
+  password: "1234", // Cambia por tu contraseña
+  port: 5433, // Puerto estándar para PostgreSQL
 });
 
 // Conexión a la base de datos

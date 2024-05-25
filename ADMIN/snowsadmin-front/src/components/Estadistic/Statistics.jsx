@@ -117,6 +117,7 @@ const Statistics = () => {
             options={chartOptions}
           />
         </div>
+        {/*
         <div className="chart-container">
           <h3>Ventas por Talla</h3>
           <Pie
@@ -124,6 +125,7 @@ const Statistics = () => {
             options={chartOptions}
           />
         </div>
+        */}
         <div className="chart-container">
           <h3>Ventas por Proveedor</h3>
           <Pie

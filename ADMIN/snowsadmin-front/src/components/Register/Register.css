@@ -1,0 +1,186 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.register-body {
+  background: url("https://i.ibb.co/HzpmrNQ/fondo-formulario.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-container {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "header"
+    "form"
+    "button";
+}
+
+.register-header {
+  grid-area: header;
+  text-align: center;
+  color: #333333;
+  padding: 20px 0;
+  background-color: #e7f4eed7;
+  margin-bottom: 0px;
+}
+
+.register-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.register-form-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  grid-gap: 40px; 
+  box-shadow: 0 0 1px rgba(1, 1, 1 0.3);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  color: #666666;
+  margin-bottom: 9px;
+  margin-top: 15px;
+}
+
+.input-group input {
+  height: 40px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  transition: 0.2s ease-in-out;
+  font-size: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
+
+
+.register-button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+.register-button {
+  margin-top: 15px;
+  width: 250px;
+  padding: 10px ;
+  background-color: #349677;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.register-button:hover {
+  background-color: #2f6453;
+}
+
+.register_animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes register_fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.register_fadeInUp {
+  animation-name: register_fadeInUp;
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    padding: 15px;
+  }
+  .register-form-group {
+    display: block;
+  }
+  .register-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+  .register-form-group input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-header h2 {
+    font-size: 1.2rem;
+  }
+  .register-form-group input {
+    padding: 8px;
+  }
+  .register-button {
+    padding: 8px;
+    width: 200px;
+  }
+}
+
+
+/*Boton de Iniciar sesion*/
+.logo-inicio-button {
+  margin-top: 15px;
+  width: 150px;
+  padding: 10px ;
+  background-color: #316755;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.logo-inicio-button:hover{
+  background-color: #74c6ac;
+}
+
+/*Boton de Cerrar sesion*/
+.logo-cerrar-button {
+  margin-top: 15px;
+  width: 150px;
+  padding: 10px ;
+  background-color: #ff5656;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.logo-cerrar-button:hover{
+  background-color: #c72626;
+}

@@ -14,7 +14,7 @@ const Loading = () => {
       }}
     >
       <Audio
-        color="#ff00bf"
+        color="#333333"
         height={100}
         width={100}
         ariaLabel="Loading"

@@ -1,0 +1,93 @@
+.talla-container{
+    background: linear-gradient(to right, #9dafb3, #cac6c0);
+    justify-content: center;
+    text-align: center;
+    height: 100vh
+}
+
+.talla-table-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  
+  width: calc(33.33% - 20px);
+  margin-right: 20px;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 5%;
+}
+
+.talla-table-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.talla-table-button {
+  margin-right: 70%;
+  margin-bottom: 20px;
+  background-color: #349677;
+  color: #fff;
+  border: none;
+}
+
+.talla-table-button:hover {
+  background-color: #2f6453;
+  transform: scale(1.05);
+}
+
+.talla-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+}
+
+.talla-table th,
+.talla-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.talla-table thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.talla-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 768px) {
+  .talla-table thead {
+    display: none;
+  }
+
+  .talla-table,
+  .talla-table tbody,
+  .talla-table tr,
+  .talla-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .talla-table tr {
+    margin-bottom: 15px;
+  }
+
+  .talla-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .talla-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+}

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import googleFontsURL from "../../FuenteLetra/FuenteLetra";
 
 const UpdateP = () => {
   const [formData, setFormData] = useState({
@@ -111,8 +112,12 @@ const UpdateP = () => {
   };
 
   return (
-    <div className="container">
-      <Form onSubmit={handleSubmit}>
+    <div className="container" style={{ fontFamily: "Prompt, sans-serif" }}>
+      <link rel="stylesheet" href={googleFontsURL} />
+      <Form
+        onSubmit={handleSubmit}
+        style={{ fontFamily: "Prompt, sans-serif" }}
+      >
         <Form.Group>
           <Form.Label>Nombre Prenda</Form.Label>
           <Form.Control

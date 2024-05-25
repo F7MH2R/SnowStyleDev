@@ -1,0 +1,66 @@
+.prenda-form-container {
+  background: linear-gradient(to right, #9dafb3, #cac6c0);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  height: auto;
+  min-height: 150vh;
+}
+
+.prenda-form-container:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.prenda-form-all {
+  background-color: #e3e1dd;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 900px;
+  margin: 20px auto;
+  margin-top: 5%;
+  transition: box-shadow 0.3s ease;
+  height: 120vh;
+}
+
+.prenda-custom-form {
+  width: calc(33.33% - 40px);
+  margin-right: 20px;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 5%;
+}
+
+.custom-form-group {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.custom-label {
+  font-weight: bold;
+}
+
+.custom-control {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-button {
+  width: 60%;
+  margin-top: 20%;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #349677;
+  color: #fff;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.custom-button:hover {
+  background-color: #2f6453;
+  transform: scale(1.05);
+}

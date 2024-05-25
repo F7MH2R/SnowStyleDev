@@ -1,0 +1,43 @@
+.tallas-form-container {
+  padding: 20px;
+}
+
+.talla-select-group-0,
+.talla-select-group-1,
+.talla-select-group-2,
+.talla-select-group-3,
+.talla-select-group-4 {
+  margin-bottom: 10px;
+}
+
+.talla-label-0,
+.talla-label-1,
+.talla-label-2,
+.talla-label-3,
+.talla-label-4 {
+  font-weight: bold;
+}
+
+.talla-select-0,
+.talla-select-1,
+.talla-select-2,
+.talla-select-3,
+.talla-select-4 {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.submit-button {
+  max-width: 150px;
+  margin-right: 10px;
+  background-color: #349677;
+  color: #fff;
+  border: none;
+}
+
+.submit-button:hover {
+  background-color: #2f6453;
+  transform: scale(1.05);
+}
