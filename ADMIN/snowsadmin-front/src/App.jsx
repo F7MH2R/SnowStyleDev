@@ -19,6 +19,7 @@ import MarcaTable from "./components/Marca/Table/MarcaTable";
 import FormMarca from "./components/Marca/Form/MarcaForm";
 import UpdatePrenda from "./components/Prendas/UpdateP/UpdateP";
 import TallaTable from "./components/Tallas/TallaTable";
+
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +49,7 @@ function App() {
               <Route path="tablePrenda" element={<TablePrenda />} />
               <Route path="FormProveedor" element={<FormProveedor />} />
               <Route path="depaTable" element={<DepartamentoTable />} />
-              <Route path="TallasForm" element={<TallasForm />} />
+              <Route path="tallas/:id_prenda" element={<TallasForm />} />
               <Route path="admin" element={<AdminDashboard />} />
               <Route path="/FormPrenda" exact element={<FormPrenda />} />
               <Route path="formMarca" exact element={<FormMarca />} />

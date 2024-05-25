@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
-import { Row, Col, Card, Carousel, Button, Offcanvas } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Card,
+  CardGroup,
+  Carousel,
+  Button,
+  Offcanvas,
+} from "react-bootstrap";
 import PropTypes from "prop-types";
 import "../pages/css/Modal.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FiltroPrendas from "./FiltroPrendas";
 import withLoader from "../Load/withLoader ";
 import { ejecutarPost } from "../compartidos/request";
+import { Tallas } from "../tallas/tallas";
 
 const CardsPrenda = () => {
   const { tipoPrendaId, departamento } = useParams();
@@ -45,6 +54,7 @@ const CardsPrenda = () => {
         idPrenda: prendaId,
         idUsuario: idUsuario,
       });
+      window.location.reload();
     }
   };
 
@@ -85,13 +95,23 @@ const CardsPrenda = () => {
     return <div>{error}</div>;
   }
 
+  const chunkArray = (array, size) => {
+    const chunkedArr = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunkedArr.push(array.slice(i, i + size));
+    }
+    return chunkedArr;
+  };
+
+  const chunkedPrendas = chunkArray(filteredPrendas, 3);
+
   return (
     <>
-      <Row className="prendas-container">
-        {filteredPrendas.length > 0 ? (
-          filteredPrendas.map((prenda) => (
-            <Col key={prenda.id_prenda} md={3} sm={6} xs={12} className="mb-4">
-              <Card className="card-wrapper">
+      {chunkedPrendas.map((chunk, index) => (
+        <Row key={index} className="mb-4">
+          <CardGroup>
+            {chunk.map((prenda) => (
+              <Card key={prenda.id_prenda} className="mb-4">
                 <Carousel>
                   {prenda.imagen1 && (
                     <Carousel.Item>
@@ -138,34 +158,33 @@ const CardsPrenda = () => {
                     <h4>Precio: ${prenda.precio_unitario} </h4>
                   </Card.Title>
                   {/* Botones de tallas */}
-                  <p>Tallas disponibles:</p>
-                  <Button>{prenda.nom_talla}</Button>
-                  {prendas.map((talla, index) => (
-                    <Button key={index}>{talla.nom_talla}</Button>
-                  ))}
-                  <Button
-                    variant="primary"
-                    as={Link}
-                    to={`/detalle/${prenda.id_prenda}`}
-                  >
-                    Ver más
-                  </Button>{" "}
-                  <Button
-                    variant="success"
-                    onClick={() => handleComprar(prenda.id_prenda)}
-                  >
-                    Comprar
-                  </Button>
+                  <h5>Tallas disponibles:</h5>
+                  <Tallas idPrenda={prenda.id_prenda} />
+                  <Row className="p-2">
+                    <Col>
+                      <Button
+                        variant="primary"
+                        as={Link}
+                        to={`/detalle/${prenda.id_prenda}`}
+                      >
+                        Ver más
+                      </Button>
+                    </Col>
+                    <Col>
+                      <Button
+                        variant="success"
+                        onClick={() => handleComprar(prenda.id_prenda)}
+                      >
+                        Comprar
+                      </Button>
+                    </Col>
+                  </Row>
                 </Card.Body>
               </Card>
-            </Col>
-          ))
-        ) : (
-          <div className="no-prendas">
-            No se encontraron prendas según los filtros aplicados.
-          </div>
-        )}
-      </Row>
+            ))}
+          </CardGroup>
+        </Row>
+      ))}
       <Button variant="primary" onClick={() => setShowFilter(true)}>
         Filtrar Prendas
       </Button>

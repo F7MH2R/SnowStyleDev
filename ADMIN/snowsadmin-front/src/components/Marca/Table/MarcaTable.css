@@ -1,0 +1,38 @@
+.marca-table-container {
+  background: linear-gradient(to right, #9dafb3, #cac6c0);
+  justify-content: center;
+  text-align: center;
+  height: auto;
+  height: 150vh;
+}
+
+.table-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+
+  width: calc(50% - 20px);
+  margin-right: 20px;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 5%;
+}
+
+.table-container th,
+.table-container td {
+  width: 30%;
+}
+
+.table-marca-button {
+  margin-right: 82%;
+  margin-bottom: 20px;
+  background-color: #349677;
+  color: #fff;
+  border: none;
+}
+
+.table-marca-button:hover {
+  background-color: #2f6453;
+  transform: scale(1.05);
+}

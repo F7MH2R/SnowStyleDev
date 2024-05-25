@@ -38,7 +38,9 @@ const TrendingSection = () => {
       style={{ fontFamily: "Prompt, sans-serif" }}
     >
       <link rel="stylesheet" href={googleFontsURL} />
-      <h1 className="seccion-ropa-header">DAMA</h1>
+      <h1 className="seccion-ropa-header" id="dama">
+        DAMA
+      </h1>
       <h3 className="trending-header">------- TENDENCIAS -------</h3>
       <div className="card-container">
         {trendingItems.map((item) => (

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import DepartmentComponent from "./DepartamentComponent"; // Importa tu nuevo componente aquí
-import "./admin.css"; // Importa tu archivo CSS aquí
+import googleFontsURL from "../FuenteLetra/FuenteLetra";
 import Menu from "../Menu/Menu";
+
+import "./admin.css";
+
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const history = useNavigate();
@@ -39,57 +41,62 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="admin-container">
-      <h2>Dashboard del Administrador</h2>
-      <h3>Departamentos</h3>
-      <DepartmentComponent />
-      <Menu />
-      <h3>Lista de Usuarios</h3>
-      {users.length > 0 ? (
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Apellidos</th>
-              <th>Correo Electrónico</th>
-              <th>Dirección</th>
-              <th>Teléfono</th>
-              <th>DUI</th>
-              <th>Imagen de Perfil</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id_usuario}>
-                <td>{user.id_usuario}</td>
-                <td>{user.nombre}</td>
-                <td>{user.apellidos}</td>
-                <td>{user.correo_electronico}</td>
-                <td>{user.direccion}</td>
-                <td>{user.telefono}</td>
-                <td>{user.dui}</td>
-                <td>
-                  <img
-                    src={user.img_perfil}
-                    alt="Perfil"
-                    width="50"
-                    height="50"
-                  />
-                </td>
-                <td>
-                  <button onClick={() => handleDeleteUser(user.id_usuario)}>
-                    Eliminar Usuario
-                  </button>
-                </td>
+    <div
+      style={{ fontFamily: "Prompt, sans-serif" }}
+      className="admin-container"
+    >
+      <link rel="stylesheet" href={googleFontsURL} />
+      <div className="admin-header">
+        <h4>Dashboard del Administrador</h4>
+      </div>
+
+      <div className="confi-menu">
+        <h5 className="nombre-menu">Menú</h5>
+        <Menu />
+      </div>
+      <div className="admin-section">
+        <h5>Lista de Usuarios</h5>
+        {users.length > 0 ? (
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Correo Electrónico</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>DUI</th>
+                <th>Imagen de Perfil</th>
+                <th>Acción</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No hay usuarios registrados.</p>
-      )}
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id_usuario}>
+                  <td>{user.id_usuario}</td>
+                  <td>{user.nombre}</td>
+                  <td>{user.apellidos}</td>
+                  <td>{user.correo_electronico}</td>
+                  <td>{user.direccion}</td>
+                  <td>{user.telefono}</td>
+                  <td>{user.dui}</td>
+                  <td>
+                    <img src={user.img_perfil} alt="Perfil" />
+                  </td>
+                  <td>
+                    <button onClick={() => handleDeleteUser(user.id_usuario)}>
+                      Eliminar Usuario
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No hay usuarios registrados.</p>
+        )}
+      </div>
     </div>
   );
 };

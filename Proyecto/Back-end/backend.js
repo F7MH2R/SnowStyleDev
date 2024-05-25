@@ -12,6 +12,10 @@ const {
   insertarItemsCarrito,
   insertarCarrito,
   obtenerCarritoPorUsuario,
+  actualizarEstadoCarrito,
+  obtenerDatosPrenda,
+  descontarInventario,
+  obtenerTallasPorPrenda,
 } = require("./queries");
 
 const path = require("path");
@@ -45,21 +49,18 @@ app.post("/api/check-email", async (req, res) => {
 
     if (result.rows.length > 0) {
       const userId = result.rows[0].id_usuario;
-      console.log("Usuario encontrado, ID:", userId); // Mostrar ID en consola
       res.status(200).json({ exists: true, userId });
     } else {
       res.status(404).json({ exists: false });
       console.error("Usuario no encontrado");
     }
   } catch (error) {
-    console.error("Error al verificar correo:", error);
     res.status(500).json({ error: "Error al verificar correo" });
   }
 });
 
 app.post("/api/reset-password", async (req, res) => {
   const { userId, newPassword } = req.body; // Usa userId en lugar de email
-  console.log("Id es " + userId);
   try {
     const hashedPassword = newPassword; // Hashear la nueva contraseña
 
@@ -74,7 +75,6 @@ app.post("/api/reset-password", async (req, res) => {
       res.status(404).json({ error: "Usuario no encontrado" }); // Ajustar mensaje de error
     }
   } catch (error) {
-    console.error("Error al restablecer la contraseña:", error);
     res.status(500).json({ error: "Error al restablecer la contraseña" });
   }
 });
@@ -82,28 +82,17 @@ app.post("/api/reset-password", async (req, res) => {
 //Login---------------------------------------------------------
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
-  console.log("Datos recibidos del frontend:", email, password);
-
   try {
     const result = await pool.query(
       "SELECT * FROM usuario WHERE correo_electronico = $1",
       [email]
     );
 
-    console.log("Resultado de la consulta:", result.rows);
-
     if (result.rows.length === 1) {
       const user = result.rows[0];
       if (password === user.password) {
         const IDUsuario = user.id_usuario; // Corregir el acceso al ID de usuario
         const imagenURL = user.img_perfil;
-        console.log(
-          "ID del usuario después de la verificación:",
-          IDUsuario,
-          " ,",
-          imagenURL
-        );
         res.status(200).json({ IDUsuario: IDUsuario, imgPerfil: imagenURL });
       } else {
         // Contraseña incorrecta
@@ -114,8 +103,6 @@ app.post("/login", async (req, res) => {
       res.status(401).json({ message: "Credenciales incorrectas" });
     }
   } catch (err) {
-    // Manejar errores de la base de datos
-    console.error("Error en la consulta:", err);
     res.status(500).json({ message: "Error en la autenticación" });
   }
 });
@@ -144,7 +131,6 @@ app.post("/register", async (req, res) => {
       // Error de restricción UNIQUE (correo electrónico duplicado)
       res.status(409).json({ message: "Correo electrónico ya registrado" });
     } else {
-      console.error(error);
       res.status(500).json({ message: "Error interno del servidor" });
     }
   }
@@ -169,7 +155,6 @@ app.get("/api/prendas/tipo/:tipoPrendaId/:departamento", async (req, res) => {
         .json({ message: "No se encontraron prendas de este tipo." });
     }
   } catch (err) {
-    console.error("Error al obtener prendas por tipo:", err);
     res.status(500).json({ message: "Error al obtener prendas." });
   }
 });
@@ -178,18 +163,17 @@ app.get("/api/prendas/tipo/:tipoPrendaId/:departamento", async (req, res) => {
 app.get("/api/prendas/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await pool.query(
-      "SELECT * FROM prenda WHERE id_prenda = $1",
-      [id]
-    );
+    const result = await pool.query(obtenerDatosPrenda, [id]);
     if (result.rows.length === 0) {
       res.status(404).json({ error: "Prenda no encontrada" });
     } else {
       res.json(result.rows[0]);
     }
   } catch (error) {
-    console.error("Error al obtener detalles de la prenda:", error);
-    res.status(500).json({ error: "Error al obtener detalles de la prenda" });
+    res.status(500).json({
+      mensaje: "Error al obtener detalles de la prenda",
+      error: error,
+    });
   }
 });
 
@@ -205,7 +189,6 @@ const transporter = nodemailer.createTransport({
 app.post("/api/request-password-change", async (req, res) => {
   const { email } = req.body;
 
-  console.log(email);
   try {
     const result = await pool.query(
       "SELECT id_usuario FROM usuario WHERE correo_electronico = $1",
@@ -297,7 +280,6 @@ app.post("/api/request-password-change", async (req, res) => {
 
     transporter.sendMail(mailOptions, (error) => {
       if (error) {
-        console.error("Error al enviar el correo:", error);
         return res
           .status(500)
           .json({ message: "Error al enviar el correo electrónico" });
@@ -305,7 +287,6 @@ app.post("/api/request-password-change", async (req, res) => {
       res.status(200).json({ message: "Correo de confirmación enviado" });
     });
   } catch (error) {
-    console.error("Error en el servidor:", error);
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
@@ -314,8 +295,6 @@ app.post("/api/request-password-change", async (req, res) => {
 app.post("/api/reset-password/:userId", async (req, res) => {
   const { userId } = req.params;
   const { newPassword } = req.body;
-  console.log(newPassword);
-  console.log(userId);
   try {
     // Buscar al usuario por su ID
     const result = await pool.query(
@@ -340,7 +319,6 @@ app.post("/api/reset-password/:userId", async (req, res) => {
 
     res.status(200).json({ message: "Contraseña actualizada exitosamente" });
   } catch (error) {
-    console.error("Error en el servidor:", error);
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
@@ -364,7 +342,6 @@ app.get("/api/user/:userId", async (req, res) => {
     res.status(200).json(result.rows[0]);
   } catch (error) {
     // Si hay un error en el servidor, devuelve un 500
-    console.error("Error en el servidor:", error);
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
@@ -373,16 +350,12 @@ app.get("/api/carrito/:idUsuario/items", async (req, res) => {
   const idUsuario = req.params.idUsuario;
   try {
     const result = await pool.query(queryCarrito, [idUsuario]);
-
     if (result.rowCount > 0) {
-      console.log("Datos encontrados:", result.rows); // Mostrar ID en consola
       res.status(200).json(result.rows);
     } else {
       res.status(200).json([]);
-      console.log("Carrito vacio");
     }
   } catch (error) {
-    console.error("Error al obtener las prendas del carrito:", error);
     res.status(500).json({ error: "Error al obtener las prendas del carrito" });
   }
 });
@@ -432,6 +405,43 @@ app.post("/api/carrito/items/add", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ mensaje: error });
+  }
+});
+
+app.patch("/api/carrito/update", async (req, res) => {
+  const idUsario = req.body.idUsuario;
+  try {
+    await pool.query(actualizarEstadoCarrito, [idUsario]);
+    res.status(200).json({ mensaje: "Carrito actualizado" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ mensaje: "Error al eliminar el carrito", error: error });
+  }
+});
+
+app.patch("/api/prendas/update", async (req, res) => {
+  const idPrenda = req.body.idPrenda;
+  const cantidad = req.body.cantidad;
+  try {
+    await pool.query(descontarInventario, [cantidad, idPrenda]);
+    res.status(200).json({ mensaje: "Inventario actualizado" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ mensaje: "Error al actualizar el inventario", error: error });
+  }
+});
+
+app.get("/api/prendas/:id/tallas", async (req, res) => {
+  const idPrenda = req.params.id;
+  try {
+    const tallas = await pool.query(obtenerTallasPorPrenda, [idPrenda]);
+    res.status(200).json({ tallasDisponibles: tallas.rows });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ mensaje: "Error al obtener tallas de la prenda", error: error });
   }
 });
 
