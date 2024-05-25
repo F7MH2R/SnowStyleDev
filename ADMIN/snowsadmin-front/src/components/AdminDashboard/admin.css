@@ -1,68 +1,165 @@
-/* Estilo para la tabla de administración */
-.department-container {
-  display: flex;
-  justify-content: center; /* Centra horizontalmente los elementos */
-}
-
-.department-card {
-  flex: 1;
-  margin: 0 10px;
-  text-align: center;
-}
-
-.department-card h3 {
-  margin-top: 10px; /* Espacio superior para el título */
-}
-
-.department-card img {
-  width: 100%; /* Asegura que todas las imágenes tengan el mismo ancho */
-  height: auto; /* Permite que la altura se ajuste automáticamente para mantener la proporción */
-  max-height: 200px; /* Establece una altura máxima para las imágenes */
-  display: block; /* Asegura que la imagen no tenga espacios en blanco debajo */
-  margin: 0 auto; /* Centra horizontalmente la imagen */
-}
-
-.department-actions {
-  margin-top: 10px; /* Espacio superior para los botones */
-}
-
-.department-actions button {
-  margin: 0 auto; /* Centra horizontalmente el botón */
-}
-
 .admin-container {
-  text-align: center; /* Centra los elementos dentro del contenedor */
+  padding: 20px;
+  background-color: #000000;
+}
+
+.admin-header {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #485c60;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.admin-header h4 {
+  margin: 0;
+}
+
+.admin-header button {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-header button:hover {
+  background-color: #c0392b;
+}
+
+.admin-section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.admin-section h5 {
+  margin-top: 2px;
+  margin-bottom: 2%;
+  font-weight: bold;
 }
 
 .admin-table {
   width: 100%;
-  border-collapse: collapse; /* Combina los bordes de las celdas */
+  border-collapse: collapse;
 }
 
 .admin-table th,
 .admin-table td {
-  border: 1px solid #ddd; /* Agrega bordes a las celdas */
-  padding: 8px; /* Espacio interno de las celdas */
+  padding: 20px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 .admin-table th {
-  background-color: #f2f2f2; /* Color de fondo para las celdas de encabezado */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  background-color: #5e8f7b;
+  color: white;
 }
 
-.admin-table td img {
-  max-width: 50px; /* Limita el tamaño máximo de las imágenes */
-  height: auto; /* Permite que la altura se ajuste automáticamente para mantener la proporción */
+.admin-table tr:hover {
+  background-color: #f1f1f1;
 }
 
-/* Estilo para el botón Eliminar Usuario */
+.admin-table img {
+  max-width: 50px;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .admin-header,
+  .admin-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-header button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 5px;
+  }
+}
+
+/* ESTILOS PARA --DepartmentComponent */
+
+.department-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.department-card {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  width: 25%;
+  min-width: 350px;
+  text-align: center;
+}
+
+.department-card h4 {
+  margin-bottom: 15px;
+}
+
+.department-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.department-actions button {
+  background-color: #000000;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.department-actions button:hover {
+  background-color: #b4934d;
+}
+
+@media (max-width: 768px) {
+  .department-card {
+    width: 100%;
+  }
+}
+
 .admin-table button {
-  background-color: #dc3545; /* Color de fondo para el botón */
-  color: white; /* Color del texto */
-  border: none; /* Sin bordes */
-  padding: 5px 10px; /* Espacio interno */
-  cursor: pointer; /* Cambia el cursor a pointer */
+  background-color: #da5461; 
+  color: white; 
+  border: none; 
+  padding: 5px 10px; 
+  cursor: pointer; 
 }
 
 .admin-table button:hover {
-  background-color: #c82333; /* Color de fondo al pasar el cursor */
+  background-color: #c82333;
+}
+
+.nombre-menu{
+  text-align: center;
+  color: white;
+  font-size: x-large;
+  margin-bottom: 2%;
+}
+
+.confi-menu{
+  margin-top: 5%;
+  margin-bottom: 5%;
 }

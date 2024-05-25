@@ -1,90 +1,77 @@
 import React from "react";
-import { Row, Col, Card } from "react-bootstrap";
-import {
-  MdPerson,
-  MdFormatListNumbered,
-  MdStore,
-  MdEqualizer,
-  MdLocalShipping,
-  MdShoppingCart,
-  MdAssignment,
-  MdLibraryBooks,
-} from "react-icons/md";
+import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom"; // Importa Link si estás utilizando React Router
+import "./Menu.css";
 
 const Menu = () => {
+  const menuItems = [
+    {
+      to: "/register",
+      label: "Registrar",
+      imageSrc: "https://i.ibb.co/6H8nkCF/Registrarse.png",
+    },
+    {
+      to: "/tallas",
+      label: "Tallas",
+      imageSrc: "https://i.ibb.co/qFwsd4n/Talla.png",
+    },
+    {
+      to: "/marcaTable",
+      label: "Marca",
+      imageSrc: "https://i.ibb.co/RcSzjc6/Marca.png",
+    },
+    {
+      to: "/estadisticas",
+      label: "Estadísticas",
+      imageSrc: "https://i.ibb.co/J5hHJ2G/Estad-stica.png",
+    },
+    {
+      to: "/tableproveedor",
+      label: "Proveedores",
+      imageSrc: "https://i.ibb.co/L07fRyg/Proveedor.png",
+    },
+    {
+      to: "/tablePrenda",
+      label: "Prendas",
+      imageSrc: "https://i.ibb.co/VYPJWhV/Prenda.png",
+    },
+    {
+      to: "/depaTable",
+      label: "Departamentos",
+      imageSrc: "https://i.ibb.co/MCctb75/Departamento.png",
+    },
+    {
+      to: "/FormPrenda",
+      label: "Agregar Prenda",
+      imageSrc: "https://i.ibb.co/pdG7vjN/Agregar-prenda.png",
+    },
+  ];
+
   return (
-    <div className="container">
-      <Row className="justify-content-center">
-        <MenuItemWithHref
-          to="/register"
-          icon={<MdPerson />}
-          label="Register"
-          imageSrc="image1.jpg"
-        />
-        <MenuItemWithHref
-          to="/tallas"
-          icon={<MdFormatListNumbered />}
-          label="Tallas"
-          imageSrc="image2.jpg"
-        />
-        <MenuItemWithHref
-          to="/marcaTable"
-          icon={<MdStore />}
-          label="Marca"
-          imageSrc="image3.jpg"
-        />
-      </Row>
-      <Row className="justify-content-center">
-        <MenuItemWithHref
-          to="/estadisticas"
-          icon={<MdEqualizer />}
-          label="Estadísticas"
-          imageSrc="image4.jpg"
-        />
-        <MenuItemWithHref
-          to="/tableproveedor"
-          icon={<MdLocalShipping />}
-          label="Proveedores"
-          imageSrc="image5.jpg"
-        />
-        <MenuItemWithHref
-          to="/tablePrenda"
-          icon={<MdShoppingCart />}
-          label="Prendas"
-          imageSrc="image6.jpg"
-        />
-      </Row>
-      <Row className="justify-content-center">
-        <MenuItemWithHref
-          to="/depaTable"
-          icon={<MdAssignment />}
-          label="Departamentos"
-          imageSrc="image7.jpg"
-        />
-        <MenuItemWithHref
-          to="/FormPrenda"
-          icon={<MdLibraryBooks />}
-          label="Agregar Prenda"
-          imageSrc="image8.jpg"
-        />
-      </Row>
+    <div className="menu-container">
+      {menuItems.map((item, index) => (
+        <MenuItemWithHref key={index} {...item} />
+      ))}
     </div>
   );
 };
 
 const MenuItemWithHref = ({ to, icon, label, imageSrc }) => (
-  <Col xs={12} sm={6} md={4} lg={4}>
-    <Card className="menu-item">
-      <Card.Img variant="top" src={imageSrc} />
-      <Card.Body>
-        <Card.Title>{label}</Card.Title>
-        <Card.Text>
-          <span className="menu-icon">{icon}</span>
-        </Card.Text>
-        <a href={to} className="stretched-link"></a>
-      </Card.Body>
-    </Card>
-  </Col>
+  <div className="menu-item-container">
+    <Link to={to} style={{ textDecoration: "none" }}>
+      {" "}
+      {/* Agrega el estilo para eliminar el subrayado */}
+      <Card className="menu-item">
+        <Card.Img variant="top" src={imageSrc} className="menu-item-image" />
+        <Card.Body>
+          <Card.Title>{label}</Card.Title>
+          <Card.Text>
+            <span className="menu-icon">{icon}</span>
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </Link>
+  </div>
 );
 
 export default Menu;

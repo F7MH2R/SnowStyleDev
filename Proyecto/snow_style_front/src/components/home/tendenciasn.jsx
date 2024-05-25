@@ -1,5 +1,6 @@
 import React from "react";
 import "../pages/css/Modal.css";
+import "../pages/css/Modal.css";
 import { Link } from "react-router-dom";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 
@@ -36,7 +37,6 @@ const TrendingSectionN = () => {
     <div
       className="trending-section"
       style={{ fontFamily: "Prompt, sans-serif" }}
-      id="ninios"
     >
       <link rel="stylesheet" href={googleFontsURL} />
       <h1 className="seccion-ropa-header">NIÑOS</h1>
@@ -54,6 +54,7 @@ const TrendingSectionN = () => {
                 className="card-img"
               />
             </Link>
+
             <div className="title-container">
               <h4>{item.title}</h4>
             </div>

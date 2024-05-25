@@ -1,0 +1,60 @@
+.menu-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.menu-item-container {
+  flex: 1 1 calc(33.333% - 20px);
+  max-width: calc(23.333% - 20px);
+  box-sizing: border-box;
+}
+
+.menu-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  transition: transform 0.3s, box-shadow 0.1s;
+  box-shadow: 0 6px 8px rgba(250, 250, 250, 0.9);
+  background-color: #fffdf0;
+}
+
+.menu-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(252, 249, 249, 1);
+}
+
+.menu-item-image {
+  height: 120px;
+  object-fit: cover;
+  width: 30%;
+  border-radius: 15px 15px 0 0;
+  margin-left: 35%
+}
+
+.card-body {
+  position: relative;
+  text-align: center;
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 1.2rem;
+}
+
+.stretched-link::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: "";
+}

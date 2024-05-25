@@ -1,7 +1,27 @@
 .boton-flotante {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-  }
-  
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+}
+
+.boton-flotante > button {
+  margin-bottom: 10px;
+  transition: all 0.3s ease-in-out; /* Transición suave */
+}
+
+.botones-agregar-prenda {
+  display: flex;
+  flex-direction: column;
+}
+
+.botones-agregar-prenda > button {
+  margin-bottom: 10px;
+  transition: all 0.3s ease-in-out; /* Transición suave */
+}
+
+.botones-agregar-prenda > button.hide {
+  opacity: 0; /* Oculta el botón */
+  visibility: hidden; /* Oculta el botón */
+}
+
