@@ -5,7 +5,7 @@ import googleFontsURL from "../Fuentes/FuenteLetras";
 import { Button, Table } from "react-bootstrap";
 import withLoader from "../Load/withLoader ";
 import { ejecutarPost } from "../compartidos/request";
-import { Tallas } from "../Tallas/Tallas";
+import { Tallas } from "../tallas/tallas";
 const DetalleProducto = () => {
   const { id_prenda } = useParams(); // Obtener el ID de la prenda de la URL
   const [prenda, setPrenda] = useState(null);

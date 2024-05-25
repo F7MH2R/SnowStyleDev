@@ -88,6 +88,7 @@ const TrendingSectionN = () => {
                 className="card-img"
               />
             </Link>
+
             <div className="title-container">
               <h4>{item.title}</h4>
             </div>
