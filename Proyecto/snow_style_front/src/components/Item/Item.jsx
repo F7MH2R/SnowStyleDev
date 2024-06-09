@@ -52,7 +52,6 @@ const Item = ({
     }
 
     async function eliminar() {
-      console.log("EJecutando eliminar!", idItemsCarrito);
       await eliminarItem(`/api/carrito/items/${idItemsCarrito}/delete`, {});
       fetchItems();
     }
