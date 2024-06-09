@@ -72,6 +72,7 @@ const Carrito = () => {
                   id={item.id}
                   key={item.id} // Agregado el key prop para evitar advertencias en la consola
                   idItemsCarrito={item.id_itemcarrito}
+                  talla={item.talla}
                   fetchItems={fetchItems}
                 />
               );

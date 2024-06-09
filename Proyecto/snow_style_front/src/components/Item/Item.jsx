@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, FormControl } from "react-bootstrap";
+import { Modal, Button, Form, FormControl, Col } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import "./Item.css";
 import { ejecutarPatch, eliminarItem } from "../compartidos/request";
@@ -12,6 +12,7 @@ const Item = ({
   cantidad,
   idItemsCarrito,
   fetchItems,
+  talla,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [cantidadItems, setCantidad] = useState(cantidad);
@@ -67,18 +68,27 @@ const Item = ({
           </div>
           <div className="col precio-descripcion">
             <div className="row">
-              {precio.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-              }) +
-                ` x ` +
-                cantidadItems}
+              <Col>
+                {precio.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }) +
+                  ` x ` +
+                  cantidadItems}
+              </Col>
             </div>
-            <div className="row">{descripcion}</div>
             <div className="row">
-              <Button className="btn-ver-detalles" onClick={handleShow}>
-                Ver Detalle
-              </Button>
+              <Col>{descripcion}</Col>
+            </div>
+            <div className="row">
+              <Col className="text-start">Talla: {talla}</Col>
+            </div>
+            <div className="row">
+              <Col>
+                <Button className="btn-ver-detalles" onClick={handleShow}>
+                  Ver Detalle
+                </Button>
+              </Col>
             </div>
           </div>
         </div>

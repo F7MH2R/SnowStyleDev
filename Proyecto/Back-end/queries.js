@@ -9,13 +9,15 @@ const queryCarrito = `select
 		p.imagen1 as imagen,
 		ic.cantidad as cantidad,
 		p.id_prenda as id,
-		ic.id_itemcarrito as id_itemcarrito
+		ic.id_itemcarrito as id_itemcarrito,
+		t.nom_talla as talla
 	from 
-		usuario u, carrito c  , items_carrito ic , prenda p 
+		usuario u, carrito c  , items_carrito ic , prenda p, talla t 
 	where 
 		u.id_usuario = c.id_usuario and 
 		c.id_carrito = ic.id_carrito and 
 		ic.id_prenda = p.id_prenda and
+		ic.id_talla = t.id_talla and
 		u.id_usuario = $1 and
 		estado_carrito = '${ESTADOS_CARRITO.EN_ESPERA}'
 		order by ic.id_itemcarrito`;
@@ -33,10 +35,12 @@ where
 const insertarItemsCarrito = `insert into items_carrito (
 		id_carrito,
 		id_prenda,
+		id_talla,
 		cantidad
 	) values (
 		$1,
 		$2,
+		$3,
 		1
 	)`;
 
@@ -77,13 +81,14 @@ const descontarInventario = `update prenda
 		id_prenda = $2
 	`;
 
-const obtenerTallasPorPrenda = `select t.nom_talla as talla 
+const obtenerTallasPorPrenda = `select t.id_talla as id_talla, t.nom_talla as talla 
 	from 
 		prenda p, tallas_prenda tp , talla t 
 	where 
 		p.id_prenda = tp.id_prenda and
 		tp.id_talla = t.id_talla and 
-		p.id_prenda = $1
+		p.id_prenda = $1 and 
+		tp.cantidad > 0 
 	`;
 
 module.exports = {

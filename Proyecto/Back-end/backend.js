@@ -389,20 +389,19 @@ app.delete("/api/carrito/items/:id/delete", async (req, res) => {
 app.post("/api/carrito/items/add", async (req, res) => {
   const idPrenda = req.body.idPrenda;
   const idUsuario = req.body.idUsuario;
+  const idTalla = req.body.idTalla;
   try {
     const carrito = await pool.query(obtenerCarritoPorUsuario, [idUsuario]);
-
+    let idCarrito = 0;
     if (carrito.rowCount > 0) {
-      const idCarrito = carrito.rows[0].id;
-      await pool.query(insertarItemsCarrito, [idCarrito, idPrenda]);
-      res.status(200).json({ estado: "Carrito actualizado - Prenda agregada" });
+      idCarrito = carrito.rows[0].id;
     } else {
       await pool.query(insertarCarrito, [idUsuario, idPrenda]);
       const carrito = await pool.query(obtenerCarritoPorUsuario, [idUsuario]);
-      const idCarrito = carrito.rows[0].id;
-      await pool.query(insertarItemsCarrito, [idCarrito, idPrenda]);
-      res.status(200).json({ estado: "Carrito creado - prenda agregada" });
+      idCarrito = carrito.rows[0].id;
     }
+    await pool.query(insertarItemsCarrito, [idCarrito, idPrenda, idTalla]);
+    res.status(200).json({ estado: "Carrito actualizado - Prenda agregada" });
   } catch (error) {
     res.status(500).json({ mensaje: error });
   }
