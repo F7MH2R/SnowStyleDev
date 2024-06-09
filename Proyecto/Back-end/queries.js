@@ -10,7 +10,8 @@ const queryCarrito = `select
 		ic.cantidad as cantidad,
 		p.id_prenda as id,
 		ic.id_itemcarrito as id_itemcarrito,
-		t.nom_talla as talla
+		t.nom_talla as talla,
+		t.id_talla as idTalla
 	from 
 		usuario u, carrito c  , items_carrito ic , prenda p, talla t 
 	where 
@@ -74,14 +75,15 @@ const obtenerDatosPrenda = `SELECT *
 	WHERE 
 		id_prenda = $1`;
 
-const descontarInventario = `update prenda
+const descontarInventario = `update tallas_prenda
 	set 
 		cantidad = (cantidad - $1)
 	where
-		id_prenda = $2
+		id_prenda = $2 and
+		id_talla = $3
 	`;
 
-const obtenerTallasPorPrenda = `select t.id_talla as id_talla, t.nom_talla as talla 
+const obtenerTallasPorPrenda = `select t.id_talla as id_talla, t.nom_talla as talla, t.id_talla as idTalla 
 	from 
 		prenda p, tallas_prenda tp , talla t 
 	where 
@@ -89,6 +91,14 @@ const obtenerTallasPorPrenda = `select t.id_talla as id_talla, t.nom_talla as ta
 		tp.id_talla = t.id_talla and 
 		p.id_prenda = $1 and 
 		tp.cantidad > 0 
+	`;
+
+const cantidadEnInventario = `SELECT tp.cantidad 
+	FROM 
+		tallas_prenda tp 
+	WHERE 
+		tp.id_prenda = $1 and
+		tp.id_talla  = $2
 	`;
 
 module.exports = {
@@ -102,4 +112,5 @@ module.exports = {
   obtenerDatosPrenda: obtenerDatosPrenda,
   descontarInventario: descontarInventario,
   obtenerTallasPorPrenda: obtenerTallasPorPrenda,
+  cantidadEnInventario: cantidadEnInventario,
 };

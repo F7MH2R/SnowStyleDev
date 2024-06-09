@@ -26,10 +26,10 @@ const Pago = () => {
           console.log("Valor retornado: ", resultado);
           if (resultado) {
             setPagoExitoso(true);
-            actualizarCarrito();
-            descontarInventario(items).then(
-              console.log("Inventario actualizado")
-            );
+            descontarInventario(items).then(() => {
+              console.log("Inventario actualizado");
+              actualizarCarrito();
+            });
           } else {
             window.alert(
               "Lo sentimos, pero no hay suficiente inventario para esta compra."
@@ -53,8 +53,10 @@ const Pago = () => {
     try {
       // Usamos Promise.all para ejecutar todas las consultas a la API simultáneamente
       const consultas = items.map(async (item) => {
-        const prenda = await ejecutarGet(`/api/prendas/${item.id}`);
-        if (prenda.cantidad <= item.cantidad) {
+        const prenda = await ejecutarGet(
+          `/api/prendas/${item.id}/tallas/${item.idtalla}/cantidad`
+        ).then((response) => response.data);
+        if (prenda.cantidad < item.cantidad) {
           return false; // Si no hay suficiente cantidad, devolvemos false
         }
         return true;
@@ -77,10 +79,12 @@ const Pago = () => {
 
   async function descontarInventario(items) {
     const consultas = items.map(async (item) => {
+      console.log("prenda___: ", item);
       const prenda = await ejecutarPatch(`/api/prendas/update`, {
         idPrenda: item.id,
         cantidad: item.cantidad,
-      });
+        idTalla: item.idtalla,
+      }).then((prenda) => prenda);
       if (prenda.cantidad <= item.cantidad) {
         return false; // Si no hay suficiente cantidad, devolvemos false
       }
@@ -294,6 +298,7 @@ const Pago = () => {
                 <thead>
                   <tr>
                     <th>Producto</th>
+                    <th>Talla</th>
                     <th>Cantidad</th>
                     <th>Precio unitario</th>
                   </tr>
@@ -302,6 +307,7 @@ const Pago = () => {
                   {items.map((item) => (
                     <tr key={item.id}>
                       <td>{item.descripcion}</td>
+                      <td>{item.talla}</td>
                       <td>{item.cantidad}</td>
                       <td>${item.precio}</td>
                     </tr>

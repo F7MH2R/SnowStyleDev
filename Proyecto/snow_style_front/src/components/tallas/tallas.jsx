@@ -9,7 +9,6 @@ export const Tallas = ({ idPrenda }) => {
     ejecutarGet(`/api/prendas/${idPrenda}/tallas`)
       .then((response) => {
         const tallasDB = response.data?.tallasDisponibles;
-        console.log("Datos de las tallas: ", tallasDB);
         setTallasDisponibles(tallasDB);
       })
       .catch((error) => console.log("Error al obtener las tallas: ", error));
