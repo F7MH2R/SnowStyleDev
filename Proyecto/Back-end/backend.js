@@ -16,6 +16,7 @@ const {
   obtenerDatosPrenda,
   descontarInventario,
   obtenerTallasPorPrenda,
+  cantidadEnInventario,
 } = require("./queries");
 
 const path = require("path");
@@ -389,20 +390,19 @@ app.delete("/api/carrito/items/:id/delete", async (req, res) => {
 app.post("/api/carrito/items/add", async (req, res) => {
   const idPrenda = req.body.idPrenda;
   const idUsuario = req.body.idUsuario;
+  const idTalla = req.body.idTalla;
   try {
     const carrito = await pool.query(obtenerCarritoPorUsuario, [idUsuario]);
-
+    let idCarrito = 0;
     if (carrito.rowCount > 0) {
-      const idCarrito = carrito.rows[0].id;
-      await pool.query(insertarItemsCarrito, [idCarrito, idPrenda]);
-      res.status(200).json({ estado: "Carrito actualizado - Prenda agregada" });
+      idCarrito = carrito.rows[0].id;
     } else {
       await pool.query(insertarCarrito, [idUsuario, idPrenda]);
       const carrito = await pool.query(obtenerCarritoPorUsuario, [idUsuario]);
-      const idCarrito = carrito.rows[0].id;
-      await pool.query(insertarItemsCarrito, [idCarrito, idPrenda]);
-      res.status(200).json({ estado: "Carrito creado - prenda agregada" });
+      idCarrito = carrito.rows[0].id;
     }
+    await pool.query(insertarItemsCarrito, [idCarrito, idPrenda, idTalla]);
+    res.status(200).json({ estado: "Carrito actualizado - Prenda agregada" });
   } catch (error) {
     res.status(500).json({ mensaje: error });
   }
@@ -423,8 +423,9 @@ app.patch("/api/carrito/update", async (req, res) => {
 app.patch("/api/prendas/update", async (req, res) => {
   const idPrenda = req.body.idPrenda;
   const cantidad = req.body.cantidad;
+  const idTalla = req.body.idTalla;
   try {
-    await pool.query(descontarInventario, [cantidad, idPrenda]);
+    await pool.query(descontarInventario, [cantidad, idPrenda, idTalla]);
     res.status(200).json({ mensaje: "Inventario actualizado" });
   } catch (error) {
     res
@@ -442,6 +443,23 @@ app.get("/api/prendas/:id/tallas", async (req, res) => {
     res
       .status(500)
       .json({ mensaje: "Error al obtener tallas de la prenda", error: error });
+  }
+});
+
+app.get("/api/prendas/:idPrenda/tallas/:idTalla/cantidad", async (req, res) => {
+  const { idPrenda, idTalla } = req.params;
+  try {
+    const result = await pool.query(cantidadEnInventario, [idPrenda, idTalla]);
+    if (result != null && result.rows.length === 0) {
+      res.status(404).json({ error: "Prenda no encontrada" });
+    } else {
+      res.json(result.rows[0]);
+    }
+  } catch (error) {
+    res.status(500).json({
+      mensaje: "Error al obtener detalles de la prenda",
+      error: error,
+    });
   }
 });
 

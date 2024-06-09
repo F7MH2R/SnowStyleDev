@@ -20,6 +20,7 @@ import imagen from "./img/userplaceholder.png";
 import "../pages/css/Modal.css";
 import Login from "../pages/Login";
 import Carrito from "../Carrito/Carrito";
+import { ToastContainer } from "react-toastify";
 
 function NavBar(props) {
   const [showSearch, setShowSearch] = useState(false);
@@ -221,6 +222,7 @@ function NavBar(props) {
           </Form>
         </Modal.Body>
       </Modal>
+      <ToastContainer position="top-center" theme="dark" />
     </>
   );
 }

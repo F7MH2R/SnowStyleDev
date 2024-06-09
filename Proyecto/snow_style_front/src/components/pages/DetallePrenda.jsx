@@ -93,8 +93,7 @@ const DetallePrenda = () => {
               )}
             </Carousel>
             <Card.Text>
-              {prenda.descripcion + "    asdfasdfasdfsf"}{" "}
-              {/* Descripción de la prenda */}
+              {prenda.descripcion} {/* Descripción de la prenda */}
             </Card.Text>
             <Button variant="primary" onClick={() => handleComprar(id_prenda)}>
               Agregar al carrito

@@ -4,9 +4,9 @@ import googleFontsURL from "../Fuentes/FuenteLetras";
 import { PDFDocument, rgb } from "pdf-lib";
 import "./css/Modal.css";
 import { ejecutarGet, ejecutarPatch } from "../compartidos/request";
+import { toast } from "react-toastify";
 
-const Pago = () => {
-  const [items, setItems] = useState([]);
+const Pago = ({ items, fetchItems }) => {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [pagoExitoso, setPagoExitoso] = useState(false);
@@ -18,26 +18,26 @@ const Pago = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    // Simulación de proceso de pago ficticio
-    setTimeout(() => {
+    setTimeout(async () => {
       setLoading(false);
-      validarInventario(items)
-        .then((resultado) => {
-          console.log("Valor retornado: ", resultado);
-          if (resultado) {
-            setPagoExitoso(true);
-            actualizarCarrito();
-            descontarInventario(items).then(
-              console.log("Inventario actualizado")
-            );
-          } else {
-            window.alert(
-              "Lo sentimos, pero no hay suficiente inventario para esta compra."
-            );
-          }
-        })
-        .catch((error) => console.log("Ha ocurrido un error: ", error));
-    }, 2000); // Simulación de un proceso de pago de 2 segundos
+      try {
+        const resultado = await validarInventario();
+        if (resultado) {
+          await descontarInventario(items);
+          await actualizarCarrito();
+          await handleDescargarFactura();
+          setPagoExitoso(true);
+          await fetchItems();
+          toast.success("👌 Gracias por comprar con nosotros");
+        } else {
+          toast.warning(
+            "Lo sentimos, pero no hay suficiente inventario para esta compra."
+          );
+        }
+      } catch (error) {
+        toast.error(`Ha ocurrido un error: ${error}`);
+      }
+    }, 2000);
   };
 
   async function actualizarCarrito() {
@@ -49,29 +49,29 @@ const Pago = () => {
     }
   }
 
-  async function validarInventario(items) {
+  async function validarInventario() {
     try {
-      // Usamos Promise.all para ejecutar todas las consultas a la API simultáneamente
       const consultas = items.map(async (item) => {
-        const prenda = await ejecutarGet(`/api/prendas/${item.id}`);
-        if (prenda.cantidad <= item.cantidad) {
-          return false; // Si no hay suficiente cantidad, devolvemos false
+        const prenda = await ejecutarGet(
+          `/api/prendas/${item.id}/tallas/${item.idtalla}/cantidad`
+        ).then((response) => response.data);
+        if (prenda.cantidad >= item.cantidad) {
+          return true;
+        } else {
+          return false;
         }
-        return true;
       });
 
-      // Esperamos a que todas las consultas se completen
       const resultados = await Promise.all(consultas);
 
-      // Verificamos si algún resultado es false
       if (resultados.includes(false)) {
-        return false; // Si hay al menos un resultado false, retornamos false
+        return false;
       }
 
-      return true; // Si todas las consultas pasaron, retornamos true
+      return true;
     } catch (error) {
       console.error("Error al validar inventario:", error);
-      throw error; // Rechazamos la promesa si hay un error
+      throw error;
     }
   }
 
@@ -80,7 +80,8 @@ const Pago = () => {
       const prenda = await ejecutarPatch(`/api/prendas/update`, {
         idPrenda: item.id,
         cantidad: item.cantidad,
-      });
+        idTalla: item.idtalla,
+      }).then((prenda) => prenda);
       if (prenda.cantidad <= item.cantidad) {
         return false; // Si no hay suficiente cantidad, devolvemos false
       }
@@ -88,7 +89,7 @@ const Pago = () => {
     });
 
     // Esperamos a que todas las consultas se completen
-    const resultados = await Promise.all(consultas);
+    await Promise.all(consultas);
   }
 
   const handleVerFactura = () => {
@@ -169,22 +170,15 @@ const Pago = () => {
   };
 
   useEffect(() => {
-    fetchItems();
-  }, []);
-
-  async function fetchItems() {
-    const idUsuario = localStorage.getItem("UserId");
-    const itemsCarrito = await ejecutarGet(`/api/carrito/${idUsuario}/items`);
     let costoTotal = 0;
-    if (itemsCarrito.data) {
-      costoTotal = itemsCarrito.data.reduce(
+    if (items) {
+      costoTotal = items.reduce(
         (total, item) => total + parseFloat(item.precio * item.cantidad),
         0
       );
-      setItems(itemsCarrito.data);
     }
     setTotal(parseFloat(costoTotal));
-  }
+  }, [items]);
 
   const handleNombre = (evento) => {
     setNombreTarjeta(evento.target.value);
@@ -273,7 +267,7 @@ const Pago = () => {
                 disabled={loading}
                 className="w-100 mt-3 custom-button"
               >
-                {loading ? "Procesando..." : "Pagar ahora"}
+                {loading ? "Procesando..." : "Pagar"}
               </Button>
             </Form>
           )}
@@ -294,6 +288,7 @@ const Pago = () => {
                 <thead>
                   <tr>
                     <th>Producto</th>
+                    <th>Talla</th>
                     <th>Cantidad</th>
                     <th>Precio unitario</th>
                   </tr>
@@ -302,6 +297,7 @@ const Pago = () => {
                   {items.map((item) => (
                     <tr key={item.id}>
                       <td>{item.descripcion}</td>
+                      <td>{item.talla}</td>
                       <td>{item.cantidad}</td>
                       <td>${item.precio}</td>
                     </tr>
@@ -319,15 +315,6 @@ const Pago = () => {
                 })}
               </p>
             </Modal.Body>
-            <Modal.Footer>
-              <Button
-                variant="secondary"
-                onClick={handleDescargarFactura}
-                style={{ fontFamily: "Prompt, sans-serif" }}
-              >
-                Descargar Factura
-              </Button>
-            </Modal.Footer>
           </Modal>
         </div>
       </div>

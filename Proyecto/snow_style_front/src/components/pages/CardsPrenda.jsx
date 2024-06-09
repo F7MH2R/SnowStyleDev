@@ -15,8 +15,7 @@ import "../pages/css/Modal.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FiltroPrendas from "./FiltroPrendas";
 import withLoader from "../Load/withLoader ";
-import { ejecutarPost } from "../compartidos/request";
-import { Tallas } from "../tallas/tallas";
+import { Tallas } from "../Tallas/Tallas";
 
 const CardsPrenda = () => {
   const { tipoPrendaId, departamento } = useParams();
@@ -43,20 +42,6 @@ const CardsPrenda = () => {
 
     fetchPrendas();
   }, [tipoPrendaId, departamento]);
-
-  const handleComprar = (prendaId) => {
-    const idUsuario = localStorage.getItem("UserId");
-
-    agregarAlCarrito(prendaId, idUsuario);
-
-    async function agregarAlCarrito(prendaId, idUsuario) {
-      await ejecutarPost(`/api/carrito/items/add`, {
-        idPrenda: prendaId,
-        idUsuario: idUsuario,
-      });
-      window.location.reload();
-    }
-  };
 
   const filtrarPrendas = (
     nombrePrenda,
@@ -158,7 +143,7 @@ const CardsPrenda = () => {
                     <h4>Precio: ${prenda.precio_unitario} </h4>
                   </Card.Title>
                   {/* Botones de tallas */}
-                  <h5>Tallas disponibles:</h5>
+                  <h5>Comprar en esta talla:</h5>
                   <Tallas idPrenda={prenda.id_prenda} />
                   <Row className="p-2">
                     <Col>
@@ -168,14 +153,6 @@ const CardsPrenda = () => {
                         to={`/detalle/${prenda.id_prenda}`}
                       >
                         Ver más
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button
-                        variant="success"
-                        onClick={() => handleComprar(prenda.id_prenda)}
-                      >
-                        Comprar
                       </Button>
                     </Col>
                   </Row>

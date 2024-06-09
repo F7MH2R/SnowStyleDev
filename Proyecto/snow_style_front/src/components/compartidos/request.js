@@ -18,7 +18,6 @@ export async function eliminarItem(sufijo, datos) {
 
 export async function ejecutarPost(sufijo, datos) {
   const endpoint = generarEndpoint(sufijo);
-  console.log(endpoint);
   return axios.post(endpoint, datos);
 }
 

@@ -30,7 +30,6 @@ function LostP({ show, onClose }) {
 
       if (data.exists) {
         setUserId(data.userId);
-        console.log(data.userId);
         setModalVisible(true);
       } else {
         setAlertType("danger");

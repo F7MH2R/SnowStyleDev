@@ -11,7 +11,6 @@ import Help from "./components/pages/Help";
 import WhoAre from "./components/pages/WhoAre";
 import DetalleProducto from "./components/pages/DetalleProducto";
 import LostP from "./components/pages/LostP";
-import Pago from "./components/pages/Pago";
 import CardsPrenda from "./components/pages/CardsPrenda";
 //import DetallePrenda from "./components/pages/DetallePrenda";
 import Spass from "./components/Lpassword/RequestPasswordChange";
@@ -45,7 +44,6 @@ function App() {
             <Route path="REGIST" element={<Registrarse />} />
             <Route path="WHOARE" element={<WhoAre />} />
             <Route path="DETALLEPRODUCTO" element={<DetalleProducto />} />
-            <Route path="PAGO" element={<Pago />} />
             <Route path="perdi" element={<Spass />} />
             <Route
               path="/prendas/:tipoPrendaId/:departamento"
