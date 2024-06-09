@@ -1,7 +1,6 @@
 import React from "react";
 import "../pages/css/Modal.css";
 import { Link } from "react-router-dom";
-import googleFontsURL from "../Fuentes/FuenteLetras";
 const TrendingSectionH = () => {
   const trendingItems = [
     {

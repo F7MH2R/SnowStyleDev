@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Item from "../Item/Item";
-import { Button, Offcanvas } from "react-bootstrap";
+import { Button, Col, Offcanvas, Row } from "react-bootstrap";
+import "react-toastify/dist/ReactToastify.css";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import { FaShoppingCart } from "react-icons/fa";
 import shoppingCartIcon from "../Multimedia/shopping-cart-icon.png"; // Ruta a tu imagen de icono de carrito de compras
 import "./Carrito.css"; // Cambio en la importación del CSS
 import { ejecutarGet } from "../compartidos/request";
+import Pago from "../pages/Pago";
 
 const Carrito = () => {
   const [show, setShow] = useState(false);
@@ -97,20 +99,14 @@ const Carrito = () => {
                 </span>
               </div>
             </div>
-            <div className="carrito-row">
-              {" "}
-              {/* Cambio en la clase */}
-              <a href="/PAGO">
-                <button
-                  variant="outline-success"
-                  style={{ fontFamily: "Prompt, sans-serif" }}
-                  className="carrito-pay-button"
-                >
-                  Pagar
-                </button>
-              </a>
-            </div>
           </div>
+          {items.length > 0 ? (
+            <Row className="carrito-row">
+              <Col>
+                <Pago items={items} fetchItems={fetchItems}></Pago>
+              </Col>
+            </Row>
+          ) : null}
         </Offcanvas.Body>
       </Offcanvas>
     </>

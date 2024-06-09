@@ -3,7 +3,6 @@ import videoBackground from "../Multimedia/videoWhoAreUs.mp4";
 import videoConocenos from "../Multimedia/videoWhoAreUs2.mp4";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 
-
 const WhoAre = () => {
   return (
     <>
@@ -83,6 +82,7 @@ const WhoAre = () => {
                 allowFullScreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
+                title="direccion"
               ></iframe>
               <h5>Teléfono: 2442-9089</h5>
               <h5>Correo electrónico: informacion@snowstyle.com</h5>
