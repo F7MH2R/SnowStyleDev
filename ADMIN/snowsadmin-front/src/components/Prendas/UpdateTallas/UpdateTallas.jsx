@@ -65,26 +65,48 @@ const UpdateTallas = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const tallas_Guardar = selectedTallas.filter((talla) => talla.length > 0);
-    for (let i = 0; i < tallas_Guardar.length; i++) {
-      if (tallas_Guardar[i]) {
+
+    for (let i = 0; i < selectedTallas.length; i++) {
+      if (selectedTallas[i]) {
         try {
-          await axios.post("http://localhost:3076/tallas_prenda", {
-            id_prenda: id,
-            id_talla: tallas_Guardar[i],
+          await axios.post(`http://localhost:3076/tallas_prenda/${id}`, {
+            id_talla: selectedTallas[i],
             cantidad: cantidad[i] || 0, // Default to 0 if no value is entered
           });
         } catch (error) {
-          console.error("Error adding tallas:", error);
+          console.error("Error handling tallas:", error);
         }
       }
     }
+
     setShowModal(true); // Show the success modal
+  };
+
+  const handleDeleteTalla = async (tallaId) => {
+    try {
+      await axios.delete(`http://localhost:3076/tallas_prenda/${id}`, {
+        data: {
+          id_prenda: id,
+          id_talla: tallaId,
+        },
+      });
+      // Actualizar el estado después de la eliminación
+      const updatedSelectedTallas = selectedTallas.filter(
+        (_, index) => selectedTallas[index] !== tallaId
+      );
+      const updatedCantidad = cantidad.filter(
+        (_, index) => selectedTallas[index] !== tallaId
+      );
+      setSelectedTallas(updatedSelectedTallas);
+      setCantidad(updatedCantidad);
+    } catch (error) {
+      console.error("Error deleting talla:", error);
+    }
   };
 
   const handleClose = () => {
     setShowModal(false);
-    navigate(`/admin`); // Navigate after closing the modal
+    navigate(`/tablePrenda`); // Navigate after closing the modal
   };
 
   return (
@@ -116,19 +138,28 @@ const UpdateTallas = () => {
                 </Form.Control>
               </Form.Group>
               {selectedTallas[index] && (
-                <Form.Group className={`cantidad-input-group-${index}`}>
-                  <Form.Label className={`cantidad-label-${index}`}>
-                    Cantidad
-                  </Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={cantidad[index]}
-                    onChange={(e) =>
-                      handleCantidadChange(index, e.target.value)
-                    }
-                    className={`cantidad-input-${index}`}
-                  />
-                </Form.Group>
+                <>
+                  <Form.Group className={`cantidad-input-group-${index}`}>
+                    <Form.Label className={`cantidad-label-${index}`}>
+                      Cantidad
+                    </Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={cantidad[index]}
+                      onChange={(e) =>
+                        handleCantidadChange(index, e.target.value)
+                      }
+                      className={`cantidad-input-${index}`}
+                    />
+                  </Form.Group>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDeleteTalla(selectedTallas[index])}
+                    className={`delete-button-${index}`}
+                  >
+                    Eliminar
+                  </Button>
+                </>
               )}
             </div>
           ))}

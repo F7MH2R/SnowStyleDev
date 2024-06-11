@@ -211,6 +211,7 @@ const UpdateP = () => {
                 />
               </div>
             </Form.Group>
+            {/*
             <Form.Group className="custom-form-group">
               <Form.Label className="custom-label">Cantidad</Form.Label>
               <Form.Control
@@ -220,7 +221,7 @@ const UpdateP = () => {
                 onChange={handleChange}
                 className="custom-control"
               />
-            </Form.Group>
+            </Form.Group>*/}
             <Form.Group className="custom-form-group">
               <Form.Label className="custom-label">Proveedor</Form.Label>
               <Form.Control

@@ -1,119 +1,96 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form, FormControl, Offcanvas } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button } from "react-bootstrap";
 
 const FiltroPrendas = ({ filtrarPrendas }) => {
   const [nombrePrenda, setNombrePrenda] = useState("");
+  const [minPrecio, setMinPrecio] = useState("");
+  const [maxPrecio, setMaxPrecio] = useState("");
   const [mostrarLiquidacion, setMostrarLiquidacion] = useState(false);
   const [tallasSeleccionadas, setTallasSeleccionadas] = useState([]);
-  const [showFilter, setShowFilter] = useState(false);
-
-  useEffect(() => {
-    setShowFilter(true); // Mostrar el filtro al montar el componente
-  }, []);
-
-  const handleNombrePrendaChange = (e) => {
-    setNombrePrenda(e.target.value);
-  };
-
-  const handleMostrarLiquidacionChange = () => {
-    setMostrarLiquidacion(!mostrarLiquidacion);
-  };
-
-  const handleTallaSeleccionada = (talla) => {
-    if (tallasSeleccionadas.includes(talla)) {
-      setTallasSeleccionadas(tallasSeleccionadas.filter((t) => t !== talla));
-    } else {
-      setTallasSeleccionadas([...tallasSeleccionadas, talla]);
-    }
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    filtrarPrendas(nombrePrenda, mostrarLiquidacion, tallasSeleccionadas);
-    setShowFilter(false);
+    filtrarPrendas(
+      nombrePrenda,
+      minPrecio,
+      maxPrecio,
+      mostrarLiquidacion,
+      tallasSeleccionadas
+    );
+  };
+
+  const handleTallasChange = (e) => {
+    const value = e.target.value;
+    setTallasSeleccionadas(
+      e.target.checked
+        ? [...tallasSeleccionadas, value]
+        : tallasSeleccionadas.filter((talla) => talla !== value)
+    );
   };
 
   return (
-    <>
-      <Offcanvas show={showFilter} onHide={() => setShowFilter(false)}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Filtro de Prendas</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formNombrePrenda">
-              <Form.Label>Buscar por nombre de prenda:</Form.Label>
-              <FormControl
-                type="text"
-                placeholder="Ingrese el nombre de la prenda"
-                value={nombrePrenda}
-                onChange={handleNombrePrendaChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formMostrarLiquidacion">
-              <Form.Check
-                type="checkbox"
-                label="Mostrar solo prendas en liquidación"
-                checked={mostrarLiquidacion}
-                onChange={handleMostrarLiquidacionChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formTallas">
-              <Form.Label>Filtrar por tallas:</Form.Label>
-              <div>
-                <Button
-                  variant={
-                    tallasSeleccionadas.includes("S")
-                      ? "primary"
-                      : "outline-primary"
-                  }
-                  onClick={() => handleTallaSeleccionada("S")}
-                  className="mr-2 mb-2"
-                >
-                  S
-                </Button>
-                <Button
-                  variant={
-                    tallasSeleccionadas.includes("M")
-                      ? "primary"
-                      : "outline-primary"
-                  }
-                  onClick={() => handleTallaSeleccionada("M")}
-                  className="mr-2 mb-2"
-                >
-                  M
-                </Button>
-                <Button
-                  variant={
-                    tallasSeleccionadas.includes("L")
-                      ? "primary"
-                      : "outline-primary"
-                  }
-                  onClick={() => handleTallaSeleccionada("L")}
-                  className="mr-2 mb-2"
-                >
-                  L
-                </Button>
-                <Button
-                  variant={
-                    tallasSeleccionadas.includes("XL")
-                      ? "primary"
-                      : "outline-primary"
-                  }
-                  onClick={() => handleTallaSeleccionada("XL")}
-                  className="mr-2 mb-2"
-                >
-                  XL
-                </Button>
-              </div>
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Aplicar filtros
-            </Button>
-          </Form>
-        </Offcanvas.Body>
-      </Offcanvas>
-    </>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="formNombrePrenda">
+        <Form.Label>Nombre de la Prenda</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Ingrese el nombre de la prenda"
+          value={nombrePrenda}
+          onChange={(e) => setNombrePrenda(e.target.value)}
+        />
+      </Form.Group>
+      <Form.Group controlId="formMinPrecio">
+        <Form.Label>Precio Mínimo</Form.Label>
+        <Form.Control
+          type="number"
+          placeholder="Ingrese el precio mínimo"
+          value={minPrecio}
+          onChange={(e) => setMinPrecio(e.target.value)}
+        />
+      </Form.Group>
+      <Form.Group controlId="formMaxPrecio">
+        <Form.Label>Precio Máximo</Form.Label>
+        <Form.Control
+          type="number"
+          placeholder="Ingrese el precio máximo"
+          value={maxPrecio}
+          onChange={(e) => setMaxPrecio(e.target.value)}
+        />
+      </Form.Group>
+      <Form.Group controlId="formMostrarLiquidacion">
+        <Form.Check
+          type="checkbox"
+          label="Mostrar solo en liquidación"
+          checked={mostrarLiquidacion}
+          onChange={(e) => setMostrarLiquidacion(e.target.checked)}
+        />
+      </Form.Group>
+      {/*}
+      <Form.Group controlId="formTallas">
+        <Form.Label>Tallas</Form.Label>
+        <Form.Check
+          type="checkbox"
+          label="S"
+          value="S"
+          onChange={handleTallasChange}
+        />
+        <Form.Check
+          type="checkbox"
+          label="M"
+          value="M"
+          onChange={handleTallasChange}
+        />
+        <Form.Check
+          type="checkbox"
+          label="L"
+          value="L"
+          onChange={handleTallasChange}
+        />
+      </Form.Group>*/}
+      <Button variant="dark" type="submit">
+        Aplicar Filtros
+      </Button>
+    </Form>
   );
 };
 

@@ -57,11 +57,12 @@ const TrendingSectionH = () => {
           </div>
         ))}
       </div>
+      {/*}
       <div className="see-all-container">
         <Link to="/todos-los-productos" className="see-all-link">
           Todos los Productos
         </Link>
-      </div>
+      </div>*/}
     </div>
   );
 };

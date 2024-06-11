@@ -45,6 +45,8 @@ const CardsPrenda = () => {
 
   const filtrarPrendas = (
     nombrePrenda,
+    minPrecio,
+    maxPrecio,
     mostrarLiquidacion,
     tallasSeleccionadas
   ) => {
@@ -57,9 +59,23 @@ const CardsPrenda = () => {
       );
     }
 
+    // Filtrar por precio mínimo
+    if (minPrecio) {
+      filtered = filtered.filter(
+        (prenda) => prenda.precio_unitario >= parseFloat(minPrecio)
+      );
+    }
+
+    // Filtrar por precio máximo
+    if (maxPrecio) {
+      filtered = filtered.filter(
+        (prenda) => prenda.precio_unitario <= parseFloat(maxPrecio)
+      );
+    }
+
     // Filtrar por liquidación
     if (mostrarLiquidacion) {
-      filtered = filtered.filter((prenda) => prenda.en_liquidacion);
+      filtered = filtered.filter((prenda) => prenda.precio_unitario < 15);
     }
 
     // Filtrar por tallas seleccionadas
@@ -92,6 +108,9 @@ const CardsPrenda = () => {
 
   return (
     <>
+      <Button variant="dark" onClick={() => setShowFilter(true)}>
+        Filtrar Prendas
+      </Button>
       {chunkedPrendas.map((chunk, index) => (
         <Row key={index} className="mb-4">
           <CardGroup>
@@ -148,7 +167,7 @@ const CardsPrenda = () => {
                   <Row className="p-2">
                     <Col>
                       <Button
-                        variant="outline-dark"
+                        variant="dark"
                         as={Link}
                         to={`/detalle/${prenda.id_prenda}`}
                       >
@@ -162,9 +181,7 @@ const CardsPrenda = () => {
           </CardGroup>
         </Row>
       ))}
-      <Button variant="primary" onClick={() => setShowFilter(true)}>
-        Filtrar Prendas
-      </Button>
+
       <Offcanvas show={showFilter} onHide={() => setShowFilter(false)}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Filtrar Prendas</Offcanvas.Title>

@@ -116,7 +116,92 @@ app.post("/api/login", async (req, res) => {
     res.status(500).send({ message: "Error al iniciar sesión" });
   }
 });
+//Tallasprenda
+app.put("/tallas_prenda/:id", async (req, res) => {
+  const { id } = req.params;
+  const { id_prenda, id_talla, cantidad } = req.body;
 
+  try {
+    const result = await pool.query(
+      "UPDATE tallas_prenda SET cantidad = $1 WHERE id_prenda = $2 AND id_talla = $3",
+      [cantidad, id_prenda, id_talla]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Talla no encontrada" });
+    }
+
+    res.status(200).json({ message: "Talla actualizada exitosamente" });
+  } catch (error) {
+    console.error("Error updating talla:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+});
+app.post("/tallas_prenda/:id", async (req, res) => {
+  const { id } = req.params;
+  const { id_talla, cantidad } = req.body;
+
+  try {
+    // Primero, intenta actualizar la talla existente
+    const updateResult = await pool.query(
+      "UPDATE tallas_prenda SET cantidad = $1 WHERE id_prenda = $2 AND id_talla = $3",
+      [cantidad, id, id_talla]
+    );
+
+    // Si no se actualizó ninguna fila, inserta una nueva
+    if (updateResult.rowCount === 0) {
+      await pool.query(
+        "INSERT INTO tallas_prenda (id_prenda, id_talla, cantidad) VALUES ($1, $2, $3)",
+        [id, id_talla, cantidad]
+      );
+    }
+
+    res.status(200).json({ message: "Talla guardada exitosamente" });
+  } catch (error) {
+    console.error("Error handling talla:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+});
+
+app.delete("/tallas_prenda/:id", async (req, res) => {
+  const { id } = req.params;
+  const { id_prenda, id_talla } = req.body;
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM tallas_prenda WHERE id_prenda = $1 AND id_talla = $2",
+      [id_prenda, id_talla]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Talla no encontrada" });
+    }
+
+    res.status(200).json({ message: "Talla eliminada exitosamente" });
+  } catch (error) {
+    console.error("Error deleting talla:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+});
+app.get("/tallas_prenda/:id/:id_talla", async (req, res) => {
+  const { id, id_talla } = req.params;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM tallas_prenda WHERE id_prenda = $1 AND id_talla = $2",
+      [id, id_talla]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Talla no encontrada" });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error("Error fetching talla:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+});
 // Ruta para obtener todos los usuarios (solo para admins)
 app.get("/api/users", async (req, res) => {
   try {

@@ -61,6 +61,7 @@ const TrendingSectionN = () => {
           </div>
         ))}
       </div>
+      {/*}
       <div className="see-all-container">
         <Link
           to="/todos-los-productos"
@@ -69,7 +70,7 @@ const TrendingSectionN = () => {
         >
           <h3 style={{ color: "black" }}>Todos los Productos</h3>
         </Link>
-      </div>
+      </div>*/}
     </div>
   );
 };
