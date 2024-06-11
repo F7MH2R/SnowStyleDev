@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Alert, Modal, Table } from "react-bootstrap";
+import { Button, Form, Alert, Modal } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import { PDFDocument, rgb } from "pdf-lib";
 import "./css/Modal.css";
@@ -7,8 +7,9 @@ import {
   ejecutarGet,
   ejecutarPatch,
   ejecutarPost,
-} from "../compartidos/request"; // Asegúrate de tener la función ejecutarPost para enviar datos
+} from "../compartidos/request";
 import { toast } from "react-toastify";
+import "./css/tabla.css";
 
 const Pago = ({ items, fetchItems }) => {
   const [total, setTotal] = useState(0);
@@ -321,31 +322,26 @@ const Pago = ({ items, fetchItems }) => {
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Table
-                striped
-                bordered
-                hover
-                style={{ fontFamily: "Prompt, sans-serif" }}
-              >
-                <thead>
-                  <tr>
-                    <th>Producto</th>
-                    <th>Talla</th>
-                    <th>Cantidad</th>
-                    <th>Precio unitario</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <div className="custom-table">
+                <div className="table-header">
+                  <div className="table-row">
+                    <div className="table-cell">Producto</div>
+                    <div className="table-cell">Talla</div>
+                    <div className="table-cell">Cantidad</div>
+                    <div className="table-cell">Precio unitario</div>
+                  </div>
+                </div>
+                <div className="table-body">
                   {items.map((item) => (
-                    <tr key={item.id}>
-                      <td>{item.descripcion}</td>
-                      <td>{item.talla}</td>
-                      <td>{item.cantidad}</td>
-                      <td>${item.precio}</td>
-                    </tr>
+                    <div className="table-row" key={item.id}>
+                      <div className="table-cell">{item.descripcion}</div>
+                      <div className="table-cell">{item.talla}</div>
+                      <div className="table-cell">{item.cantidad}</div>
+                      <div className="table-cell">${item.precio}</div>
+                    </div>
                   ))}
-                </tbody>
-              </Table>
+                </div>
+              </div>
               <p
                 className="fw-bold"
                 style={{ fontFamily: "Prompt, sans-serif" }}

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Form, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import googleFontsURL from "../../FuenteLetra/FuenteLetra";
 import "../Table/PrendaTable.css";
 
 const PrendaTable = () => {
   const [prendas, setPrendas] = useState([]);
+  const [searchName, setSearchName] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +30,17 @@ const PrendaTable = () => {
     navigate(`/UpdatePrenda/${id_prenda}`);
   };
 
+  const filteredPrendas = prendas.filter((prenda) => {
+    const matchesName =
+      prenda.nombre_prenda &&
+      prenda.nombre_prenda.toLowerCase().includes(searchName.toLowerCase());
+    const matchesMinPrice =
+      minPrice === "" || prenda.precio_unitario >= parseFloat(minPrice);
+    const matchesMaxPrice =
+      maxPrice === "" || prenda.precio_unitario <= parseFloat(maxPrice);
+    return matchesName && matchesMinPrice && matchesMaxPrice;
+  });
+
   return (
     <>
       <div
@@ -34,15 +48,43 @@ const PrendaTable = () => {
         style={{ fontFamily: "Prompt, sans-serif" }}
       >
         <link rel="stylesheet" href={googleFontsURL} />
-        <Table striped bordered hove className="prenda-container ">
-          <Button
-            className="prenda-button"
-            variant="primary"
-            onClick={() => navigate("/FormPrenda")}
-            style={{ marginBottom: "10px" }}
-          >
-            + Nueva Prenda
-          </Button>
+        <Button
+          className="prenda-button"
+          variant="primary"
+          onClick={() => navigate("/FormPrenda")}
+          style={{ marginBottom: "10px" }}
+        >
+          + Nueva Prenda
+        </Button>
+        <Form className="mb-3">
+          <Row>
+            <Col md={4}>
+              <Form.Control
+                type="text"
+                placeholder="Buscar por nombre"
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
+              />
+            </Col>
+            <Col md={4}>
+              <Form.Control
+                type="number"
+                placeholder="Precio mínimo"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+              />
+            </Col>
+            <Col md={4}>
+              <Form.Control
+                type="number"
+                placeholder="Precio máximo"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+              />
+            </Col>
+          </Row>
+        </Form>
+        <Table striped bordered hover className="prenda-container">
           <thead>
             <tr>
               <th>ID</th>
@@ -52,7 +94,7 @@ const PrendaTable = () => {
             </tr>
           </thead>
           <tbody>
-            {prendas.map((prenda) => (
+            {filteredPrendas.map((prenda) => (
               <tr key={prenda.id_prenda}>
                 <td>{prenda.id_prenda}</td>
                 <td>{prenda.nombre_prenda}</td>

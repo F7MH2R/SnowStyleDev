@@ -20,6 +20,7 @@ import FormMarca from "./components/Marca/Form/MarcaForm";
 import UpdatePrenda from "./components/Prendas/UpdateP/UpdateP";
 import TallaTable from "./components/Tallas/TallaTable";
 import UpdateTallas from "./components/Prendas/UpdateTallas/UpdateTallas";
+import Footer from "./components/General/Footer";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -57,6 +58,7 @@ function App() {
               <Route path="/UpdatePrenda/:id" element={<UpdatePrenda />} />
               <Route path="/UpdateTallas/:id" element={<UpdateTallas />} />
             </Routes>
+            <Footer />
           </div>
         )}
       </div>

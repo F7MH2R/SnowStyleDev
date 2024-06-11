@@ -148,7 +148,7 @@ const CardsPrenda = () => {
                   <Row className="p-2">
                     <Col>
                       <Button
-                        variant="primary"
+                        variant="outline-dark"
                         as={Link}
                         to={`/detalle/${prenda.id_prenda}`}
                       >

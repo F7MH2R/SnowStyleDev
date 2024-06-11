@@ -37,6 +37,7 @@ export const Tallas = ({ idPrenda }) => {
           {tallasDisponibles.map((talla) => (
             <Col key={talla.id_talla}>
               <Button
+                variant="outline-dark"
                 className="boton-talla"
                 onClick={() => handleComprar(idPrenda, talla.id_talla)}
                 key={talla.id_talla}
