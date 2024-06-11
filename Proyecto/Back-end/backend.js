@@ -148,7 +148,7 @@ app.get("/api/prendas/tipo/:tipoPrendaId/:departamento", async (req, res) => {
     const result = await pool.query(
       ` select * from prenda p
         where 
-        p.id_tipo_prenda = $1 AND p.id_departamento = $2;  `,
+        p.id_tipo_prenda = $1 AND p.id_departamento = $2 AND p.disponibilidad = 1;  `,
 
       [tipoPrendaId, departamento]
     );
