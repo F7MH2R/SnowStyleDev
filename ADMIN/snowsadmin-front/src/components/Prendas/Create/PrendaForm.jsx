@@ -10,7 +10,7 @@ const PrendaForm = () => {
     id_marca: "",
     id_departamento: "",
     disponibilidad: "",
-    cantidad: "",
+    cantidad: 0, // Set cantidad to zero
     id_proveedor: "",
     precio_unitario: "",
     imagen1: "",
@@ -26,6 +26,14 @@ const PrendaForm = () => {
     material4: "",
     material5: "",
   });
+
+  const [imagePreviews, setImagePreviews] = useState({
+    imagen1: "",
+    imagen2: "",
+    imagen3: "",
+    imagen4: "",
+  });
+
   const navigate = useNavigate();
 
   const [marcas, setMarcas] = useState([]);
@@ -57,7 +65,30 @@ const PrendaForm = () => {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prevFormData) => {
+      if (name === "id_marca") {
+        const selectedMarca = marcas.find((marca) => marca.id_marca == value);
+        return {
+          ...prevFormData,
+          [name]: type === "checkbox" ? (checked ? value : "") : value,
+          material5: selectedMarca ? selectedMarca.nom_marca : "",
+        };
+      }
+      return {
+        ...prevFormData,
+        [name]: type === "checkbox" ? (checked ? value : "") : value,
+      };
+    });
+
+    // Update image preview if the input name is one of the images
+    if (name.startsWith("imagen")) {
+      setImagePreviews((prevPreviews) => ({
+        ...prevPreviews,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -71,7 +102,7 @@ const PrendaForm = () => {
       id_marca: "",
       id_departamento: "",
       disponibilidad: "",
-      cantidad: "",
+      cantidad: 0, // Ensure cantidad is reset to zero
       id_proveedor: "",
       precio_unitario: "",
       imagen1: "",
@@ -86,6 +117,12 @@ const PrendaForm = () => {
       material3: "",
       material4: "",
       material5: "",
+    });
+    setImagePreviews({
+      imagen1: "",
+      imagen2: "",
+      imagen3: "",
+      imagen4: "",
     });
 
     navigate(`/tallas/${prendaId}`);
@@ -102,13 +139,7 @@ const PrendaForm = () => {
           <h4>
             <b>Nueva Prenda</b>
           </h4>
-          <Form
-            striped
-            bordered
-            hove
-            onSubmit={handleSubmit}
-            className="prenda-custom-form"
-          >
+          <Form onSubmit={handleSubmit} className="prenda-custom-form">
             <Form.Group className="custom-form-group">
               <Form.Label className="custom-label">Nombre Prenda</Form.Label>
               <Form.Control
@@ -129,8 +160,8 @@ const PrendaForm = () => {
                 className="custom-control"
               >
                 <option value="">Seleccione Marca</option>
-                {marcas.map((marca, index) => (
-                  <option key={index} value={index + 1}>
+                {marcas.map((marca) => (
+                  <option key={marca.id_marca} value={marca.id_marca}>
                     {marca.nom_marca}
                   </option>
                 ))}
@@ -146,8 +177,11 @@ const PrendaForm = () => {
                 className="custom-control"
               >
                 <option value="">Seleccione Departamento</option>
-                {departamentos.map((departamento, index) => (
-                  <option key={index} value={index + 1}>
+                {departamentos.map((departamento) => (
+                  <option
+                    key={departamento.id_departamento}
+                    value={departamento.id_departamento}
+                  >
                     {departamento.nombre}
                   </option>
                 ))}
@@ -155,27 +189,26 @@ const PrendaForm = () => {
             </Form.Group>
             <Form.Group className="custom-form-group">
               <Form.Label className="custom-label">Disponibilidad</Form.Label>
-              <Form.Control
-                type="number"
-                name="disponibilidad"
-                value={formData.disponibilidad}
-                onChange={handleChange}
-                className="custom-control"
-              />
+              <div className="custom-control">
+                <Form.Check
+                  type="checkbox"
+                  label="Disponible"
+                  name="disponibilidad"
+                  value="1"
+                  checked={formData.disponibilidad === "1"}
+                  onChange={handleChange}
+                />
+                <Form.Check
+                  type="checkbox"
+                  label="No Disponible"
+                  name="disponibilidad"
+                  value="0"
+                  checked={formData.disponibilidad === "0"}
+                  onChange={handleChange}
+                />
+              </div>
             </Form.Group>
-            <Form.Group className="custom-form-group">
-              <Form.Label className="custom-label">Cantidad</Form.Label>
-              <Form.Control
-                type="number"
-                name="cantidad"
-                value={formData.cantidad}
-                onChange={handleChange}
-                className="custom-control"
-              />
-            </Form.Group>
-          </Form>
 
-          <Form onSubmit={handleSubmit} className="prenda-custom-form">
             <Form.Group className="custom-form-group">
               <Form.Label className="custom-label">Proveedor</Form.Label>
               <Form.Control
@@ -186,8 +219,11 @@ const PrendaForm = () => {
                 className="custom-control"
               >
                 <option value="">Seleccione Proveedor</option>
-                {proveedores.map((proveedor, index) => (
-                  <option key={index} value={index + 1}>
+                {proveedores.map((proveedor) => (
+                  <option
+                    key={proveedor.id_proveedor}
+                    value={proveedor.id_proveedor}
+                  >
                     {proveedor.name_proveedor}
                   </option>
                 ))}
@@ -215,6 +251,13 @@ const PrendaForm = () => {
                   onChange={handleChange}
                   className="custom-control"
                 />
+                {imagePreviews.imagen1 && (
+                  <img
+                    src={imagePreviews.imagen1}
+                    alt="Preview"
+                    className="image-preview"
+                  />
+                )}
               </Form.Group>
               <Form.Group className="custom-form-group">
                 <Form.Label className="custom-label">Imagen 2</Form.Label>
@@ -225,6 +268,13 @@ const PrendaForm = () => {
                   onChange={handleChange}
                   className="custom-control"
                 />
+                {imagePreviews.imagen2 && (
+                  <img
+                    src={imagePreviews.imagen2}
+                    alt="Preview"
+                    className="image-preview"
+                  />
+                )}
               </Form.Group>
               <Form.Group className="custom-form-group">
                 <Form.Label className="custom-label">Imagen 3</Form.Label>
@@ -235,6 +285,13 @@ const PrendaForm = () => {
                   onChange={handleChange}
                   className="custom-control"
                 />
+                {imagePreviews.imagen3 && (
+                  <img
+                    src={imagePreviews.imagen3}
+                    alt="Preview"
+                    className="image-preview"
+                  />
+                )}
               </Form.Group>
               <Form.Group className="custom-form-group">
                 <Form.Label className="custom-label">Imagen 4</Form.Label>
@@ -245,11 +302,16 @@ const PrendaForm = () => {
                   onChange={handleChange}
                   className="custom-control"
                 />
+                {imagePreviews.imagen4 && (
+                  <img
+                    src={imagePreviews.imagen4}
+                    alt="Preview"
+                    className="image-preview"
+                  />
+                )}
               </Form.Group>
             </div>
-          </Form>
 
-          <Form onSubmit={handleSubmit} className="prenda-custom-form">
             <div className="custom-form-section">
               <Form.Group className="custom-form-group">
                 <Form.Label className="custom-label">Tipo Prenda</Form.Label>
@@ -261,8 +323,11 @@ const PrendaForm = () => {
                   className="custom-control"
                 >
                   <option value="">Seleccione Tipo Prenda</option>
-                  {tipoPrendas.map((tipoPrenda, index) => (
-                    <option key={index} value={index + 1}>
+                  {tipoPrendas.map((tipoPrenda) => (
+                    <option
+                      key={tipoPrenda.id_tipo_prenda}
+                      value={tipoPrenda.id_tipo_prenda}
+                    >
                       {tipoPrenda.nombre_tipo}
                     </option>
                   ))}

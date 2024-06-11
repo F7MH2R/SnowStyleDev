@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import "chart.js/auto";
+import { Container, Row, Col } from "react-bootstrap";
 import "./css/statistics.css";
 import SalesByMonthChart from "./SalesByMoth";
 
@@ -100,55 +101,59 @@ const Statistics = () => {
   };
 
   return (
-    <div>
-      <h2>Estadísticas de Ventas</h2>
-      <div className="statistics-container">
-        <div className="chart-container">
-          <h3>Ventas por Fecha</h3>
-          <Pie
-            data={createChartData(salesByDate, "fecha", "total_vendido")}
-            options={chartOptions}
-          />
-        </div>
-        <div className="chart-container">
+    <Container>
+      <h2 className="text-center">Estadísticas del ventas de prendas</h2>
+      <Row className="statistics-container">
+        <Col md={6} className="chart-container">
           <h3>Ventas por Departamento</h3>
-          <Pie
-            data={createChartData(salesByDepartment, "nombre", "total_vendido")}
-            options={chartOptions}
-          />
-        </div>
-        {/*
-        <div className="chart-container">
+          <div className="pie-chart">
+            <Pie
+              data={createChartData(
+                salesByDepartment,
+                "nombre",
+                "total_vendido"
+              )}
+              options={chartOptions}
+            />
+          </div>
+        </Col>
+
+        <Col md={6} className="chart-container">
           <h3>Ventas por Talla</h3>
-          <Pie
-            data={createChartData(salesBySize, "nom_talla", "total_vendido")}
-            options={chartOptions}
-          />
-        </div>
-        */}
-        <div className="chart-container">
+          <div className="pie-chart">
+            <Pie
+              data={createChartData(salesBySize, "nom_talla", "total_vendido")}
+              options={chartOptions}
+            />
+          </div>
+        </Col>
+      </Row>
+      <Row className="statistics-container">
+        <Col md={6} className="chart-container">
           <h3>Ventas por Proveedor</h3>
-          <Pie
-            data={createChartData(
-              salesByProvider,
-              "name_proveedor",
-              "total_vendido"
-            )}
-            options={chartOptions}
-          />
-        </div>
-        <div className="chart-container centered">
+          <div className="pie-chart">
+            <Pie
+              data={createChartData(
+                salesByProvider,
+                "name_proveedor",
+                "total_vendido"
+              )}
+              options={chartOptions}
+            />
+          </div>
+        </Col>
+
+        <Col md={6} className="chart-container">
           <h3>Ventas por Marca</h3>
-          <Pie
-            data={createChartData(salesByBrand, "nom_marca", "total_vendido")}
-            options={chartOptions}
-          />
-        </div>
-        <div className="chart-container">
-          <SalesByMonthChart />
-        </div>
-      </div>
-    </div>
+          <div className="pie-chart">
+            <Pie
+              data={createChartData(salesByBrand, "nom_marca", "total_vendido")}
+              options={chartOptions}
+            />
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

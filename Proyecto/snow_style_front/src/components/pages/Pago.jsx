@@ -3,14 +3,17 @@ import { Button, Form, Alert, Modal, Table } from "react-bootstrap";
 import googleFontsURL from "../Fuentes/FuenteLetras";
 import { PDFDocument, rgb } from "pdf-lib";
 import "./css/Modal.css";
-import { ejecutarGet, ejecutarPatch } from "../compartidos/request";
+import {
+  ejecutarGet,
+  ejecutarPatch,
+  ejecutarPost,
+} from "../compartidos/request"; // Asegúrate de tener la función ejecutarPost para enviar datos
 import { toast } from "react-toastify";
 
 const Pago = ({ items, fetchItems }) => {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [pagoExitoso, setPagoExitoso] = useState(false);
-  const [mostrarFactura, setMostrarFactura] = useState(false);
   const [nombreTarjeta, setNombreTarjeta] = useState("");
   const [correoElectronico, setCorreoElectronico] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
@@ -92,20 +95,12 @@ const Pago = ({ items, fetchItems }) => {
     await Promise.all(consultas);
   }
 
-  const handleVerFactura = () => {
-    setMostrarFactura(true);
-  };
-
-  const handleCloseFactura = () => {
-    setMostrarFactura(false);
-  };
-
   const handleDescargarFactura = async () => {
     try {
       const pdfDoc = await PDFDocument.create();
-      const page = pdfDoc.addPage();
+      const page = pdfDoc.addPage([600, 800]);
 
-      //contenido de la factura
+      // Contenido de la factura
       const facturaTexto = generateFacturaTexto(
         total,
         nombreTarjeta,
@@ -118,15 +113,57 @@ const Pago = ({ items, fetchItems }) => {
       let textY = height - 50; // Posición Y inicial del texto
       const textLines = facturaTexto.split("\n");
 
-      page.drawText("Factura SnowStyle", {
-        x: width / 2 - 50, // centrar el texto horizontalmente
-        y: textY,
-        size: 20,
-        color: rgb(0, 0, 0), // color negro
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString("es-ES", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       });
-      textY -= 30; // espacio después del título
 
-      // editar el texto
+      // Título
+      page.drawText("DOCUMENTO TRIBUTARIO ELECTRÓNICO", {
+        x: width / 2 - 150,
+        y: textY,
+        size: 16,
+        color: rgb(0, 0, 0),
+      });
+      textY -= 20;
+
+      page.drawText("COMPROBANTE DE CRÉDITO FISCAL", {
+        x: width / 2 - 130,
+        y: textY,
+        size: 14,
+        color: rgb(0, 0, 0),
+      });
+      textY -= 20;
+
+      // Fecha y hora de generación
+      page.drawText(`Fecha y Hora de Generación: ${formattedDate}`, {
+        x: textX,
+        y: textY,
+        size: fontSize,
+        color: rgb(0, 0, 0),
+      });
+      textY -= 20;
+
+      // Información del Emisor y Receptor
+      page.drawText("EMISOR", {
+        x: textX,
+        y: textY,
+        size: fontSize,
+        color: rgb(0, 0, 0),
+      });
+      page.drawText("RECEPTOR", {
+        x: width - 200,
+        y: textY,
+        size: fontSize,
+        color: rgb(0, 0, 0),
+      });
+      textY -= 20;
+
+      // Detalle de la factura
       for (const line of textLines) {
         page.drawText(line, {
           x: textX,
@@ -137,11 +174,19 @@ const Pago = ({ items, fetchItems }) => {
         textY -= 20; // espacio entre líneas
       }
 
-      // generar el archivo PDF
+      // Generar el archivo PDF
       const pdfBytes = await pdfDoc.save();
       const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
 
-      // crear un enlace de descarga para el PDF
+      // Enviar el PDF al backend
+      const idUsuario = localStorage.getItem("UserId");
+      const formData = new FormData();
+      formData.append("file", pdfBlob, "SnowStyleFactura.pdf");
+      formData.append("idUsuario", idUsuario);
+
+      await ejecutarPost("/api/facturas/upload", formData);
+
+      // Crear un enlace de descarga para el PDF
       const downloadLink = document.createElement("a");
       downloadLink.href = URL.createObjectURL(pdfBlob);
       downloadLink.download = "SnowStyleFactura.pdf";
@@ -206,9 +251,6 @@ const Pago = ({ items, fetchItems }) => {
               <Alert variant="success" className="custom-alert">
                 ¡Pago exitoso! Se ha procesado el pago correctamente.
               </Alert>
-              <Button variant="secondary" onClick={handleVerFactura}>
-                Ver factura
-              </Button>
             </div>
           )}
 
@@ -272,7 +314,7 @@ const Pago = ({ items, fetchItems }) => {
             </Form>
           )}
 
-          <Modal show={mostrarFactura} onHide={handleCloseFactura}>
+          <Modal show={pagoExitoso} onHide={() => setPagoExitoso(false)}>
             <Modal.Header closeButton>
               <Modal.Title style={{ fontFamily: "Prompt, sans-serif" }}>
                 Factura

@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
 const app = express();
+const multer = require("multer");
+const path = require("path");
 const port = process.env.PORT || 3077;
 const {
   queryCarrito,
@@ -19,17 +21,19 @@ const {
   cantidadEnInventario,
 } = require("./queries");
 
-const path = require("path");
 // Configuración de CORS para permitir solicitudes desde cualquier origen
 app.use(cors());
 app.use(bodyParser.json()); // Middleware para analizar cuerpos JSON
+app.use(bodyParser.urlencoded({ extended: true }));
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 // Configuración de la base de datos PostgreSQL
 const pool = new Pool({
   user: "slayer", // Cambia por tu usuario
   host: "localhost",
   database: "snowstyle", // Nombre de tu base de datos
-  password: "deku", // Cambia por tu contraseña
+  password: "1234", // Cambia por tu contraseña
   port: 5432, // Puerto estándar para PostgreSQL
 });
 
@@ -460,6 +464,60 @@ app.get("/api/prendas/:idPrenda/tallas/:idTalla/cantidad", async (req, res) => {
       mensaje: "Error al obtener detalles de la prenda",
       error: error,
     });
+  }
+});
+
+//endpoint de envio de factura pdf
+
+app.post("/api/facturas/upload", upload.single("file"), async (req, res) => {
+  const { idUsuario } = req.body;
+  const file = req.file;
+
+  if (!file) {
+    return res
+      .status(400)
+      .json({ message: "No se ha proporcionado ningún archivo" });
+  }
+
+  try {
+    const result = await pool.query(
+      "SELECT correo_electronico FROM usuario WHERE id_usuario = $1",
+      [idUsuario]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+    const email = result.rows[0].correo_electronico;
+
+    // Enviar el archivo PDF por correo electrónico
+    const mailOptions = {
+      to: email,
+      from: "snowstyle342@gmail.com",
+      subject: "Factura de compra - SnowStyle",
+      text: `Gracias por su compra. Adjuntamos su factura en formato PDF.`,
+      attachments: [
+        {
+          filename: "SnowStyleFactura.pdf",
+          content: file.buffer,
+          contentType: "application/pdf",
+        },
+      ],
+    };
+
+    transporter.sendMail(mailOptions, (error) => {
+      if (error) {
+        console.error("Error al enviar el correo electrónico:", error);
+        return res
+          .status(500)
+          .json({ message: "Error al enviar el correo electrónico" });
+      }
+      res
+        .status(200)
+        .json({ message: "Factura enviada por correo electrónico" });
+    });
+  } catch (error) {
+    console.error("Error al enviar la factura:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
   }
 });
 

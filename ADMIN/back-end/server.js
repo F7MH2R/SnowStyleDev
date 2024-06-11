@@ -549,6 +549,22 @@ app.get("/tallas", async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
+
+// Endpoint to get tallas by prenda ID
+app.get("/tallas_prenda/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "SELECT * FROM tallas_prenda WHERE id_prenda = $1",
+      [id]
+    );
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error("Error getting tallas_prenda", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

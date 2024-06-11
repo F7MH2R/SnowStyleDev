@@ -19,7 +19,7 @@ const PrendaTable = () => {
   };
 
   const handleDelete = async (id_prenda) => {
-    await axios.delete(`http://localhost:3076/prendas/${id_prenda}`);
+    navigate(`/UpdateTallas/${id_prenda}`);
     fetchPrendas();
   };
 
@@ -29,7 +29,10 @@ const PrendaTable = () => {
 
   return (
     <>
-      <div className="prenda-table-container" style={{ fontFamily: "Prompt, sans-serif" }}>
+      <div
+        className="prenda-table-container"
+        style={{ fontFamily: "Prompt, sans-serif" }}
+      >
         <link rel="stylesheet" href={googleFontsURL} />
         <Table striped bordered hove className="prenda-container ">
           <Button
@@ -56,17 +59,17 @@ const PrendaTable = () => {
                 <td>{prenda.precio_unitario}</td>
                 <td>
                   <Button
-                    variant="warning"
+                    variant="outline-warning"
                     onClick={() => handleUpdate(prenda.id_prenda)}
                     style={{ marginRight: "10px" }}
                   >
                     Update
                   </Button>
                   <Button
-                    variant="danger"
+                    variant="outline-dark"
                     onClick={() => handleDelete(prenda.id_prenda)}
                   >
-                    Delete
+                    Tallas
                   </Button>
                 </td>
               </tr>
@@ -74,7 +77,6 @@ const PrendaTable = () => {
           </tbody>
         </Table>
       </div>
-      
     </>
   );
 };

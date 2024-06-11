@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Button, Modal } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaTshirt } from "react-icons/fa"; // Importing an icon from react-icons
+import { FaTshirt } from "react-icons/fa";
 import googleFontsURL from "../../FuenteLetra/FuenteLetra";
 import "./TallasForm.css";
 
-const TallasForm = () => {
-  const { id_prenda } = useParams();
+const UpdateTallas = () => {
+  const { id } = useParams();
   const [tallas, setTallas] = useState([]);
   const [selectedTallas, setSelectedTallas] = useState(Array(5).fill(""));
   const [cantidad, setCantidad] = useState(Array(5).fill(""));
@@ -25,7 +25,31 @@ const TallasForm = () => {
     };
 
     fetchTallas();
-  }, []);
+
+    // Fetch existing tallas for the prenda
+    const fetchTallasPrenda = async () => {
+      try {
+        const tallasPrendaResult = await axios.get(
+          `http://localhost:3076/tallas_prenda/${id}`
+        );
+        const existingTallas = tallasPrendaResult.data;
+        const newSelectedTallas = Array(5).fill("");
+        const newCantidad = Array(5).fill("");
+        existingTallas.forEach((talla, index) => {
+          newSelectedTallas[index] = talla.id_talla;
+          newCantidad[index] = talla.cantidad;
+        });
+        setSelectedTallas(newSelectedTallas);
+        setCantidad(newCantidad);
+      } catch (error) {
+        console.error("Error fetching tallas_prenda:", error);
+      }
+    };
+
+    if (id) {
+      fetchTallasPrenda();
+    }
+  }, [id]);
 
   const handleChange = (index, value) => {
     const newSelectedTallas = [...selectedTallas];
@@ -46,7 +70,7 @@ const TallasForm = () => {
       if (tallas_Guardar[i]) {
         try {
           await axios.post("http://localhost:3076/tallas_prenda", {
-            id_prenda: id_prenda,
+            id_prenda: id,
             id_talla: tallas_Guardar[i],
             cantidad: cantidad[i] || 0, // Default to 0 if no value is entered
           });
@@ -109,7 +133,7 @@ const TallasForm = () => {
             </div>
           ))}
           <Button variant="primary" type="submit" className="submit-button">
-            Agregar Tallas
+            Actualizar Tallas
           </Button>
         </Form>
       </div>
@@ -120,7 +144,7 @@ const TallasForm = () => {
         <Modal.Body>
           <div className="modal-body-content">
             <FaTshirt className="modal-icon" size={100} />
-            <p>Has agregado tu prenda correctamente.</p>
+            <p>Has actualizado las tallas de tu prenda correctamente.</p>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -133,4 +157,4 @@ const TallasForm = () => {
   );
 };
 
-export default TallasForm;
+export default UpdateTallas;

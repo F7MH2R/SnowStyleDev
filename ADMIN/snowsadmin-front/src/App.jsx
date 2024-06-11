@@ -19,6 +19,7 @@ import MarcaTable from "./components/Marca/Table/MarcaTable";
 import FormMarca from "./components/Marca/Form/MarcaForm";
 import UpdatePrenda from "./components/Prendas/UpdateP/UpdateP";
 import TallaTable from "./components/Tallas/TallaTable";
+import UpdateTallas from "./components/Prendas/UpdateTallas/UpdateTallas";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -54,6 +55,7 @@ function App() {
               <Route path="/FormPrenda" exact element={<FormPrenda />} />
               <Route path="formMarca" exact element={<FormMarca />} />
               <Route path="/UpdatePrenda/:id" element={<UpdatePrenda />} />
+              <Route path="/UpdateTallas/:id" element={<UpdateTallas />} />
             </Routes>
           </div>
         )}
