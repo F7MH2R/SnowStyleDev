@@ -256,7 +256,9 @@ const UpdateP = () => {
 
             <div className="custom-form-section">
               <Form.Group className="custom-form-group">
-                <Form.Label className="custom-label">Imagen 1</Form.Label>
+                <Form.Label className="custom-label">
+                  Imagen de presentación
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="imagen1"
@@ -273,7 +275,9 @@ const UpdateP = () => {
                 )}
               </Form.Group>
               <Form.Group className="custom-form-group">
-                <Form.Label className="custom-label">Imagen 2</Form.Label>
+                <Form.Label className="custom-label">
+                  Imagen de la prenda
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="imagen2"
@@ -290,7 +294,9 @@ const UpdateP = () => {
                 )}
               </Form.Group>
               <Form.Group className="custom-form-group">
-                <Form.Label className="custom-label">Imagen 3</Form.Label>
+                <Form.Label className="custom-label">
+                  Imagen de la prenda
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="imagen3"
@@ -307,7 +313,9 @@ const UpdateP = () => {
                 )}
               </Form.Group>
               <Form.Group className="custom-form-group">
-                <Form.Label className="custom-label">Imagen 4</Form.Label>
+                <Form.Label className="custom-label">
+                  Imagen de la prenda
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="imagen4"
@@ -359,7 +367,9 @@ const UpdateP = () => {
               </Form.Group>
 
               <Form.Group className="custom-form-group">
-                <Form.Label className="custom-label">Material 1</Form.Label>
+                <Form.Label className="custom-label">
+                  Exportado desde:
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="material1"
@@ -369,7 +379,7 @@ const UpdateP = () => {
                 />
               </Form.Group>
               <Form.Group className="custom-form-group">
-                <Form.Label className="custom-label">Material 2</Form.Label>
+                <Form.Label className="custom-label">Fabricado en</Form.Label>
                 <Form.Control
                   type="text"
                   name="material2"
@@ -379,7 +389,9 @@ const UpdateP = () => {
                 />
               </Form.Group>
               <Form.Group className="custom-form-group">
-                <Form.Label className="custom-label">Material 3</Form.Label>
+                <Form.Label className="custom-label">
+                  Material de la prenda
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="material3"
@@ -389,7 +401,7 @@ const UpdateP = () => {
                 />
               </Form.Group>
               <Form.Group className="custom-form-group">
-                <Form.Label className="custom-label">Material 4</Form.Label>
+                <Form.Label className="custom-label">Medidas</Form.Label>
                 <Form.Control
                   type="text"
                   name="material4"
@@ -399,7 +411,7 @@ const UpdateP = () => {
                 />
               </Form.Group>
               <Form.Group className="custom-form-group">
-                <Form.Label className="custom-label">Material 5</Form.Label>
+                <Form.Label className="custom-label">Marca</Form.Label>
                 <Form.Control
                   type="text"
                   name="material5"
