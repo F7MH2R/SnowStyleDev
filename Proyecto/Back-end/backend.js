@@ -30,10 +30,10 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 // Configuración de la base de datos PostgreSQL
 const pool = new Pool({
-  user: "slayer", // Cambia por tu usuario
+  user: "postgres", // Cambia por tu usuario
   host: "localhost",
-  database: "snowstyle", // Nombre de tu base de datos
-  password: "1234", // Cambia por tu contraseña
+  database: "Snowstyle", // Nombre de tu base de datos
+  password: "deku", // Cambia por tu contraseña
   port: 5432, // Puerto estándar para PostgreSQL
 });
 
